@@ -27,13 +27,13 @@ public class ControllerLoginPage {
     private JFXButton loginJFXButton;
 
     @FXML
-    private JFXComboBox<Manager> multiUserComboBox;
-    private ObservableList<Manager> managerObservableList = FXCollections.observableArrayList();
+    private JFXComboBox<String> multiUserComboBox;
+    private ObservableList<String> managerObservableList = FXCollections.observableArrayList();
 
     @FXML
     private JFXCheckBox multiApertJFXCheckBox;
 
-    private ArrayList<Manager> manager;
+    private ArrayList<Manager> managers = new ArrayList<>();
 
     @FXML
     private void initialize()
@@ -69,14 +69,34 @@ public class ControllerLoginPage {
 
     private void populateManagersComboBox() {
         ModelManager DBmanagers = new ModelDBManagers();
-        managerObservableList.addAll((DBmanagers.getManagers()));
+        for (Manager m: DBmanagers.getManagers()) {
+            managerObservableList.add(m.toString());
+        }
     }
 
     private void handleLoginJFXButton(ActionEvent actionEvent)
     {
+        ControllerAlert alert = new ControllerAlert();
+        ModelManager DBmanager = new ModelDBManagers();
+        Manager m = DBmanager.checkManagerInformation(userJFXTextField.getText(), pswJFXPasswordField.getText());
 
-        StageManager mainPage = new StageManager();
-        mainPage.setStageMainPage((Stage) loginJFXButton.getScene().getWindow());
+        if(m == null)
+        {
+            alert.displayAlert("username o psw sbagliate!");
+        }
+        else
+        {
+            managers.add(m);
+            if(multiApertJFXCheckBox.isSelected())
+            {
+                Manager m2 = DBmanager.getManagerInformation(multiUserComboBox.getValue());
+                managers.add(m2);
+            }
+            StageManager mainPage = new StageManager();
+            mainPage.setStageMainPage((Stage) loginJFXButton.getScene().getWindow(), managers);
+        }
     }
+
+
 }
 

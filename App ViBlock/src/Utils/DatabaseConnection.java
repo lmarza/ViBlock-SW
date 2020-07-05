@@ -32,7 +32,7 @@ public class DatabaseConnection
     public void DBOpenConnection() {
         try {
 
-            File loginf = new File("C:\\Users\\Luca Marzari\\Desktop\\ViBlock-SW\\App ViBlock\\logDB.txt");
+            File loginf = new File("C:\\Users\\Luca Marzari\\Desktop\\logDB.txt");
             Scanner read = new Scanner(loginf);
             read.useDelimiter(",");
             String user = null;

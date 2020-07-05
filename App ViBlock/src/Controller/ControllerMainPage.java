@@ -1,5 +1,6 @@
 package Controller;
 
+import Data.Manager;
 import Utils.StageManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -8,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+
+import java.util.ArrayList;
 
 public class ControllerMainPage {
 
@@ -62,6 +65,8 @@ public class ControllerMainPage {
     @FXML
     private JFXButton esportaSaldoGiorJFXButton;
 
+    private ArrayList<Manager> managers;
+
     @FXML
     private void initialize()
     {
@@ -75,6 +80,17 @@ public class ControllerMainPage {
         searchImageView.setOnMouseClicked(this::handleSearchImageView);
         logoutImageView.setOnMouseClicked(this::handleLogOutImageView);
     }
+
+    public void setManagers(ArrayList<Manager> managers) {
+        this.managers = managers;
+    }
+
+    public void setSideScreen()
+    {
+        ControllerSideScreen controllerSideScreen = new ControllerSideScreen();
+        controllerSideScreen.fillLabel(managers, user1Label, user2Label, saldoAperturaLabel, saldoGiorLabel, totCassaLabel, PersEntrateLabel, prelievoLabel);
+    }
+
 
     private void handleLogOutImageView(MouseEvent mouseEvent) {
     }

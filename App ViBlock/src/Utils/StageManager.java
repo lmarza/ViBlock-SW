@@ -2,6 +2,7 @@ package Utils;
 
 import Controller.ControllerLoginPage;
 import Controller.ControllerMainPage;
+import Data.Manager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,7 +30,7 @@ public class StageManager {
         }
     }
 
-    public void setStageMainPage(Stage primaryStage) {
+    public void setStageMainPage(Stage primaryStage, ArrayList<Manager> managers) {
         Parent root;
 
         try {
@@ -37,6 +38,10 @@ public class StageManager {
 
             root = fxmlLoader.load();
             ControllerMainPage controllerMainPage = fxmlLoader.getController();
+            controllerMainPage.setManagers(managers);
+            controllerMainPage.setSideScreen();
+
+
 
             primaryStage.setTitle("MainPage - Vi Block");
             primaryStage.setScene(new Scene(root));

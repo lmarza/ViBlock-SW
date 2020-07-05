@@ -57,19 +57,18 @@ public class ModelDBManagers implements ModelManager
     }
 
     @Override
-    public Manager getManagerInformation(String username) {
+    public Manager checkManagerInformation(String username, String password) {
        Manager manager;
 
         db.DBOpenConnection();
         db.executeSQLQuery( "SELECT * " +
                 "FROM socioresponsabile " +
-                "WHERE username = ?",List.of(username));
+                "WHERE username = ? AND psw = ?",List.of(username, password));
 
         manager = resultSetToManager(db.getResultSet());
-
-
         return manager;
     }
+
 
     private Manager resultSetToManager(ResultSet rs)
     {
@@ -97,4 +96,18 @@ public class ModelDBManagers implements ModelManager
 
         return null;
     }
+
+    @Override
+    public Manager getManagerInformation(String username) {
+        Manager manager;
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT * " +
+                "FROM socioresponsabile " +
+                "WHERE username = ? ",List.of(username));
+
+        manager = resultSetToManager(db.getResultSet());
+        return manager;
+    }
+
 }
