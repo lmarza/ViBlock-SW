@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerIngresso">
+   <children>
+      <AnchorPane layoutX="406.0" layoutY="-7.0">
+         <children>
+            <ImageView fitHeight="1153.0" fitWidth="1524.0" layoutY="-57.0" opacity="0.83">
+               <image>
+                  <Image url="@../images/Climbing-Chaps-01-Chris-Sharma.jpg" />
+               </image>
+            </ImageView>
+            <AnchorPane layoutX="76.0" layoutY="973.0" prefHeight="82.0" prefWidth="225.0">
+               <children>
+                  <ImageView fx:id="homePageImageView" fitHeight="70.0" fitWidth="69.0" layoutX="-51.0" layoutY="8.0">
+                     <image>
+                        <Image url="@../images/home_64px.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label layoutX="25.0" layoutY="13.0" prefHeight="48.0" prefWidth="182.0" text="Home" textFill="#f7f5f5fc">
+                     <font>
+                        <Font name="Ink Free" size="29.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <JFXButton fx:id="DieciIngrJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="475.0" layoutY="583.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Abbonamento 10 ingressi" textFill="#ffa423">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="ingressoSingoloJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="581.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Ingresso singolo" textFill="#ffa423">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="mensileJFXButton" alignment="CENTER" layoutX="851.0" layoutY="583.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Abbonamento Mensile" textFill="#ffa423">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="trimeJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="110.0" layoutY="739.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Abbonamento Trimestrale" textFill="#ffa423">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="corsoJFXButton" alignment="CENTER" layoutX="480.0" layoutY="741.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Tessera Corso" textFill="#ffa423">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label layoutX="251.0" layoutY="942.0" prefHeight="93.0" prefWidth="454.0" text="Totale da pagare:" textFill="#1d1c1c" underline="true">
+               <font>
+                  <Font name="Ink Free" size="57.0" />
+               </font>
+            </Label>
+            <Label fx:id="totDaPagareLabel" layoutX="724.0" layoutY="945.0" prefHeight="93.0" prefWidth="163.0" textFill="#1d1c1c">
+               <font>
+                  <Font name="Ink Free" size="57.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="contantiJFXCheckBox" layoutX="1108.0" layoutY="906.0" prefHeight="18.0" prefWidth="91.0" selected="true" text="Contanti">
+               <font>
+                  <Font name="Tahoma" size="35.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="cartaJFXCheckBox" layoutX="1321.0" layoutY="906.0" prefHeight="18.0" prefWidth="91.0" text="Carta">
+               <font>
+                  <Font name="Tahoma" size="35.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXButton fx:id="pagamentoJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1025.0" layoutY="966.0" prefHeight="79.0" prefWidth="277.0" style="-fx-background-color: rgba(88, 247, 80, 0.8); -fx-background-radius: 90;" text="Registra pagamento">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <AnchorPane layoutX="92.0" layoutY="145.0" prefHeight="370.0" prefWidth="661.0" style="-fx-background-color: rgba(0,0,0,0.4); -fx-background-radius: 90;">
+               <children>
+                  <Label layoutX="182.0" layoutY="46.0" maxWidth="220.0" prefHeight="47.0" prefWidth="103.0" text="Nome:" textFill="#f1f1f1">
+                     <font>
+                        <Font name="Tahoma Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="183.0" layoutY="100.0" maxWidth="220.0" prefHeight="47.0" prefWidth="143.0" text="Cognome:" textFill="#f1f1f1">
+                     <font>
+                        <Font name="Tahoma Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="183.0" layoutY="153.0" maxWidth="220.0" prefHeight="47.0" prefWidth="206.0" text="Codice Fiscale:" textFill="#f1f1f1">
+                     <font>
+                        <Font name="Tahoma Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nomeLabel" layoutX="283.0" layoutY="47.0" prefHeight="47.0" prefWidth="361.0" textFill="#ffa423">
+                     <font>
+                        <Font name="Tahoma" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="cognomeLabel" layoutX="328.0" layoutY="101.0" maxWidth="324.0" prefHeight="47.0" prefWidth="324.0" textFill="#ffa423">
+                     <font>
+                        <Font name="Tahoma" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="CFLabel" layoutX="389.0" layoutY="154.0" prefHeight="47.0" prefWidth="270.0" textFill="#ffa423">
+                     <font>
+                        <Font name="Tahoma" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="184.0" layoutY="202.0" maxWidth="220.0" prefHeight="47.0" prefWidth="75.0" text="Mail:" textFill="#f1f1f1">
+                     <font>
+                        <Font name="Tahoma Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="185.0" layoutY="256.0" maxWidth="298.0" prefHeight="47.0" prefWidth="298.0" text="Scandenza certificato:" textFill="#f1f1f1">
+                     <font>
+                        <Font name="Tahoma Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="185.0" layoutY="309.0" maxWidth="220.0" prefHeight="47.0" prefWidth="137.0" text="Under18:" textFill="#f1f1f1">
+                     <font>
+                        <Font name="Tahoma Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="mailLabel" layoutX="262.0" layoutY="203.0" prefHeight="47.0" prefWidth="390.0" textFill="#ffa423">
+                     <font>
+                        <Font name="Tahoma" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="scadCertificatoLabel" layoutX="493.0" layoutY="257.0" maxWidth="200.0" prefHeight="47.0" prefWidth="150.0" textFill="#ffa423">
+                     <font>
+                        <Font name="Tahoma" size="26.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="U18Label" layoutX="327.0" layoutY="308.0" prefHeight="47.0" prefWidth="91.0" textFill="#ffa423">
+                     <font>
+                        <Font name="Tahoma" size="26.0" />
+                     </font>
+                  </Label>
+                  <AnchorPane layoutX="40.0" layoutY="45.0" prefHeight="104.0" prefWidth="113.0" style="-fx-background-color: rgba(255,255,255,1); -fx-background-radius: 90;">
+                     <children>
+                        <ImageView fitHeight="98.0" fitWidth="100.0" layoutX="-1.0" layoutY="6.0">
+                           <image>
+                              <Image url="@../images/climbing_50px.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <JFXButton fx:id="scarpetteJFXButton" alignment="CENTER" layoutX="856.0" layoutY="740.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Noleggio scarpette" textFill="#ffa423">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXCheckBox fx:id="tesseramentoJFXCheckBox" layoutX="827.0" layoutY="904.0" prefHeight="18.0" prefWidth="91.0" text="Tesseramento">
+               <font>
+                  <Font name="Tahoma" size="35.0" />
+               </font>
+            </JFXCheckBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="404.0" layoutY="-2.0" prefHeight="126.0" prefWidth="1533.0">
+         <children>
+            <Label layoutX="107.0" layoutY="-10.0" prefHeight="139.0" prefWidth="553.0" text="Ingresso" textFill="#ffa423" underline="true">
+               <font>
+                  <Font name="Ink Free" size="62.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="-6.0" prefHeight="1089.0" prefWidth="412.0" style="-fx-background-color: rgba(0,0,0,0.7);">
+         <children>
+            <AnchorPane layoutX="107.0" layoutY="67.0" prefHeight="158.0" prefWidth="143.0" style="-fx-background-radius: 90;" />
+            <ImageView fitHeight="139.0" fitWidth="145.0" layoutX="34.0" layoutY="60.0">
+               <image>
+                  <Image url="@../images/user_account_80px.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="user1Label" layoutX="191.0" layoutY="94.0" prefHeight="24.0" prefWidth="206.0" textFill="WHITE">
+               <font>
+                  <Font name="Ink Free" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="user2Label" layoutX="191.0" layoutY="151.0" prefHeight="24.0" prefWidth="206.0" textFill="WHITE">
+               <font>
+                  <Font name="Ink Free" size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="196.0" fitWidth="200.0" layoutX="108.0" layoutY="843.0">
+               <image>
+                  <Image url="@../images/Vi%20block.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="21.0" layoutY="290.0" prefHeight="33.0" prefWidth="383.0" textFill="#fffcfc">
+               <font>
+                  <Font name="Ink Free" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="22.0" layoutY="357.0" prefHeight="36.0" prefWidth="168.0" text="Soldi apertura:" textFill="#fffcfc">
+               <font>
+                  <Font name="Ink Free" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="saldoAperturaLabel" layoutX="193.0" layoutY="362.0" prefHeight="36.0" prefWidth="168.0" textFill="#fffcfc">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="22.0" layoutY="417.0" prefHeight="36.0" prefWidth="206.0" text="Saldo giornaliero:" textFill="#fffcfc">
+               <font>
+                  <Font name="Ink Free" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="saldoGiorLabel" layoutX="213.0" layoutY="424.0" prefHeight="36.0" prefWidth="168.0" textFill="#fffcfc">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="22.0" layoutY="473.0" prefHeight="36.0" prefWidth="206.0" text="Totale in cassa:" textFill="#fffcfc">
+               <font>
+                  <Font name="Ink Free" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="totCassaLabel" layoutX="200.0" layoutY="478.0" prefHeight="36.0" prefWidth="168.0" textFill="#fffcfc">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="62.0" layoutY="737.0" prefHeight="36.0" prefWidth="325.0" text="Numero di persone entrate:" textFill="#fffcfc">
+               <font>
+                  <Font name="Ink Free" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="PersEntrateLabel" layoutX="143.0" layoutY="783.0" prefHeight="36.0" prefWidth="137.0" textFill="#fffcfc">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="23.0" layoutY="525.0" prefHeight="36.0" prefWidth="103.0" text="Prelievo:" textFill="#fffcfc">
+               <font>
+                  <Font name="Ink Free" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="prelievoLabe" layoutX="127.0" layoutY="531.0" prefHeight="36.0" prefWidth="168.0" textFill="#fffcfc">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
