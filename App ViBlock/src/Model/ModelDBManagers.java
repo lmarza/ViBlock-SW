@@ -63,7 +63,7 @@ public class ModelDBManagers implements ModelManager
         db.DBOpenConnection();
         db.executeSQLQuery( "SELECT * " +
                 "FROM socioresponsabile " +
-                "WHERE username = ? AND psw = ?",List.of(username, password));
+                "WHERE username ILIKE ? AND psw = ?",List.of(username, password));
 
         manager = resultSetToManager(db.getResultSet());
         return manager;

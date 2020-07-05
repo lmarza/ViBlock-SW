@@ -1,6 +1,8 @@
 package Controller;
 
 import Data.Manager;
+import Model.ModelDBRiepilogoGiorn;
+import Model.ModelRiepilogoGiorn;
 import javafx.scene.control.Label;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ public class ControllerSideScreen {
 
     public void fillLabel(ArrayList<Manager> managers, Label user1Label, Label user2Label, Label saldoAperturaLabel, Label saldoGiorLabel, Label totCassaLabel, Label PersEntrateLabel, Label prelievoLabel )
     {
+        /*Managers label*/
         if (managers.size() > 1)
         {
             user1Label.setText(managers.get(0).getUsername());
@@ -16,6 +19,10 @@ public class ControllerSideScreen {
         }
         else
             user1Label.setText(managers.get(0).getUsername());
+
+        /*opening balance*/
+        ModelRiepilogoGiorn DBriepilogoGior = new ModelDBRiepilogoGiorn();
+        saldoAperturaLabel.setText(DBriepilogoGior.getOpeningBalance().toString() + "€");
     }
 
 
