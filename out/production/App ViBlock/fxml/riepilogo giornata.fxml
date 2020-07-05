@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerRiepilogoGiornaliero">
+   <children>
+      <ImageView fitHeight="1081.0" fitWidth="1516.0" layoutX="406.0" layoutY="-1.0" opacity="0.93">
+         <image>
+            <Image url="@../images/tommy-caldwell-2019-sun.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="406.0" layoutY="9.0" prefHeight="1070.0" prefWidth="284.0">
+         <children>
+            <AnchorPane layoutX="76.0" layoutY="973.0" prefHeight="82.0" prefWidth="225.0">
+               <children>
+                  <ImageView fx:id="homePageImageView" fitHeight="70.0" fitWidth="69.0" layoutX="-51.0" layoutY="8.0">
+                     <image>
+                        <Image url="@../images/home_64px.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label layoutX="25.0" layoutY="13.0" prefHeight="48.0" prefWidth="182.0" text="Home" textFill="#f7f5f5fc">
+                     <font>
+                        <Font name="Ink Free" size="29.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="404.0" layoutY="-2.0" prefHeight="126.0" prefWidth="1533.0">
+         <children>
+            <Label layoutX="107.0" layoutY="-10.0" prefHeight="139.0" prefWidth="553.0" text="Riepilogo Giornata" textFill="#db4532" underline="true">
+               <font>
+                  <Font name="Ink Free" size="62.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="-6.0" prefHeight="1089.0" prefWidth="412.0" style="-fx-background-color: rgba(0,0,0,0.7);">
+         <children>
+            <AnchorPane layoutX="107.0" layoutY="67.0" prefHeight="158.0" prefWidth="143.0" style="-fx-background-radius: 90;" />
+            <ImageView fitHeight="139.0" fitWidth="145.0" layoutX="34.0" layoutY="60.0">
+               <image>
+                  <Image url="@../images/user_account_80px.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="user1Label" layoutX="191.0" layoutY="94.0" prefHeight="24.0" prefWidth="206.0" textFill="WHITE">
+               <font>
+                  <Font name="Ink Free" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="user2Label" layoutX="191.0" layoutY="151.0" prefHeight="24.0" prefWidth="206.0" textFill="WHITE">
+               <font>
+                  <Font name="Ink Free" size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="196.0" fitWidth="200.0" layoutX="108.0" layoutY="843.0">
+               <image>
+                  <Image url="@../images/Vi%20block.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="dateLabel" layoutX="21.0" layoutY="290.0" prefHeight="33.0" prefWidth="383.0" textFill="#fffcfc">
+               <font>
+                  <Font name="Ink Free" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="22.0" layoutY="357.0" prefHeight="36.0" prefWidth="168.0" text="Soldi apertura:" textFill="#fffcfc">
+               <font>
+                  <Font name="Ink Free" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="saldoAperturaLabel" layoutX="193.0" layoutY="362.0" prefHeight="36.0" prefWidth="168.0" textFill="#fffcfc">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="22.0" layoutY="417.0" prefHeight="36.0" prefWidth="206.0" text="Saldo giornaliero:" textFill="#fffcfc">
+               <font>
+                  <Font name="Ink Free" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="saldoGiorLabel" layoutX="213.0" layoutY="424.0" prefHeight="36.0" prefWidth="168.0" textFill="#fffcfc">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="22.0" layoutY="473.0" prefHeight="36.0" prefWidth="206.0" text="Totale in cassa:" textFill="#fffcfc">
+               <font>
+                  <Font name="Ink Free" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="totCassaLabel" layoutX="200.0" layoutY="478.0" prefHeight="36.0" prefWidth="168.0" textFill="#fffcfc">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="62.0" layoutY="737.0" prefHeight="36.0" prefWidth="325.0" text="Numero di persone entrate:" textFill="#fffcfc">
+               <font>
+                  <Font name="Ink Free" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="PersEntrateLabel" layoutX="143.0" layoutY="783.0" prefHeight="36.0" prefWidth="137.0" textFill="#fffcfc">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="23.0" layoutY="525.0" prefHeight="36.0" prefWidth="103.0" text="Prelievo:" textFill="#fffcfc">
+               <font>
+                  <Font name="Ink Free" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="prelievoLabel" layoutX="127.0" layoutY="531.0" prefHeight="36.0" prefWidth="168.0" textFill="#fffcfc">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="RiepilogoTableView" layoutX="511.0" layoutY="325.0" opacity="0.78" prefHeight="557.0" prefWidth="1148.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
