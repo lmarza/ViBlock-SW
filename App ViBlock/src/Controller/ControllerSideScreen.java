@@ -5,6 +5,7 @@ import Model.ModelDBRiepilogoGiorn;
 import Model.ModelRiepilogoGiorn;
 import javafx.scene.control.Label;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class ControllerSideScreen {
@@ -22,7 +23,10 @@ public class ControllerSideScreen {
 
         /*opening balance*/
         ModelRiepilogoGiorn DBriepilogoGior = new ModelDBRiepilogoGiorn();
-        saldoAperturaLabel.setText(DBriepilogoGior.getOpeningBalance().toString() + "€");
+        BigDecimal saldo = DBriepilogoGior.getOpeningBalance();
+        saldoAperturaLabel.setText(saldo.toString() + "€");
+
+        /**/
     }
 
 
