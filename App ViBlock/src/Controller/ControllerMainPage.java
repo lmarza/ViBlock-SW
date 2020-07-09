@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -93,6 +94,9 @@ public class ControllerMainPage {
 
 
     private void handleLogOutImageView(MouseEvent mouseEvent) {
+        managers.removeAll(managers);
+        StageManager loginPageState = new StageManager();
+        loginPageState.setStageHomepage((Stage) logoutImageView.getScene().getWindow());
     }
 
     private void handleSearchImageView(MouseEvent mouseEvent) {
