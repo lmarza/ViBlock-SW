@@ -1,15 +1,17 @@
 package Utils;
 
+import Controller.ControllerDaySummary;
 import Controller.ControllerLoginPage;
 import Controller.ControllerMainPage;
+import Data.Entrata;
 import Data.Manager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class StageManager {
 
@@ -25,6 +27,7 @@ public class StageManager {
             primaryStage.setTitle("Login - Vi Block");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
+            primaryStage.getIcons().add(new Image("images/Vi block.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,6 +43,28 @@ public class StageManager {
             ControllerMainPage controllerMainPage = fxmlLoader.getController();
             controllerMainPage.setManagers(managers);
             controllerMainPage.setSideScreen();
+
+
+
+            primaryStage.setTitle("MainPage - Vi Block");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setStageDaySummary(Stage primaryStage, ArrayList<Manager> managers, ArrayList<Entrata> records) {
+        Parent root;
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/riepilogoGiornata.fxml"));
+
+            root = fxmlLoader.load();
+            ControllerDaySummary controllerDaySummary = fxmlLoader.getController();
+            controllerDaySummary.setManagers(managers);
+            controllerDaySummary.setSideScreen();
+            controllerDaySummary.setTableView(records);
 
 
 

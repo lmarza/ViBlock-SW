@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerRiepilogoGiornaliero">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ControllerDaySummary">
    <children>
       <ImageView fitHeight="1081.0" fitWidth="1516.0" layoutX="406.0" layoutY="-1.0" opacity="0.93">
          <image>
@@ -109,7 +109,7 @@
                   <Font name="Ink Free" size="25.0" />
                </font>
             </Label>
-            <Label fx:id="PersEntrateLabel" layoutX="143.0" layoutY="783.0" prefHeight="36.0" prefWidth="137.0" textFill="#fffcfc">
+            <Label fx:id="PersEntrateLabel" alignment="CENTER" layoutX="143.0" layoutY="783.0" prefHeight="36.0" prefWidth="137.0" textFill="#fffcfc">
                <font>
                   <Font size="25.0" />
                </font>
@@ -126,7 +126,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <TableView fx:id="RiepilogoTableView" layoutX="511.0" layoutY="325.0" opacity="0.78" prefHeight="557.0" prefWidth="1148.0">
+      <TableView fx:id="RiepilogoTableView" layoutX="511.0" layoutY="382.0" opacity="0.78" prefHeight="557.0" prefWidth="748.0" style="-fx-alignment: CENTER;">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />

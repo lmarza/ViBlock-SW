@@ -28,21 +28,23 @@ public class ModelDBEntrata implements ModelEntrata {
 
     private ArrayList<Entrata> resultSetToRecords(ResultSet rs) {
         ArrayList<Entrata> records = new ArrayList<>();
-        Entrata record = null;
+        Entrata record;
 
         try
         {
             while (rs.next())
             {
-                record.setNome(db.getSQLString(rs,"nome"));
-                record.setCognome(db.getSQLString(rs,"cognome"));
-                record.setSesso(db.getSQLString(rs,"sesso"));
-                record.setUnder18(db.getSQLBool(rs,"under18"));
-                record.setIngresso(db.getSQLString(rs,"ingresso"));
-                record.setTipoPagamento(db.getSQLString(rs,"tipopagamento"));
-                record.setImporto(db.getSQLNumeric(rs,"importo"));
-                record.setTesseramento(db.getSQLString(rs,"tesseramento"));
-                record.setScarpette(db.getSQLString(rs,"scarpette"));
+                String under18;
+                if(!db.getSQLBool(rs, "under18"))
+                    under18 = "NO";
+                else
+                    under18 = "SI";
+
+                record = new Entrata(db.getSQLString(rs,"nome"), db.getSQLString(rs,"cognome"), db.getSQLString(rs,"sesso"),
+                        under18, db.getSQLString(rs,"ingresso"),db.getSQLString(rs, "tipopagamento"),
+                        db.getSQLNumeric(rs, "importo"), db.getSQLString(rs,"tesseramento"), db.getSQLString(rs, "scarpette"));
+
+                records.add(record);
             }
 
             return records;

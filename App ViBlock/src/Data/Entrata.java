@@ -6,22 +6,22 @@ public class Entrata {
     String nome;
     String cognome;
     String sesso;
-    Boolean under18;
+    String under18;
     String ingresso;
-    String tipoPagamento;
+    String tipopagamento;
     BigDecimal importo;
     String tesseramento;
     String scarpette;
 
     public Entrata(){}
 
-    public Entrata(String nome, String cognome, String sesso, Boolean under18, String ingresso, String tipoPagamento, BigDecimal importo, String tesseramento, String scarpette) {
+    public Entrata(String nome, String cognome, String sesso, String under18, String ingresso, String tipoPagamento, BigDecimal importo, String tesseramento, String scarpette) {
         this.nome = nome;
         this.cognome = cognome;
         this.sesso = sesso;
         this.under18 = under18;
         this.ingresso = ingresso;
-        this.tipoPagamento = tipoPagamento;
+        this.tipopagamento = tipoPagamento;
         this.importo = importo;
         this.tesseramento = tesseramento;
         this.scarpette = scarpette;
@@ -51,11 +51,11 @@ public class Entrata {
         this.sesso = sesso;
     }
 
-    public Boolean getUnder18() {
+    public String getUnder18() {
         return under18;
     }
 
-    public void setUnder18(Boolean under18) {
+    public void setUnder18(String under18) {
         this.under18 = under18;
     }
 
@@ -67,12 +67,12 @@ public class Entrata {
         this.ingresso = ingresso;
     }
 
-    public String getTipoPagamento() {
-        return tipoPagamento;
+    public String getTipopagamento() {
+        return tipopagamento;
     }
 
-    public void setTipoPagamento(String tipoPagamento) {
-        this.tipoPagamento = tipoPagamento;
+    public void setTipopagamento(String tipopagamento) {
+        this.tipopagamento = tipopagamento;
     }
 
     public BigDecimal getImporto() {
@@ -107,7 +107,7 @@ public class Entrata {
                 ", sesso='" + sesso + '\'' +
                 ", under18=" + under18 +
                 ", ingresso='" + ingresso + '\'' +
-                ", tipoPagamento='" + tipoPagamento + '\'' +
+                ", tipoPagamento='" + tipopagamento + '\'' +
                 ", importo=" + importo +
                 ", tesseramento='" + tesseramento + '\'' +
                 ", scarpette='" + scarpette + '\'' ;

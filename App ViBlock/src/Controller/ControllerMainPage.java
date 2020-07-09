@@ -1,6 +1,9 @@
 package Controller;
 
+import Data.Entrata;
 import Data.Manager;
+import Model.ModelDBEntrata;
+import Model.ModelEntrata;
 import Utils.StageManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -11,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class ControllerMainPage {
@@ -112,6 +116,24 @@ public class ControllerMainPage {
     }
 
     private void handleRiepGiornataJFXButton(ActionEvent actionEvent) {
+        /*fetch all information about the day*/
+        ArrayList<Entrata> records = new ArrayList<>();
+        ModelEntrata modelEntrataDB = new ModelDBEntrata();
+        records.addAll(modelEntrataDB.getAllRecord());
+        for (Entrata e: records) {
+            if(e.getTipopagamento() == null || e.getTipopagamento().equalsIgnoreCase(""))
+                e.setTipopagamento("Abbonamento");
+            if(e.getImporto() == null)
+                e.setImporto(new BigDecimal(0.00));
+            if (e.getTesseramento() == null)
+                e.setTesseramento("NO");
+            if(e.getScarpette() == null)
+                e.setScarpette("NO");
+        }
+
+
+        StageManager daySummary = new StageManager();
+        daySummary.setStageDaySummary((Stage) riepGiornataJFXButton.getScene().getWindow(), managers, records);
     }
 
     private void handleIngressoProvaJFXButton(ActionEvent actionEvent) {

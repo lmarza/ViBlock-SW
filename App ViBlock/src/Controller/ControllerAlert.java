@@ -7,9 +7,10 @@ public class ControllerAlert
     public void displayAlert(String s)
     {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Check your input");
+        alert.setTitle("Controlla le credenziali d'accesso");
         alert.setHeaderText(null);
         alert.setContentText(s);
+
 
         alert.showAndWait();
     }
