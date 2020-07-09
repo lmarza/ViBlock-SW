@@ -168,6 +168,18 @@ public class DatabaseConnection
         }
     }
 
+    public boolean getSQLBool(ResultSet rs, String name)
+    {
+        try
+        {
+            return rs.getBoolean(name);
+        }
+        catch (SQLException e)
+        {
+            return Boolean.parseBoolean(null);
+        }
+    }
+
     public Integer getSQLInt(ResultSet rs, String name)
     {
         try

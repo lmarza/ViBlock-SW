@@ -29,6 +29,7 @@ public class ModelDBRiepilogoGiorn implements ModelRiepilogoGiorn {
         return openingBalance;
     }
 
+
     private BigDecimal resultSetToOpeningBalance(ResultSet rs) {
 
         BigDecimal openingBalance = null;
@@ -41,6 +42,41 @@ public class ModelDBRiepilogoGiorn implements ModelRiepilogoGiorn {
             }
 
             return openingBalance;
+        }
+        catch (SQLException e)
+        {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        return null;
+    }
+
+    @Override
+    public BigDecimal getDayBalance() {
+        BigDecimal dayBalance;
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT SUM(importo) as saldogiornaliero " +
+                "FROM riepilogogiornata ");
+
+        dayBalance = resultSetToDayBalance(db.getResultSet());
+
+        return dayBalance;
+    }
+
+    private BigDecimal resultSetToDayBalance(ResultSet rs) {
+
+        BigDecimal dayBalance = null;
+
+        try
+        {
+            while (rs.next())
+            {
+                dayBalance = db.getSQLNumeric(rs,"saldogiornaliero");
+            }
+
+            return dayBalance;
         }
         catch (SQLException e)
         {

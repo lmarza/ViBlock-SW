@@ -88,7 +88,7 @@ public class ControllerMainPage {
     public void setSideScreen()
     {
         ControllerSideScreen controllerSideScreen = new ControllerSideScreen();
-        controllerSideScreen.fillLabel(managers, user1Label, user2Label, saldoAperturaLabel, saldoGiorLabel, totCassaLabel, PersEntrateLabel, prelievoLabel);
+        controllerSideScreen.fillLabel(managers, user1Label, user2Label, dateLabel, saldoAperturaLabel, saldoGiorLabel, totCassaLabel, PersEntrateLabel, prelievoLabel);
     }
 
 

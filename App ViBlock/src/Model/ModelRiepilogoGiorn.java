@@ -4,4 +4,5 @@ import java.math.BigDecimal;
 
 public interface ModelRiepilogoGiorn {
     public BigDecimal getOpeningBalance();
+    public BigDecimal getDayBalance();
 }
