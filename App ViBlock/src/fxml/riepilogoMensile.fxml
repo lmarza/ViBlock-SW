@@ -148,6 +148,6 @@
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="monthJFXComboBox" focusColor="#3eaaec" layoutX="800.0" layoutY="232.0" prefHeight="52.0" prefWidth="125.0" style="-fx-background-color: #e0f7fa;" unFocusColor="#3eaaec" />
+      <JFXComboBox fx:id="monthJFXComboBox" focusColor="#3eaaec" layoutX="800.0" layoutY="243.0" opacity="0.8" prefHeight="35.0" prefWidth="140.0" promptText="Scegli mese" style="-fx-background-color: #e0f7fa;" unFocusColor="#3eaaec" />
    </children>
 </AnchorPane>

@@ -1,10 +1,15 @@
 package Model;
 
+import Data.Manager;
 import Utils.DatabaseConnection;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class ModelDBPrelievo implements ModelPrelievo {
     private DatabaseConnection db = DatabaseConnection.getInstance();
@@ -15,7 +20,7 @@ public class ModelDBPrelievo implements ModelPrelievo {
         db.DBOpenConnection();
         db.executeSQLQuery( "SELECT importo " +
                 "FROM prelievo " +
-                "WHERE date_part('day'::text, istanteprelievo) = date_part('day'::text, CURRENT_DATE) ");
+                "WHERE date_part('day'::text, istante) = date_part('day'::text, CURRENT_DATE) ");
 
         withdrawal = resultSetTowithdrawal(db.getResultSet());
 
@@ -47,7 +52,14 @@ public class ModelDBPrelievo implements ModelPrelievo {
         return null;
     }
 
-
+    @Override
+    public void insertWithdrawal(BigDecimal importo, Manager socio)
+    {
+        db.DBOpenConnection();
+        Date currentTimestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+        db.executeSQLUpdate( "INSERT INTO prelievo(istante, socio, importo) " +
+                                    "VALUES(?, ?, ?); ", List.of(currentTimestamp, socio.getUsername(), importo));
+    }
 
 }
 

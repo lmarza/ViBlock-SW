@@ -9,5 +9,5 @@ public interface ModelRiepilogoGiorn {
     public BigDecimal getOpeningBalance();
     public BigDecimal getDayBalance();
     public ArrayList<RiepilogoGiornaliero> getDailySummaries();
-    public ArrayList<RiepilogoGiornaliero> getMonthSummaries(int month);
+    public ArrayList<RiepilogoGiornaliero> getMonthSummaries(String month);
 }

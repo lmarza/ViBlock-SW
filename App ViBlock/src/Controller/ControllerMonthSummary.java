@@ -52,8 +52,8 @@ public class ControllerMonthSummary {
     private Label prelievoLabel;
 
     @FXML
-    private JFXComboBox<Integer> monthJFXComboBox;
-    private ObservableList<Integer> month = FXCollections.observableArrayList();
+    private JFXComboBox<String> monthJFXComboBox;
+    private ObservableList<String> month = FXCollections.observableArrayList();
     @FXML
     private TableView<RiepilogoGiornaliero> riepilogoMensileTableView;
 
@@ -96,13 +96,20 @@ public class ControllerMonthSummary {
     }
 
     private void populateComboBox() {
-        month.addAll(1,2,3,4,5,6,7,8,9,10,11,12);
+
+        month.addAll("Annuale ","1 - Gennaio","2 - Febbraio","3 - Marzo","4 - Aprile","5 - Maggio","6 - Giugno","7 - Luglio","8 - Agosto",
+                            "9 - Settembre","10 - Ottobre","11 - Novembre","12 - Dicembre");
     }
 
     private void handleSearchMonthJFXButton(ActionEvent actionEvent) {
         ArrayList<RiepilogoGiornaliero> monthSummary = new ArrayList<>();
         ModelRiepilogoGiorn modelRiepilogoGiornDB = new ModelDBRiepilogoGiorn();
-        monthSummary = modelRiepilogoGiornDB.getMonthSummaries(monthJFXComboBox.getValue());
+        String[] parts = monthJFXComboBox.getValue().split(" ");
+
+        if (monthJFXComboBox.getValue().equalsIgnoreCase("Annuale "))
+            monthSummary = modelRiepilogoGiornDB.getDailySummaries();
+        else
+            monthSummary = modelRiepilogoGiornDB.getMonthSummaries(parts[0]);
 
         riepilogoMensileTableView.getColumns().clear();
         ViewRiepilogoMensile viewRiepilogoMensile= new ViewRiepilogoMensileJFX();

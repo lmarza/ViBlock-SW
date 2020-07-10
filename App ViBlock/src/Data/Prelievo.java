@@ -2,15 +2,27 @@ package Data;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Prelievo {
     Timestamp istantePrelievo;
+    Manager socio;
     BigDecimal importo;
 
     public Prelievo(){}
+
+    public Prelievo(Timestamp istantePrelievo, Manager socio, BigDecimal importo) {
+        this.istantePrelievo = istantePrelievo;
+        this.socio = socio;
+        this.importo = importo;
+    }
+
+    public Manager getSocio() {
+        return socio;
+    }
+
+    public void setSocio(Manager socio) {
+        this.socio = socio;
+    }
 
     public Timestamp getIstantePrelievo() {
         return istantePrelievo;
@@ -28,9 +40,6 @@ public class Prelievo {
         this.importo = importo;
     }
 
-    public Prelievo(Timestamp istantePrelievo, BigDecimal importo) {
-        this.istantePrelievo = istantePrelievo;
-        this.importo = importo;
-    }
+
 
 }

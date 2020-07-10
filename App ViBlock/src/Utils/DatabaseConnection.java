@@ -90,10 +90,7 @@ public class DatabaseConnection
         }
     }
 
-    public void executeSQLUpdate(String query)
-    {
-        executeSQLUpdate(query, List.of());
-    }
+
 
     public void executeSQLUpdate(String query, List<Object> args)
     {
@@ -128,6 +125,8 @@ public class DatabaseConnection
                     preparedStmt.setBoolean(i + 1, (Boolean) objectClass);
                 else if (objectClass instanceof Date)
                     preparedStmt.setDate(i + 1, (Date) objectClass);
+                else if(objectClass instanceof Timestamp)
+                    preparedStmt.setTimestamp(i + 1, (Timestamp) objectClass);
                 else if (objectClass instanceof Double)
                     preparedStmt.setDouble(i + 1, (Double) objectClass);
                 else if (objectClass instanceof Float)

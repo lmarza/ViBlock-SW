@@ -3,22 +3,25 @@ package Controller;
 import Data.Entrata;
 import Data.Manager;
 import Data.RiepilogoGiornaliero;
-import Model.ModelDBEntrata;
-import Model.ModelDBRiepilogoGiorn;
-import Model.ModelEntrata;
-import Model.ModelRiepilogoGiorn;
+import Model.*;
 import Utils.StageManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.xml.validation.Validator;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class ControllerMainPage {
 
@@ -113,6 +116,36 @@ public class ControllerMainPage {
     }
 
     private void handlePrelievoJFXButton(ActionEvent actionEvent) {
+
+        ControllerAlert alert = new ControllerAlert();
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setHeaderText("");
+        dialog.setTitle("Prelievo");
+        dialog.setContentText("Cifra prelevata:");
+        ((Stage) dialog.getDialogPane().getScene().getWindow()).getIcons().add(new Image("images/Vi Block.png"));
+
+        Optional<String> s = dialog.showAndWait();
+        BigDecimal withdrawal = new BigDecimal(0.0);
+
+        if (s.isPresent()) {
+            try {
+                int i = Integer.parseInt(s.get());
+                withdrawal = new BigDecimal(i);
+            } catch (NumberFormatException e) {
+                alert.displayAlert("Controlla la cifra inserita!");
+            }
+        } else {
+            alert.displayAlert("Inserisci una cifra!");
+        }
+
+        if(!withdrawal.equals(new BigDecimal(0.0)))
+        {
+            ModelPrelievo modelPrelievoDB = new ModelDBPrelievo();
+            modelPrelievoDB.insertWithdrawal(withdrawal, managers.get(0));
+            setSideScreen();
+        }
+
+
     }
 
     private void handleRiepMensileJFXButton(ActionEvent actionEvent) {
@@ -122,9 +155,6 @@ public class ControllerMainPage {
 
         StageManager monthSummaries = new StageManager();
         monthSummaries.setStageMonthSummary((Stage) riepMensileJFXButton.getScene().getWindow(), managers, dailySummaries);
-
-
-
     }
 
     private void handleRiepGiornataJFXButton(ActionEvent actionEvent) {
@@ -154,6 +184,9 @@ public class ControllerMainPage {
     private void handleTesseramentoJFXButton(ActionEvent actionEvent) {
     }
 
+    private boolean isNumerical(String s) {
+        return s.matches("[+]?([0-9]*[.])?[0-9]+");
+    }
 
 
 }

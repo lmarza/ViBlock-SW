@@ -142,13 +142,13 @@ public class ModelDBRiepilogoGiorn implements ModelRiepilogoGiorn {
     }
 
     @Override
-    public ArrayList<RiepilogoGiornaliero> getMonthSummaries(int month) {
+    public ArrayList<RiepilogoGiornaliero> getMonthSummaries(String month) {
         ArrayList<RiepilogoGiornaliero> dailySummaries;
 
         db.DBOpenConnection();
         db.executeSQLQuery( "SELECT * " +
                 "FROM riepilogogiornate " +
-                "WHERE date_part('month'::text, data) = ? " +
+                "WHERE date_part('month'::text, data) = ?::DOUBLE PRECISION " +
                 "ORDER BY DATA ", List.of(month));
 
         dailySummaries = resultSetToDailySummaries(db.getResultSet());
