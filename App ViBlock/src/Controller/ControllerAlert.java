@@ -1,6 +1,8 @@
 package Controller;
 
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class ControllerAlert
 {
@@ -10,7 +12,7 @@ public class ControllerAlert
         alert.setTitle("Controlla le credenziali d'accesso");
         alert.setHeaderText(null);
         alert.setContentText(s);
-
+        ((Stage)alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("images/Vi Block.png"));
 
         alert.showAndWait();
     }

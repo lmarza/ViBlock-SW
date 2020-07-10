@@ -76,6 +76,9 @@ public class ModelDBRiepilogoGiorn implements ModelRiepilogoGiorn {
                 dayBalance = db.getSQLNumeric(rs,"saldogiornaliero");
             }
 
+            if (dayBalance == null)
+                dayBalance = new BigDecimal(0.0);
+
             return dayBalance;
         }
         catch (SQLException e)

@@ -31,8 +31,10 @@ public class ModelDBPrelievo implements ModelPrelievo {
         {
             while (rs.next())
             {
-                withdrawal = db.getSQLNumeric(rs,"importo");
+                    withdrawal = db.getSQLNumeric(rs,"importo");
             }
+            if (withdrawal == null)
+                withdrawal = new BigDecimal(0.0);
 
             return withdrawal;
         }
