@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerRiepilogoMensile">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ControllerMonthSummary">
    <children>
       <ImageView fitHeight="1082.0" fitWidth="1533.0" layoutX="405.0" layoutY="-2.0">
          <image>
@@ -71,7 +71,7 @@
                   <Image url="@../images/Vi%20block.png" />
                </image>
             </ImageView>
-            <Label layoutX="21.0" layoutY="290.0" prefHeight="33.0" prefWidth="383.0" textFill="#fffcfc">
+            <Label fx:id="dateLabel" layoutX="21.0" layoutY="290.0" prefHeight="33.0" prefWidth="383.0" textFill="#fffcfc">
                <font>
                   <Font name="Ink Free" size="25.0" />
                </font>
@@ -111,7 +111,7 @@
                   <Font name="Ink Free" size="25.0" />
                </font>
             </Label>
-            <Label fx:id="PersEntrateLabel" layoutX="143.0" layoutY="783.0" prefHeight="36.0" prefWidth="137.0" textFill="#fffcfc">
+            <Label fx:id="PersEntrateLabel" alignment="CENTER" layoutX="143.0" layoutY="783.0" prefHeight="36.0" prefWidth="137.0" textFill="#fffcfc">
                <font>
                   <Font size="25.0" />
                </font>
@@ -128,18 +128,13 @@
             </Label>
          </children>
       </AnchorPane>
-      <TableView fx:id="riepilogoMensileTableView" layoutX="511.0" layoutY="341.0" opacity="0.78" prefHeight="619.0" prefWidth="1055.0">
+      <TableView fx:id="riepilogoMensileTableView" layoutX="711.0" layoutY="341.0" opacity="0.78" prefHeight="619.0" prefWidth="579.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />
         </columns>
       </TableView>
-      <JFXTextField fx:id="searchMonthJFXTextField" focusColor="WHITE" layoutX="838.0" layoutY="191.0" prefHeight="48.0" prefWidth="449.0" promptText="Cerca mese" style="-fx-text-inner-color: rgba(255,255,255,1); -fx-prompt-text-fill: -fx-text-inner-color;" unFocusColor="#faf8f8">
-         <font>
-            <Font name="Ink Free" size="32.0" />
-         </font>
-      </JFXTextField>
-      <AnchorPane layoutX="772.0" layoutY="214.0" prefHeight="52.0" prefWidth="60.0" style="-fx-background-color: rgba(255,255,255,0.7); -fx-background-radius: 50;">
+      <AnchorPane layoutX="711.0" layoutY="230.0" prefHeight="52.0" prefWidth="60.0" style="-fx-background-color: rgba(255,255,255,0.7); -fx-background-radius: 50;">
          <children>
             <ImageView fitHeight="70.0" fitWidth="52.0" layoutX="2.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -148,10 +143,11 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <JFXButton fx:id="searchJFXButton" layoutX="1326.0" layoutY="229.0" prefHeight="51.0" prefWidth="178.0" style="-fx-background-color: rgba(255,255,255,0.8);" text="Cerca" textFill="#386ff9">
+      <JFXButton fx:id="searchJFXButton" layoutX="984.0" layoutY="235.0" prefHeight="51.0" prefWidth="178.0" style="-fx-background-color: rgba(255,255,255,0.8);" text="Cerca" textFill="#386ff9">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
+      <JFXComboBox fx:id="monthJFXComboBox" focusColor="#3eaaec" layoutX="800.0" layoutY="232.0" prefHeight="52.0" prefWidth="125.0" style="-fx-background-color: #e0f7fa;" unFocusColor="#3eaaec" />
    </children>
 </AnchorPane>

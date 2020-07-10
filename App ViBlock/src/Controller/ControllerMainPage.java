@@ -2,8 +2,11 @@ package Controller;
 
 import Data.Entrata;
 import Data.Manager;
+import Data.RiepilogoGiornaliero;
 import Model.ModelDBEntrata;
+import Model.ModelDBRiepilogoGiorn;
 import Model.ModelEntrata;
+import Model.ModelRiepilogoGiorn;
 import Utils.StageManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -113,6 +116,15 @@ public class ControllerMainPage {
     }
 
     private void handleRiepMensileJFXButton(ActionEvent actionEvent) {
+        ArrayList<RiepilogoGiornaliero> dailySummaries = new ArrayList<>();
+        ModelRiepilogoGiorn modelRiepilogoGiornDB = new ModelDBRiepilogoGiorn();
+        dailySummaries.addAll(modelRiepilogoGiornDB.getDailySummaries());
+
+        StageManager monthSummaries = new StageManager();
+        monthSummaries.setStageMonthSummary((Stage) riepMensileJFXButton.getScene().getWindow(), managers, dailySummaries);
+
+
+
     }
 
     private void handleRiepGiornataJFXButton(ActionEvent actionEvent) {

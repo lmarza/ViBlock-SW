@@ -15,7 +15,7 @@ public class ModelDBManagers implements ModelManager
     @Override
     public ArrayList<Manager> getManagers()
     {
-        ArrayList<Manager> managers = new ArrayList<>();
+        ArrayList<Manager> managers;
 
         db.DBOpenConnection();
         db.executeSQLQuery( "SELECT * " +

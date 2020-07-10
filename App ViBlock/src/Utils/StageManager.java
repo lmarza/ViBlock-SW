@@ -3,8 +3,10 @@ package Utils;
 import Controller.ControllerDaySummary;
 import Controller.ControllerLoginPage;
 import Controller.ControllerMainPage;
+import Controller.ControllerMonthSummary;
 import Data.Entrata;
 import Data.Manager;
+import Data.RiepilogoGiornaliero;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -68,7 +70,29 @@ public class StageManager {
 
 
 
-            primaryStage.setTitle("MainPage - Vi Block");
+            primaryStage.setTitle("Riepilogo Giornaliero - Vi Block");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setStageMonthSummary(Stage primaryStage, ArrayList<Manager> managers, ArrayList<RiepilogoGiornaliero> dailySummaries) {
+        Parent root;
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/riepilogoMensile.fxml"));
+
+            root = fxmlLoader.load();
+            ControllerMonthSummary controllerMonthSummary = fxmlLoader.getController();
+            controllerMonthSummary.setManagers(managers);
+            controllerMonthSummary.setSideScreen();
+            controllerMonthSummary.setTableView(dailySummaries);
+
+
+
+            primaryStage.setTitle("Riepilogo Mensile - Vi Block");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
         } catch (Exception e) {

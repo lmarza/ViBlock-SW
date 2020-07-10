@@ -1,12 +1,14 @@
 package Model;
 
 import Data.Manager;
+import Data.RiepilogoGiornaliero;
 import Utils.DatabaseConnection;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ModelDBRiepilogoGiorn implements ModelRiepilogoGiorn {
     private DatabaseConnection db = DatabaseConnection.getInstance();
@@ -65,6 +67,8 @@ public class ModelDBRiepilogoGiorn implements ModelRiepilogoGiorn {
         return dayBalance;
     }
 
+
+
     private BigDecimal resultSetToDayBalance(ResultSet rs) {
 
         BigDecimal dayBalance = null;
@@ -90,5 +94,67 @@ public class ModelDBRiepilogoGiorn implements ModelRiepilogoGiorn {
         return null;
     }
 
+    @Override
+    public ArrayList<RiepilogoGiornaliero> getDailySummaries()
+    {
+        ArrayList<RiepilogoGiornaliero> dailySummaries = new ArrayList<>();
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT * " +
+                            "FROM riepilogogiornate " +
+                            "ORDER BY DATA ");
+
+        dailySummaries = resultSetToDailySummaries(db.getResultSet());
+
+
+        return dailySummaries;
+    }
+
+    private ArrayList<RiepilogoGiornaliero> resultSetToDailySummaries(ResultSet rs) {
+        ArrayList<RiepilogoGiornaliero> dailySummaries = new ArrayList<>();
+        RiepilogoGiornaliero dailySummary = null;
+
+        try
+        {
+            while (rs.next())
+            {
+                dailySummary = new RiepilogoGiornaliero();
+                dailySummary.setData(db.getSQLDate(rs,"data"));
+                dailySummary.setSaldoFinale(db.getSQLNumeric(rs,"saldofinale"));
+                dailySummary.setTesseramenti(db.getSQLInt(rs,"tesseramenti"));
+                dailySummary.setSoldiTesseramenti(db.getSQLNumeric(rs,"solditesseramenti"));
+                dailySummary.setEntrateGiornata(db.getSQLNumeric(rs, "entrategiornaliere"));
+                dailySummary.setPrelievi(db.getSQLNumeric(rs,"prelievi"));
+
+                dailySummaries.add(dailySummary);
+
+            }
+
+            return dailySummaries;
+        }
+        catch (SQLException e)
+        {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        return null;
+    }
+
+    @Override
+    public ArrayList<RiepilogoGiornaliero> getMonthSummaries(int month) {
+        ArrayList<RiepilogoGiornaliero> dailySummaries;
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT * " +
+                "FROM riepilogogiornate " +
+                "WHERE date_part('month'::text, data) = ? " +
+                "ORDER BY DATA ", List.of(month));
+
+        dailySummaries = resultSetToDailySummaries(db.getResultSet());
+
+
+        return dailySummaries;
+    }
 
 }

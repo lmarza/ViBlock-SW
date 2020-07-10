@@ -1,21 +1,22 @@
 package Data;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Prelievo {
-    Long istantePrelievo;
+    Timestamp istantePrelievo;
     BigDecimal importo;
 
     public Prelievo(){}
 
-    public Long getIstantePrelievo() {
+    public Timestamp getIstantePrelievo() {
         return istantePrelievo;
     }
 
-    public void setIstantePrelievo(Long istantePrelievo) {
+    public void setIstantePrelievo(Timestamp istantePrelievo) {
         this.istantePrelievo = istantePrelievo;
     }
 
@@ -27,19 +28,9 @@ public class Prelievo {
         this.importo = importo;
     }
 
-    public Prelievo(Long istantePrelievo, BigDecimal importo) {
+    public Prelievo(Timestamp istantePrelievo, BigDecimal importo) {
         this.istantePrelievo = istantePrelievo;
         this.importo = importo;
     }
 
-    public Date getDateFromUnixTime()
-    {
-        return new Date((long) istantePrelievo*1000);
-    }
-
-    public String RiepilogoGiornDate()
-    {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
-        return dateFormat.format(this.getDateFromUnixTime());
-    }
 }

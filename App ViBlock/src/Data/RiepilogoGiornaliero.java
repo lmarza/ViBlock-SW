@@ -1,22 +1,20 @@
 package Data;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
 public class RiepilogoGiornaliero {
-    Long data;
+    Date data;
     BigDecimal saldoFinale;
     Integer tesseramenti;
     BigDecimal soldiTesseramenti;
-    Integer entrateGiornata;
+    BigDecimal entrateGiornata;
     BigDecimal prelievi;
 
     public RiepilogoGiornaliero(){}
 
-    public RiepilogoGiornaliero(Long data, BigDecimal saldoFinale, Integer tesseramenti, BigDecimal soldiTesseramenti, Integer entrateGiornata, BigDecimal prelievi) {
+    public RiepilogoGiornaliero(Date data, BigDecimal saldoFinale, Integer tesseramenti, BigDecimal soldiTesseramenti, BigDecimal entrateGiornata, BigDecimal prelievi) {
         this.data = data;
         this.saldoFinale = saldoFinale;
         this.tesseramenti = tesseramenti;
@@ -25,11 +23,11 @@ public class RiepilogoGiornaliero {
         this.prelievi = prelievi;
     }
 
-    public Long getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(Long data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
@@ -57,11 +55,11 @@ public class RiepilogoGiornaliero {
         this.soldiTesseramenti = soldiTesseramenti;
     }
 
-    public Integer getEntrateGiornata() {
+    public BigDecimal getEntrateGiornata() {
         return entrateGiornata;
     }
 
-    public void setEntrateGiornata(Integer entrateGiornata) {
+    public void setEntrateGiornata(BigDecimal entrateGiornata) {
         this.entrateGiornata = entrateGiornata;
     }
 
@@ -73,14 +71,5 @@ public class RiepilogoGiornaliero {
         this.prelievi = prelievi;
     }
 
-    public Date getDateFromUnixTime()
-    {
-        return new Date((long) data*1000);
-    }
 
-    public String RiepilogoGiornDate()
-    {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
-        return dateFormat.format(this.getDateFromUnixTime());
-    }
 }

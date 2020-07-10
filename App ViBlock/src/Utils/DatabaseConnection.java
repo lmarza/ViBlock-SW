@@ -192,11 +192,11 @@ public class DatabaseConnection
         }
     }
 
-    public Long getSQLLong(ResultSet rs, String name)
+    public java.util.Date getSQLDate(ResultSet rs, String name)
     {
         try
         {
-            return rs.getLong(name);
+            return rs.getDate(name);
         }
         catch (SQLException e)
         {
