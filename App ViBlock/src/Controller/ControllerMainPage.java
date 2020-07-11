@@ -134,8 +134,6 @@ public class ControllerMainPage {
             } catch (NumberFormatException e) {
                 alert.displayAlert("Controlla la cifra inserita!");
             }
-        } else {
-            alert.displayAlert("Inserisci una cifra!");
         }
 
         if(!withdrawal.equals(new BigDecimal(0.0)))
@@ -179,6 +177,8 @@ public class ControllerMainPage {
     }
 
     private void handleIngressoProvaJFXButton(ActionEvent actionEvent) {
+        StageManager tryEnter = new StageManager();
+        tryEnter.setStageTryEnter((Stage) ingressoProvaJFXButton.getScene().getWindow(), managers);
     }
 
     private void handleTesseramentoJFXButton(ActionEvent actionEvent) {

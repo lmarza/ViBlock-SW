@@ -1,9 +1,6 @@
 package Utils;
 
-import Controller.ControllerDaySummary;
-import Controller.ControllerLoginPage;
-import Controller.ControllerMainPage;
-import Controller.ControllerMonthSummary;
+import Controller.*;
 import Data.Entrata;
 import Data.Manager;
 import Data.RiepilogoGiornaliero;
@@ -93,6 +90,25 @@ public class StageManager {
 
 
             primaryStage.setTitle("Riepilogo Mensile - Vi Block");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setStageTryEnter(Stage primaryStage, ArrayList<Manager> managers) {
+        Parent root;
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/ingressoProva.fxml"));
+
+            root = fxmlLoader.load();
+            ControllerTryEnter controllerTryEnter = fxmlLoader.getController();
+            controllerTryEnter.setManagers(managers);
+            controllerTryEnter.setSideScreen();
+
+            primaryStage.setTitle("Ingresso prova - Vi Block");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
         } catch (Exception e) {

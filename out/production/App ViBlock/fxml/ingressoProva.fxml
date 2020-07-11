@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerIngressoProva">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ControllerTryEnter">
    <children>
       <AnchorPane layoutX="406.0" layoutY="-7.0">
          <children>
@@ -51,7 +51,7 @@
                   <Font name="Ink Free" size="57.0" />
                </font>
             </Label>
-            <Label fx:id="totDaPagareLabel" layoutX="724.0" layoutY="941.0" prefHeight="93.0" prefWidth="129.0" textFill="#f42626">
+            <Label fx:id="totDaPagareLabel" alignment="CENTER" layoutX="724.0" layoutY="941.0" prefHeight="93.0" prefWidth="129.0" textFill="#f42626">
                <font>
                   <Font name="Ink Free" size="57.0" />
                </font>
@@ -187,7 +187,7 @@
                   <Image url="@../images/Vi%20block.png" />
                </image>
             </ImageView>
-            <Label layoutX="21.0" layoutY="290.0" prefHeight="33.0" prefWidth="383.0" textFill="#fffcfc">
+            <Label fx:id="dateLabel" layoutX="21.0" layoutY="290.0" prefHeight="33.0" prefWidth="383.0" textFill="#fffcfc">
                <font>
                   <Font name="Ink Free" size="25.0" />
                </font>
@@ -227,7 +227,7 @@
                   <Font name="Ink Free" size="25.0" />
                </font>
             </Label>
-            <Label fx:id="PersEntrateLabel" layoutX="143.0" layoutY="783.0" prefHeight="36.0" prefWidth="137.0" textFill="#fffcfc">
+            <Label fx:id="PersEntrateLabel" alignment="CENTER" layoutX="143.0" layoutY="783.0" prefHeight="36.0" prefWidth="137.0" textFill="#fffcfc">
                <font>
                   <Font size="25.0" />
                </font>
