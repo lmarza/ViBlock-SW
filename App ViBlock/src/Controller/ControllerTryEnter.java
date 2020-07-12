@@ -1,7 +1,12 @@
 package Controller;
 
 import Data.Manager;
+import Data.Pagamento;
 import Data.Person;
+import Model.ModelCliente;
+import Model.ModelDBCliente;
+import Model.ModelDBPagamento;
+import Model.ModelPagamento;
 import Utils.CodiceFiscale;
 import Utils.StageManager;
 import com.jfoenix.controls.JFXButton;
@@ -20,7 +25,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class ControllerTryEnter {
 
@@ -135,26 +146,29 @@ public class ControllerTryEnter {
 
     private void handlegenCFJFXButton(ActionEvent actionEvent) throws IOException {
 
-        //TODO check all fields before strarting calculate CF
         ControllerAlert alert = new ControllerAlert();
-        Person person = new Person();
-        person.setSurname(cognomeJFXTextField.getText());
-        person.setName(nomeJFXTextField.getText());
-        person.setSex(sessoComboBox.getValue());
-        person.setBornCity(luogoNascitaJFXTextField.getText().toUpperCase());
-        String[] birthday = dataNascitaJFXTextField.getText().split("/");
-        if(birthday.length < 3)
-            alert.displayAlert("Controlla la data di nascita!");
-        else
+        CotrollerPersonInformation controllerPersonInformation = new CotrollerPersonInformation();
+        String error = controllerPersonInformation.fieldsAreValid(nomeJFXTextField,cognomeJFXTextField, dataNascitaJFXTextField, luogoNascitaJFXTextField, sessoComboBox.getValue());
+
+        if(error.isEmpty())
         {
+            Person person = new Person();
+            person.setSurname(cognomeJFXTextField.getText());
+            person.setName(nomeJFXTextField.getText());
+            person.setSex(sessoComboBox.getValue());
+            person.setBornCity(luogoNascitaJFXTextField.getText().toUpperCase());
+            String[] birthday = dataNascitaJFXTextField.getText().split("/");
             person.setDay(birthday[0]);
             person.setMonth(birthday[1]);
             person.setYear(birthday[2]);
+            CFJFXTextField.setText(new CodiceFiscale(person).getCode());
         }
-
-        CFJFXTextField.setText(new CodiceFiscale(person).getCode());
-
+        else
+        {
+            alert.displayAlert(error);
+        }
     }
+
 
     private void populateComboBox() {
         sex.addAll("M", "F");
@@ -162,6 +176,14 @@ public class ControllerTryEnter {
 
     private void handleIngressoProvaJFXButton(ActionEvent actionEvent) {
         totDaPagareLabel.setText("10 €");
+        ControllerAlert alert = new ControllerAlert();
+        if(!nomeJFXTextField.getText().isEmpty() && !cognomeJFXTextField.getText().isEmpty() && !dataNascitaJFXTextField.getText().isEmpty() &&
+                sessoComboBox.getValue() != null && !CFJFXTextField.getText().isEmpty())
+            pagamentoJFXButton.setDisable(false);
+        else
+        {
+            alert.displayAlert("Riempire tutti i campi prima di procedere!");
+        }
     }
 
     private void handleContantiJFXCheckBox(ActionEvent actionEvent) {
@@ -188,13 +210,72 @@ public class ControllerTryEnter {
     }
 
     private void handleStranieroCheckBox(ActionEvent actionEvent) {
+        ControllerAlert alert = new ControllerAlert();
         if(stranieroCheckBox.isSelected())
+        {
             genCFJFXButton.setDisable(true);
+            alert.displayInformation("Al posto del codice fiscale inserire: NomeCognomeAnnoNascita con l'anno di nascita in questo formato YYYY");
+        }
+
         if(!stranieroCheckBox.isSelected())
             genCFJFXButton.setDisable(false);
     }
 
     private void handlePagamentoJFXButton(ActionEvent actionEvent) {
+        ControllerAlert confirm = new ControllerAlert();
+
+        //TODO CHECK IF CLIENT ALREADY EXISTS
+
+        /*first create new client and insert into DB*/
+        Person person = new Person();
+        person.setSurname(cognomeJFXTextField.getText());
+        person.setName(nomeJFXTextField.getText());
+        person.setSex(sessoComboBox.getValue());
+        person.setBornCity(luogoNascitaJFXTextField.getText());
+        person.setBirthday(dataNascitaJFXTextField.getText());
+        person.setSex(sessoComboBox.getValue());
+        person.setCf(CFJFXTextField.getText());
+        person.setClientType("P");
+        Date d = new Date();
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
+        String finaleDate = dateFormat.format(d);
+        person.setDataTry(finaleDate);
+
+
+        ModelCliente modelClientDB = new ModelDBCliente();
+        modelClientDB.insertNewClient(person);
+
+        /*now insert new record for payment into DB*/
+        Pagamento payment = new Pagamento();
+        payment.setCfPerson(person.getCf());
+        Timestamp currentTimestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+        payment.setPaymentInstant(currentTimestamp);
+
+        String[] s = totDaPagareLabel.getText().split(" ");
+        payment.setAmount(new BigDecimal(Integer.parseInt(s[0])));
+        if(contantiJFXCheckBox.isSelected())
+            payment.setPaymentType("Contante");
+        else
+            payment.setPaymentType("Carta");
+
+        payment.setEnterType("Ingresso prova");
+        payment.setMembership("NO");
+        if(scarpetteJFXCheckBox.isSelected())
+        {
+            payment.setShoes("SI");
+            payment.setPriceShoes(new BigDecimal(2.00));
+        }
+        else
+            payment.setShoes("NO");
+
+
+        /*Add payment into DB*/
+        ModelPagamento modelPagamentoDB = new ModelDBPagamento();
+        modelPagamentoDB.insertNewPayment(payment);
+
+        confirm.displayInformation("Pagamento regitrato!");
+        StageManager mainPage = new StageManager();
+        mainPage.setStageMainPage((Stage) homePageImageView.getScene().getWindow(), managers);
 
     }
 

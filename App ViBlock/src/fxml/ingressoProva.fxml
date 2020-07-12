@@ -66,7 +66,7 @@
                   <Font name="Tahoma" size="35.0" />
                </font>
             </JFXCheckBox>
-            <JFXButton fx:id="pagamentoJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1025.0" layoutY="966.0" prefHeight="79.0" prefWidth="277.0" style="-fx-background-color: rgba(88, 247, 80, 0.8); -fx-background-radius: 90;" text="Registra pagamento">
+            <JFXButton fx:id="pagamentoJFXButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="1025.0" layoutY="966.0" prefHeight="79.0" prefWidth="277.0" style="-fx-background-color: rgba(88, 247, 80, 0.8); -fx-background-radius: 90;" text="Registra pagamento">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>

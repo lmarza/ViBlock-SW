@@ -2,16 +2,20 @@ package Data;
 
 public class Person {
 
-    private String surname="";
-    private String name="";
+    private String surname;
+    private String name;
     private int dayBirth;
     private int monthBirth;
     private int yearBirth;
-    private String c_born="";
-    private String sex="";
+    private String c_born;
+    private String sex;
     private String mail;
     private String psw;
     private String cf;
+    private String birthday;
+    private String[] medicalCertificate;
+    private String dataTry;
+    private String ClientType;
 
 
     public Person(){}
@@ -94,6 +98,38 @@ public class Person {
 
     public String getSex(){
         return sex;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String[] getMedicalCertificate() {
+        return medicalCertificate;
+    }
+
+    public void setMedicalCertificate(String[] medicalCertificate) {
+        this.medicalCertificate = medicalCertificate;
+    }
+
+    public String getDataTry() {
+        return dataTry;
+    }
+
+    public void setDataTry(String dataTry) {
+        this.dataTry = dataTry;
+    }
+
+    public String getClientType() {
+        return ClientType;
+    }
+
+    public void setClientType(String clientType) {
+        ClientType = clientType;
     }
 
 }

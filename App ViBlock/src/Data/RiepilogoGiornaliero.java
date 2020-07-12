@@ -1,11 +1,10 @@
 package Data;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 
 public class RiepilogoGiornaliero {
-    Date data;
+    String data;
     BigDecimal saldoFinale;
     Integer tesseramenti;
     BigDecimal soldiTesseramenti;
@@ -14,7 +13,7 @@ public class RiepilogoGiornaliero {
 
     public RiepilogoGiornaliero(){}
 
-    public RiepilogoGiornaliero(Date data, BigDecimal saldoFinale, Integer tesseramenti, BigDecimal soldiTesseramenti, BigDecimal entrateGiornata, BigDecimal prelievi) {
+    public RiepilogoGiornaliero(String data, BigDecimal saldoFinale, Integer tesseramenti, BigDecimal soldiTesseramenti, BigDecimal entrateGiornata, BigDecimal prelievi) {
         this.data = data;
         this.saldoFinale = saldoFinale;
         this.tesseramenti = tesseramenti;
@@ -23,11 +22,11 @@ public class RiepilogoGiornaliero {
         this.prelievi = prelievi;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 

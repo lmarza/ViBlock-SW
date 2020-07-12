@@ -19,8 +19,11 @@ import javafx.stage.Stage;
 
 import javax.xml.validation.Validator;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 
 public class ControllerMainPage {
@@ -113,6 +116,47 @@ public class ControllerMainPage {
     }
 
     private void handleEsportaSaldoGJFXButton(ActionEvent actionEvent) {
+        /*first check if one balance for db is already into DB */
+        ModelRiepilogoGiorn modelRiepilogoGiornDB = new ModelDBRiepilogoGiorn();
+        int row = modelRiepilogoGiornDB.checkIfRecordExists();
+        RiepilogoGiornaliero riepilogo = new RiepilogoGiornaliero();
+        ControllerAlert confirm = new ControllerAlert();
+
+        Date d = new Date();
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
+        String finaleDate = dateFormat.format(d);
+        riepilogo.setData(finaleDate);
+
+        String[] s = totCassaLabel.getText().split(" ");
+        riepilogo.setSaldoFinale(new BigDecimal(s[0]));
+        riepilogo.setTesseramenti(modelRiepilogoGiornDB.getDailyMembership());
+        BigDecimal membershipBalance = new BigDecimal(modelRiepilogoGiornDB.getDailyMembership()).multiply(new BigDecimal(20.00));
+        riepilogo.setSoldiTesseramenti(membershipBalance);
+
+        String[] s1 = saldoGiorLabel.getText().split(" ");
+        String[] s2 = prelievoLabel.getText().split(" ");
+
+        BigDecimal totDay = new BigDecimal(s1[0]).subtract(membershipBalance);
+        if (totDay.intValue() < 0)
+            riepilogo.setEntrateGiornata(new BigDecimal(0));
+        else
+            riepilogo.setEntrateGiornata(totDay);
+
+        riepilogo.setPrelievi(new BigDecimal(s2[0]));
+
+        if (row == 0)
+        {
+            /*Insert*/
+            modelRiepilogoGiornDB.insertDayBalance(riepilogo);
+        }
+        else
+        {
+            /*Update*/
+            modelRiepilogoGiornDB.updateDayBalance(riepilogo);
+        }
+
+        confirm.displayInformation("Esporta saldo giornaliero eseguito!");
+
     }
 
     private void handlePrelievoJFXButton(ActionEvent actionEvent) {
@@ -184,9 +228,6 @@ public class ControllerMainPage {
     private void handleTesseramentoJFXButton(ActionEvent actionEvent) {
     }
 
-    private boolean isNumerical(String s) {
-        return s.matches("[+]?([0-9]*[.])?[0-9]+");
-    }
 
 
 }

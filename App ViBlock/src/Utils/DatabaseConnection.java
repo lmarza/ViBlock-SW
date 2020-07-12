@@ -76,7 +76,7 @@ public class DatabaseConnection
         executeSQLQuery(query, List.of());
     }
 
-    public void executeSQLQuery(String query, List<Object> args)
+    public void executeSQLQuery(String query, List<String> args)
     {
         try
         {
@@ -92,7 +92,7 @@ public class DatabaseConnection
 
 
 
-    public void executeSQLUpdate(String query, List<Object> args)
+    public void executeSQLUpdate(String query, List<String> args)
     {
         try
         {
@@ -106,7 +106,7 @@ public class DatabaseConnection
         }
     }
 
-    private PreparedStatement prepareStatement(String query, List<Object> args)
+    private PreparedStatement prepareStatement(String query, List<String> args)
     {
         Object objectClass;
 
@@ -191,11 +191,11 @@ public class DatabaseConnection
         }
     }
 
-    public java.util.Date getSQLDate(ResultSet rs, String name)
+    public String getSQLDate(ResultSet rs, String name)
     {
         try
         {
-            return rs.getDate(name);
+            return rs.getString(name);
         }
         catch (SQLException e)
         {

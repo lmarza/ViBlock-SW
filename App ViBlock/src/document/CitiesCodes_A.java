@@ -895,7 +895,6 @@ public class CitiesCodes_A extends HashMap<String, String> {
         this.put("A653", "BARENGO");
         this.put("A654", "BARESI");
         this.put("A655", "BARESSA");
-        this.put("A655", "BARESSA");
         this.put("A656", "BARETE");
         this.put("A657", "BARGA");
         this.put("A658", "BARGAGLI");
@@ -903,8 +902,7 @@ public class CitiesCodes_A extends HashMap<String, String> {
         this.put("A660", "BARGE");
         this.put("A661", "BARGHE");
         this.put("A662", "BARI");
-        this.put("A662", "BARI DELLE PUGLIE");
-        this.put("A663", "BARI");
+       // this.put("A663", "BARI");
         this.put("A663", "BARI SARDO");
         this.put("A663", "BARI SARDO");
         this.put("A664", "BARIANO");
@@ -927,15 +925,11 @@ public class CitiesCodes_A extends HashMap<String, String> {
         this.put("A679", "BARZIZZA");
         this.put("A680", "BARTESATE");
         this.put("A681", "BARUMINI");
-        this.put("A681", "BARUMINI");
         this.put("A682", "BARZA");
-        this.put("A683", "BARZAGO");
         this.put("A683", "BARZAGO");
         this.put("A684", "BARZANA");
         this.put("A685", "BARZANIGA");
         this.put("A686", "BARZANO'");
-        this.put("A686", "BARZANO'");
-        this.put("A687", "BARZIO");
         this.put("A687", "BARZIO");
         this.put("A688", "BARZOLA");
         this.put("A689", "BASALUZZO");
@@ -943,7 +937,6 @@ public class CitiesCodes_A extends HashMap<String, String> {
         this.put("A691", "BASCHI");
         this.put("A692", "BASCIANO");
         this.put("A693", "BASELGA");
-        this.put("A693", "BASELGA DI VEZZANO");
         this.put("A694", "BASELGA DI PINE'");
         this.put("A695", "BASELICA BOLOGNA");
         this.put("A696", "BASELICE");
@@ -955,9 +948,6 @@ public class CitiesCodes_A extends HashMap<String, String> {
         this.put("A700", "PASIAN SCHIAVONESCO");
         this.put("A701", "BASSANELLO");
         this.put("A701", "VASANELLO");
-        this.put("A702", "BASSANO");
-        this.put("A702", "BASSANO BRESCIANO");
-        this.put("A703", "BASSANO");
         this.put("A703", "BASSANO DEL GRAPPA");
         this.put("A704", "BASSANO DI SUTRI");
         this.put("A704", "BASSANO ROMANO");
@@ -1346,9 +1336,7 @@ public class CitiesCodes_A extends HashMap<String, String> {
         this.put("A994", "BORGHETTO");
         this.put("A994", "BORGHETTO SAN NICOLO'");
         this.put("A995", "BORGHETTO LODIGIANO");
-        this.put("A995", "BORGHETTO");
         this.put("A995", "BORGHETTO LODIGIANO");
-        this.put("A996", "BORGHETTO");
         this.put("A996", "BORGO VELINO");
         this.put("A997", "BORGHETTO");
         this.put("A998", "BORGHETTO DI BORBERA");

@@ -1,6 +1,5 @@
 package Model;
 
-import Data.Manager;
 import Data.RiepilogoGiornaliero;
 import Utils.DatabaseConnection;
 
@@ -22,6 +21,7 @@ public class ModelDBRiepilogoGiorn implements ModelRiepilogoGiorn {
         db.DBOpenConnection();
         db.executeSQLQuery( "SELECT saldoFinale " +
                             "FROM riepilogoGiornate " +
+                            "WHERE data <> CURRENT_DATE " +
                             "ORDER BY data DESC " +
                             "LIMIT 1 " );
 
@@ -155,6 +155,75 @@ public class ModelDBRiepilogoGiorn implements ModelRiepilogoGiorn {
 
 
         return dailySummaries;
+    }
+
+    @Override
+    public int checkIfRecordExists() {
+        int count;
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT COUNT(*) " +
+                "FROM riepilogogiornate " +
+                "WHERE data = CURRENT_DATE; ");
+
+        count = resultSetToCountRecord(db.getResultSet());
+
+        return count;
+    }
+
+    @Override
+    public int getDailyMembership() {
+        int count;
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT COUNT(*) " +
+                "FROM riepilogogiornata " +
+                "WHERE tesseramento ILIKE 'SI' ");
+
+        count = resultSetToCountRecord(db.getResultSet());
+
+        return count;
+    }
+
+
+
+    private int resultSetToCountRecord(ResultSet rs) {
+        int count = 0;
+
+        try
+        {
+            while (rs.next())
+            {
+                count = db.getSQLInt(rs, "count");
+            }
+
+            return count;
+        }
+        catch (SQLException e)
+        {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        return Integer.parseInt(null);
+    }
+
+    @Override
+    public void insertDayBalance(RiepilogoGiornaliero dailyBalance) {
+        db.DBOpenConnection();
+        db.executeSQLUpdate("INSERT INTO riepilogogiornate(data, saldofinale, tesseramenti, solditesseramenti, entrategiornaliere, prelievi) " +
+                "VALUES (?::DATE, ?::NUMERIC(7,2), ?::INTEGER, ?::NUMERIC(7,2), ?::NUMERIC(7,2), ?::NUMERIC(7,2));", List.of(dailyBalance.getData(), dailyBalance.getSaldoFinale().toString(), dailyBalance.getTesseramenti().toString(),
+                dailyBalance.getSoldiTesseramenti().toString(), dailyBalance.getEntrateGiornata().toString(), dailyBalance.getPrelievi().toString()));
+
+    }
+
+    @Override
+    public void updateDayBalance(RiepilogoGiornaliero dailyBalance) {
+        db.DBOpenConnection();
+        db.executeSQLUpdate("UPDATE public.riepilogogiornate " +
+                "SET saldofinale=?::NUMERIC(7,2), tesseramenti=?::INTEGER, solditesseramenti=?::NUMERIC(7,2), entrategiornaliere=?::NUMERIC(7,2), prelievi=?::NUMERIC(7,2) " +
+                "WHERE data = ?::DATE", List.of(dailyBalance.getSaldoFinale().toString(), dailyBalance.getTesseramenti().toString(),
+                dailyBalance.getSoldiTesseramenti().toString(), dailyBalance.getEntrateGiornata().toString(), dailyBalance.getPrelievi().toString(), dailyBalance.getData()));
     }
 
 }

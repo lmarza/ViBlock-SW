@@ -57,8 +57,7 @@ public class ModelDBPrelievo implements ModelPrelievo {
     {
         db.DBOpenConnection();
         Date currentTimestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
-        db.executeSQLUpdate( "INSERT INTO prelievo(istante, socio, importo) " +
-                                    "VALUES(?, ?, ?); ", List.of(currentTimestamp, socio.getUsername(), importo));
+        db.executeSQLUpdate("INSERT INTO prelievo(istante, socio, importo) VALUES(?::TIMESTAMP, ?, ?::NUMERIC(6,2)); ", List.of(currentTimestamp.toString(), socio.getUsername(), importo.toString()));
     }
 
 }

@@ -32,21 +32,21 @@ public class ControllerSideScreen {
         /*opening balance*/
         ModelRiepilogoGiorn DBriepilogoGior = new ModelDBRiepilogoGiorn();
         BigDecimal openiningBalance = DBriepilogoGior.getOpeningBalance();
-        saldoAperturaLabel.setText(openiningBalance.toString() + "€");
+        saldoAperturaLabel.setText(openiningBalance.toString() + " €");
 
         /*day Balance*/
         ModelRiepilogoGiorn dayBalanceDB = new ModelDBRiepilogoGiorn();
         BigDecimal dayBalance = dayBalanceDB.getDayBalance();
-        saldoGiorLabel.setText(dayBalance.toString() + "€");
+        saldoGiorLabel.setText(dayBalance.toString() + " €");
 
         /*Cash withdrawal*/
         ModelPrelievo modelPrelievoDB = new ModelDBPrelievo();
         BigDecimal withdrawal = modelPrelievoDB.getWithdrawal();
-        prelievoLabel.setText(withdrawal.toString() + "€");
+        prelievoLabel.setText(withdrawal.toString() + " €");
 
         /*total balance*/
         BigDecimal tot = (openiningBalance.add(dayBalance)).subtract(withdrawal);
-        totCassaLabel.setText(tot.toString() + "€");
+        totCassaLabel.setText(tot.toString() + " €");
 
         /*people entered*/
         ModelEntrata modelDBentrata = new ModelDBEntrata();

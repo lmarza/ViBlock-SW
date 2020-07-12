@@ -20,9 +20,10 @@ public class ControllerAlert
     public Alert displayConfirmation(String s)
     {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm");
-        alert.setHeaderText("Confirm");
+        alert.setTitle("Conferma");
+        alert.setHeaderText("");
         alert.setContentText(s);
+        ((Stage)alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("images/Vi Block.png"));
 
         alert.showAndWait();
 
@@ -32,9 +33,10 @@ public class ControllerAlert
     public void displayInformation(String s)
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText("Information");
+        alert.setTitle("Informazione");
+        alert.setHeaderText("");
         alert.setContentText(s);
+        ((Stage)alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("images/Vi Block.png"));
 
         alert.showAndWait();
     }
