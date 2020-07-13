@@ -4,7 +4,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import java.util.Calendar;
 
-public class CotrollerPersonInformation {
+public class ControllerPersonInformation {
     public String fieldsAreValid(JFXTextField name, JFXTextField surname, JFXTextField birthday, JFXTextField birthPlace, String sex) {
 
         StringBuilder error = new StringBuilder();

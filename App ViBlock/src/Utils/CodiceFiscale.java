@@ -188,7 +188,7 @@ public class CodiceFiscale {
                 case 11: s+="S";break;
                 case 12: s+="T";break;
             }
-            if(sesso=="M"){
+            if(sesso.equals("M")){
                 if(giorno<10)
                     s+="0"+giorno;
                 else
@@ -266,9 +266,7 @@ public class CodiceFiscale {
         }
 
         private boolean isVocal(char c){
-            if(c=='A' || c=='E' || c=='I' || c=='O' || c=='U')
-                return true;
-            return false;
+            return c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U';
         }
 
     }

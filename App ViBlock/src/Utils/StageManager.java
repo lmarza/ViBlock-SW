@@ -115,4 +115,23 @@ public class StageManager {
             e.printStackTrace();
         }
     }
+
+    public void setStageNewMembership(Stage primaryStage, ArrayList<Manager> managers) {
+        Parent root;
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/tesseramento.fxml"));
+
+            root = fxmlLoader.load();
+            ControllerMembership controllerMembership = fxmlLoader.getController();
+            controllerMembership.setManagers(managers);
+            controllerMembership.setSideScreen();
+
+            primaryStage.setTitle("Ingresso prova - Vi Block");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

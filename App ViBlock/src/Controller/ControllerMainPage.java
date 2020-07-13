@@ -226,6 +226,8 @@ public class ControllerMainPage {
     }
 
     private void handleTesseramentoJFXButton(ActionEvent actionEvent) {
+        StageManager newMembership = new StageManager();
+        newMembership.setStageNewMembership((Stage) tesseramentoJFXButton.getScene().getWindow(), managers);
     }
 
 

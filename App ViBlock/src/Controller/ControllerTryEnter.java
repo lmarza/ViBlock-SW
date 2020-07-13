@@ -11,7 +11,6 @@ import Utils.CodiceFiscale;
 import Utils.StageManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -147,7 +146,7 @@ public class ControllerTryEnter {
     private void handlegenCFJFXButton(ActionEvent actionEvent) throws IOException {
 
         ControllerAlert alert = new ControllerAlert();
-        CotrollerPersonInformation controllerPersonInformation = new CotrollerPersonInformation();
+        ControllerPersonInformation controllerPersonInformation = new ControllerPersonInformation();
         String error = controllerPersonInformation.fieldsAreValid(nomeJFXTextField,cognomeJFXTextField, dataNascitaJFXTextField, luogoNascitaJFXTextField, sessoComboBox.getValue());
 
         if(error.isEmpty())
