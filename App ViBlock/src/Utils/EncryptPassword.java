@@ -8,8 +8,10 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 
-public class EncodingPassword
+public class EncryptPassword
 {
+    public EncryptPassword() {
+    }
 
     private static boolean validatePassword(String originalPassword, String storedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException
     {
@@ -34,7 +36,7 @@ public class EncodingPassword
         return diff == 0;
     }
 
-    private static String generateHashPsw(String password) throws NoSuchAlgorithmException, InvalidKeySpecException
+    public String generateHashPsw(String password) throws NoSuchAlgorithmException, InvalidKeySpecException
     {
         int iterations = 1000;
         char[] chars = password.toCharArray();

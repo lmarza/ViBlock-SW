@@ -1,8 +1,15 @@
 package Controller;
 
 import Data.Manager;
+import Data.MedicalCertificate;
 import Data.Person;
+import Model.ModelCertificatoMedico;
+import Model.ModelCliente;
+import Model.ModelDBCertificatoMedico;
+import Model.ModelDBCliente;
 import Utils.CodiceFiscale;
+import Utils.EncryptPassword;
+import Utils.Mail;
 import Utils.StageManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -17,7 +24,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.mail.MessagingException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -78,6 +89,9 @@ public class ControllerMembership {
     private JFXTextField scadenzaCertJFXTextField;
 
     @FXML
+    private JFXTextField rilascioCertJFXTextField;
+
+    @FXML
     private JFXTextField CFJFXTextField;
 
     @FXML
@@ -121,7 +135,7 @@ public class ControllerMembership {
         registraSocioJFXButton.setOnAction(actionEvent -> {
             try {
                 hadleRegistraSocio(actionEvent);
-            } catch (ParseException e) {
+            } catch (ParseException | MessagingException | FileNotFoundException | InvalidKeySpecException | NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
         });
@@ -178,6 +192,7 @@ public class ControllerMembership {
         String password = new Random().ints(10, 33, 122).mapToObj(i -> String.valueOf((char)i)).collect(Collectors.joining());
         pswTempJFXTextField.setText(password);
         pswTempJFXTextField.setDisable(true);
+        genPswJFXButton.setDisable(true);
     }
 
     private void handleStranieroCheckBox(ActionEvent actionEvent) {
@@ -192,7 +207,7 @@ public class ControllerMembership {
             genCFJFXButton.setDisable(false);
     }
 
-    private void hadleRegistraSocio(ActionEvent actionEvent) throws ParseException {
+    private void hadleRegistraSocio(ActionEvent actionEvent) throws ParseException, FileNotFoundException, MessagingException, InvalidKeySpecException, NoSuchAlgorithmException {
         ControllerAlert alert = new ControllerAlert();
         ControllerPersonInformation checkFields = new ControllerPersonInformation();
         String error = checkFields.fieldsAreValid(nomeJFXTextField, cognomeJFXTextField, dataNascitaJFXTextField, luogoNascitaJFXTextField, sessoComboBox.getValue());
@@ -202,39 +217,116 @@ public class ControllerMembership {
         if(!isMailValid(mailJFXTextField.getText()))
             error += "-La mail inserita non è nel formato corretto!\n";
 
+        if(rilascioCertJFXTextField.getText().trim().isEmpty())
+        {
+            error += "-La data di rilascio certificato deve essere inserita!\n";
+        }
+        else
+        {
+            String[] split = rilascioCertJFXTextField.getText().split("/");
+            if(split.length < 3)
+            {
+                error += "-La data di rilascio deve avere formato DD/MM/YYYY!\n";
+            }
+            else
+            {
+                if(!isNumerical(split[0]) || split[0].length() > 2 || (Integer.parseInt(split[0]) > 31 ||(Integer.parseInt(split[0]) < 1)))
+                    error += "-Giorno di rilascio certificato non valido!\n";
+                if(!isNumerical(split[1]) || split[1].length() > 2 || (Integer.parseInt(split[1]) < 1 ||(Integer.parseInt(split[1]) > 12)))
+                    error += "-Mese di rilascio certificato non valido!\n";
+                if(!isNumerical(split[2]) || split[2].length() != 4 || (Integer.parseInt(split[2]) > year ||(Integer.parseInt(split[2]) < 1900)))
+                    error += "-Anno di rilascio certificato non valido (YYYY, 4 cifre necessarie)!\n";
+
+                /*check if medicate certificate is valid*/
+                /*
+                Date date = new SimpleDateFormat("dd/mm/yyyy").parse(rilascioCertJFXTextField.getText());
+                Date currentDate = new SimpleDateFormat("dd/mm/yyyy").parse(String.valueOf(LocalDate.now()));
+
+                if (date.after(currentDate))
+                    error += "-Data rilascio certificato non valida!\n";
+
+                 */
+            }
+
+        }
+
         if(scadenzaCertJFXTextField.getText().trim().isEmpty())
         {
-            error += "-La data di nascita deve essere inserita!\n";
+            error += "-La data di scadenza certificato deve essere inserita!\n";
         }
         else
         {
             String[] split = scadenzaCertJFXTextField.getText().split("/");
             if(split.length < 3)
             {
-                error += "-La data di nascita deve avere formato DD/MM/YYYY!\n";
+                error += "-La data di scadenza deve avere formato DD/MM/YYYY!\n";
             }
             else
             {
                 if(!isNumerical(split[0]) || split[0].length() > 2 || (Integer.parseInt(split[0]) > 31 ||(Integer.parseInt(split[0]) < 1)))
-                    error += "-Giorno nascita non valido!\n";
+                    error += "-Giorno scadenza certificato non valido!\n";
                 if(!isNumerical(split[1]) || split[1].length() > 2 || (Integer.parseInt(split[1]) < 1 ||(Integer.parseInt(split[1]) > 12)))
-                    error += "-Mese nascita non valido!\n";
-                if(!isNumerical(split[2]) || split[2].length() != 4 || (Integer.parseInt(split[2]) > year ||(Integer.parseInt(split[2]) < 1900)))
-                    error += "-Anno nascita non valido (YYYY, 4 cifre necessarie)!\n";
+                    error += "-Mese scadenza certificato non valido!\n";
+                if(!isNumerical(split[2]) || split[2].length() != 4 || (Integer.parseInt(split[2]) < year ||(Integer.parseInt(split[2]) < 1900)))
+                    error += "-Anno scadenza certificato non valido (YYYY, 4 cifre necessarie)!\n";
 
                 /*check if medicate certificate is valid*/
+                /*
                 Date date = new SimpleDateFormat("dd/mm/yyyy").parse(scadenzaCertJFXTextField.getText());
                 Date currentDate = new SimpleDateFormat("dd/mm/yyyy").parse(String.valueOf(LocalDate.now()));
 
                 if (date.before(currentDate))
                     error += "-Data scadenza certificato non valida!\n";
+
+                 */
             }
 
         }
 
         if(error.isEmpty()){
             /*check if client is already a member*/
+            ModelCliente modelClienteDB = new ModelDBCliente();
+            int exists = modelClienteDB.checkIfClientAlreadyExists(CFJFXTextField.getText());
 
+            if(exists == 0)
+            {
+                /*first send mail with temp psw to user's mail*/
+                Mail.sendMail(mailJFXTextField.getText(), nomeJFXTextField.getText(), cognomeJFXTextField.getText(), pswTempJFXTextField.getText());
+
+                /*encoding psw*/
+                EncryptPassword encryptPassword = new EncryptPassword();
+                String finalPsw = encryptPassword.generateHashPsw(pswTempJFXTextField.getText());
+
+                /*add new medical certificate into DB*/
+                MedicalCertificate medicalCertificate = new MedicalCertificate();
+                medicalCertificate.setDataRilascio(rilascioCertJFXTextField.getText());
+                medicalCertificate.setDataScadenza(scadenzaCertJFXTextField.getText());
+                ModelCertificatoMedico modelCertificatoMedico = new ModelDBCertificatoMedico();
+                modelCertificatoMedico.insertNewMedicalCertificate(medicalCertificate);
+
+                /*get last medical certificate id and create a new Client*/
+                int medicalCertificateId = modelCertificatoMedico.getLastMedicalCertificateInsert();
+                Person person = new Person();
+                person.setName(nomeJFXTextField.getText());
+                person.setSurname(cognomeJFXTextField.getText());
+                person.setSex(sessoComboBox.getValue());
+                person.setBirthday(dataNascitaJFXTextField.getText());
+                person.setMail(mailJFXTextField.getText());
+                person.setPsw(finalPsw);
+                person.setMedicalCertificate(String.valueOf(medicalCertificateId));
+                person.setClientType("R");
+                person.setBornCity(luogoNascitaJFXTextField.getText());
+                person.setCf(CFJFXTextField.getText());
+
+                modelClienteDB.insertNewClient(person);
+                alert.displayInformation("Il cliente è stato registrato con successo!\n");
+                StageManager mainPage = new StageManager();
+                mainPage.setStageMainPage((Stage) homePageImageView.getScene().getWindow(), managers);
+            }
+            else
+            {
+                alert.displayAlert("Il cliente è già tesserato!");
+            }
 
         }
         else

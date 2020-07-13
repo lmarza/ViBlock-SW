@@ -176,13 +176,25 @@ public class ControllerTryEnter {
     private void handleIngressoProvaJFXButton(ActionEvent actionEvent) {
         totDaPagareLabel.setText("10 €");
         ControllerAlert alert = new ControllerAlert();
-        if(!nomeJFXTextField.getText().isEmpty() && !cognomeJFXTextField.getText().isEmpty() && !dataNascitaJFXTextField.getText().isEmpty() &&
-                sessoComboBox.getValue() != null && !CFJFXTextField.getText().isEmpty())
-            pagamentoJFXButton.setDisable(false);
+        ModelCliente modelClienteDB = new ModelDBCliente();
+
+        int exists = modelClienteDB.checkIfClientAlreadyExists(CFJFXTextField.getText());
+
+        if(exists == 0)
+        {
+            if(!nomeJFXTextField.getText().isEmpty() && !cognomeJFXTextField.getText().isEmpty() && !dataNascitaJFXTextField.getText().isEmpty() &&
+                    sessoComboBox.getValue() != null && !CFJFXTextField.getText().isEmpty())
+                pagamentoJFXButton.setDisable(false);
+            else
+            {
+                alert.displayAlert("Riempire tutti i campi prima di procedere!");
+            }
+        }
         else
         {
-            alert.displayAlert("Riempire tutti i campi prima di procedere!");
+            alert.displayAlert("Il cliente ha già fatto la prova o è già tesserato!");
         }
+
     }
 
     private void handleContantiJFXCheckBox(ActionEvent actionEvent) {
@@ -222,8 +234,7 @@ public class ControllerTryEnter {
 
     private void handlePagamentoJFXButton(ActionEvent actionEvent) {
         ControllerAlert confirm = new ControllerAlert();
-
-        //TODO CHECK IF CLIENT ALREADY EXISTS
+        ModelCliente modelClientDB = new ModelDBCliente();
 
         /*first create new client and insert into DB*/
         Person person = new Person();
@@ -240,8 +251,6 @@ public class ControllerTryEnter {
         String finaleDate = dateFormat.format(d);
         person.setDataTry(finaleDate);
 
-
-        ModelCliente modelClientDB = new ModelDBCliente();
         modelClientDB.insertNewClient(person);
 
         /*now insert new record for payment into DB*/

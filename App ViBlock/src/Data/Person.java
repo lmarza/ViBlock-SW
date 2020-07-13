@@ -13,7 +13,7 @@ public class Person {
     private String psw;
     private String cf;
     private String birthday;
-    private String[] medicalCertificate;
+    private String medicalCertificate;
     private String dataTry;
     private String ClientType;
 
@@ -108,11 +108,11 @@ public class Person {
         this.birthday = birthday;
     }
 
-    public String[] getMedicalCertificate() {
+    public String getMedicalCertificate() {
         return medicalCertificate;
     }
 
-    public void setMedicalCertificate(String[] medicalCertificate) {
+    public void setMedicalCertificate(String medicalCertificate) {
         this.medicalCertificate = medicalCertificate;
     }
 
