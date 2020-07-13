@@ -192,9 +192,29 @@ public class ControllerTryEnter {
         }
         else
         {
-            alert.displayAlert("Il cliente ha già fatto la prova o è già tesserato!");
-        }
+            Person person = modelClienteDB.getClient(CFJFXTextField.getText());
 
+            String[] membership;
+            String[] dataTry;
+            int year = Calendar.getInstance().get(Calendar.YEAR);
+
+            /*if client is member for the new year or he/she had already try for this year -->error */
+            if (person.getDataMembership() != null)
+            {
+                membership = person.getDataMembership().split("-");
+                if(Integer.parseInt(membership[1]) > 6 && Integer.parseInt(membership[0]) >= year)
+                {
+                    alert.displayAlert("Il cliente è già tesserato!");
+                }
+            }
+
+            if(person.getDataTry() != null)
+            {
+                dataTry = person.getDataTry().split("-");
+                if(Integer.parseInt(dataTry[1]) > 6 && Integer.parseInt(dataTry[0]) >= year)
+                    alert.displayAlert("Il cliente ha già effettuato la prova!");
+            }
+        }
     }
 
     private void handleContantiJFXCheckBox(ActionEvent actionEvent) {
@@ -286,7 +306,4 @@ public class ControllerTryEnter {
         mainPage.setStageMainPage((Stage) homePageImageView.getScene().getWindow(), managers);
 
     }
-
-
-
 }

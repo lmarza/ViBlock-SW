@@ -16,6 +16,7 @@ public class Person {
     private String medicalCertificate;
     private String dataTry;
     private String ClientType;
+    private String dataMembership;
 
 
     public Person(){}
@@ -130,6 +131,14 @@ public class Person {
 
     public void setClientType(String clientType) {
         ClientType = clientType;
+    }
+
+    public String getDataMembership() {
+        return dataMembership;
+    }
+
+    public void setDataMembership(String dataMembership) {
+        this.dataMembership = dataMembership;
     }
 
 }
