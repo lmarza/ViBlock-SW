@@ -241,11 +241,11 @@ public class ControllerTryEnter {
     }
 
     private void handleStranieroCheckBox(ActionEvent actionEvent) {
-        ControllerAlert alert = new ControllerAlert();
         if(stranieroCheckBox.isSelected())
         {
             genCFJFXButton.setDisable(true);
-            alert.displayInformation("Al posto del codice fiscale inserire: NomeCognomeAnnoNascita con l'anno di nascita in questo formato YYYY");
+            String[] birthday = dataNascitaJFXTextField.getText().split("/");
+            CFJFXTextField.setText(nomeJFXTextField.getText()+cognomeJFXTextField.getText()+birthday[2]);
         }
 
         if(!stranieroCheckBox.isSelected())
