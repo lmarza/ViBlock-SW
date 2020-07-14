@@ -32,6 +32,9 @@ public class ModelDBCertificatoMedico implements ModelCertificatoMedico {
         return id;
     }
 
+
+
+
     private int resultSetToCountRecord(ResultSet rs) {
         int id = 0;
 
@@ -52,5 +55,41 @@ public class ModelDBCertificatoMedico implements ModelCertificatoMedico {
 
         return Integer.parseInt(null);
     }
+
+    @Override
+    public String getExpiryDateMedicalCertificate(String id) {
+        String date;
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT datascadenza " +
+                "FROM certificatomedico " +
+                "WHERE id = ?::INTEGER; ", List.of(id));
+
+        date = resultSetToExpiryDate(db.getResultSet());
+
+        return date;
+    }
+
+    private String resultSetToExpiryDate(ResultSet rs) {
+        String date = null;
+        try
+        {
+            while (rs.next())
+            {
+                date = db.getSQLDate(rs, "datascadenza");
+            }
+
+            return date;
+        }
+        catch (SQLException e)
+        {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        return null;
+
+    }
+
 
 }

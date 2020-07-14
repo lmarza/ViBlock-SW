@@ -3,6 +3,7 @@ package Utils;
 import Controller.*;
 import Data.Entrata;
 import Data.Manager;
+import Data.Person;
 import Data.RiepilogoGiornaliero;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -127,7 +128,28 @@ public class StageManager {
             controllerMembership.setManagers(managers);
             controllerMembership.setSideScreen();
 
-            primaryStage.setTitle("Ingresso prova - Vi Block");
+            primaryStage.setTitle("Tesseramento - Vi Block");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setStageEntrace(Stage primaryStage, ArrayList<Manager> managers, Person person) {
+        Parent root;
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/ingresso.fxml"));
+
+            root = fxmlLoader.load();
+            ControllerEntrance controllerEntrance = fxmlLoader.getController();
+            controllerEntrance.setPerson(person);
+            controllerEntrance.setManagers(managers);
+            controllerEntrance.setSideScreen();
+
+
+            primaryStage.setTitle("Ingresso - Vi Block");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
         } catch (Exception e) {

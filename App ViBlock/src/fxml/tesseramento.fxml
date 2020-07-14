@@ -117,43 +117,48 @@
                   </Label>
                </children>
             </AnchorPane>
-            <JFXTextField fx:id="nomeJFXTextField" layoutX="278.0" layoutY="289.0" prefHeight="25.0" prefWidth="252.0" promptText="Nome">
+            <JFXTextField fx:id="nomeJFXTextField" layoutX="278.0" layoutY="289.0" prefHeight="46.0" prefWidth="283.0" promptText="Nome">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="cognomeJFXTextField" layoutX="278.0" layoutY="345.0" prefHeight="25.0" prefWidth="252.0" promptText="Cognome">
+            <JFXTextField fx:id="cognomeJFXTextField" layoutX="278.0" layoutY="345.0" prefHeight="46.0" prefWidth="284.0" promptText="Cognome">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="mailJFXTextField" layoutX="278.0" layoutY="407.0" prefHeight="25.0" prefWidth="252.0" promptText="Mail">
+            <JFXTextField fx:id="mailJFXTextField" layoutX="278.0" layoutY="407.0" prefHeight="46.0" prefWidth="285.0" promptText="Mail">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="dataNascitaJFXTextField" layoutX="278.0" layoutY="459.0" prefHeight="25.0" prefWidth="252.0" promptText="Data di nascita">
+            <JFXTextField fx:id="dataNascitaJFXTextField" layoutX="278.0" layoutY="459.0" prefHeight="46.0" prefWidth="285.0" promptText="Data di nascita">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="luogoNascitaJFXTextField" layoutX="278.0" layoutY="518.0" prefHeight="25.0" prefWidth="252.0" promptText="Luogo di nascita">
+            <JFXTextField fx:id="luogoNascitaJFXTextField" layoutX="278.0" layoutY="518.0" prefHeight="46.0" prefWidth="285.0" promptText="Luogo di nascita">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
             </JFXTextField>
             <ComboBox fx:id="sessoComboBox" editable="true" layoutX="279.0" layoutY="587.0" opacity="0.75" prefHeight="35.0" prefWidth="250.0" promptText="Sesso" />
-            <JFXTextField fx:id="scadenzaCertJFXTextField" layoutX="743.0" layoutY="375.0" prefHeight="46.0" prefWidth="289.0" promptText="Scadenza certifica medico">
+            <JFXTextField fx:id="rilascioCertJFXTextField" layoutX="745.0" layoutY="317.0" prefHeight="46.0" prefWidth="305.0" promptText="Rilascio certificato medico">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="CFJFXTextField" layoutX="743.0" layoutY="442.0" prefHeight="46.0" prefWidth="286.0" promptText="Codice Fiscale">
+            <JFXTextField fx:id="scadenzaCertJFXTextField" layoutX="743.0" layoutY="375.0" prefHeight="46.0" prefWidth="305.0" promptText="Scadenza certificato medico">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="pswTempJFXTextField" layoutX="743.0" layoutY="522.0" prefHeight="46.0" prefWidth="292.0" promptText="PSW temporanea per app">
+            <JFXTextField fx:id="CFJFXTextField" layoutX="743.0" layoutY="442.0" prefHeight="46.0" prefWidth="304.0" promptText="Codice Fiscale">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="pswTempJFXTextField" layoutX="743.0" layoutY="522.0" prefHeight="46.0" prefWidth="305.0" promptText="PSW temporanea per app">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
@@ -168,7 +173,7 @@
                   <Font name="Tahoma" size="24.0" />
                </font>
             </JFXButton>
-            <CheckBox fx:id="stranieroCheckBox" layoutX="1326.0" layoutY="369.0" mnemonicParsing="false" text="Straniero" textFill="#fa453f" underline="true">
+            <CheckBox fx:id="stranieroCheckBox" layoutX="1326.0" layoutY="454.0" mnemonicParsing="false" text="Straniero" textFill="#fa453f" underline="true">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
@@ -178,11 +183,6 @@
                   <Font name="Tahoma" size="24.0" />
                </font>
             </JFXButton>
-            <JFXTextField fx:id="rilascioCertJFXTextField" layoutX="745.0" layoutY="317.0" prefHeight="46.0" prefWidth="289.0" promptText="Rilascio certifica medico">
-               <font>
-                  <Font name="Tahoma" size="24.0" />
-               </font>
-            </JFXTextField>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="404.0" layoutY="-2.0" prefHeight="126.0" prefWidth="1533.0">

@@ -141,8 +141,6 @@ public class ControllerMembership {
 
     }
 
-
-
     public void setManagers(ArrayList<Manager> managers) {
         this.managers = managers;
     }
@@ -285,21 +283,11 @@ public class ControllerMembership {
     private void insertOrUpdateClient(int exists, ModelCliente modelClienteDB) throws FileNotFoundException, MessagingException, InvalidKeySpecException, NoSuchAlgorithmException {
         /*first send mail with temp psw to user's mail*/
         ControllerAlert alert = new ControllerAlert();
-        Mail.sendMail(mailJFXTextField.getText(), nomeJFXTextField.getText(), cognomeJFXTextField.getText(), pswTempJFXTextField.getText());
 
         /*encoding psw*/
         EncryptPassword encryptPassword = new EncryptPassword();
         String finalPsw = encryptPassword.generateHashPsw(pswTempJFXTextField.getText());
 
-        /*add new medical certificate into DB*/
-        MedicalCertificate medicalCertificate = new MedicalCertificate();
-        medicalCertificate.setDataRilascio(rilascioCertJFXTextField.getText());
-        medicalCertificate.setDataScadenza(scadenzaCertJFXTextField.getText());
-        ModelCertificatoMedico modelCertificatoMedico = new ModelDBCertificatoMedico();
-        modelCertificatoMedico.insertNewMedicalCertificate(medicalCertificate);
-
-        /*get last medical certificate id and create a new Client*/
-        int medicalCertificateId = modelCertificatoMedico.getLastMedicalCertificateInsert();
         Person person = new Person();
         person.setName(nomeJFXTextField.getText());
         person.setSurname(cognomeJFXTextField.getText());
@@ -307,10 +295,10 @@ public class ControllerMembership {
         person.setBirthday(dataNascitaJFXTextField.getText());
         person.setMail(mailJFXTextField.getText());
         person.setPsw(finalPsw);
-        person.setMedicalCertificate(String.valueOf(medicalCertificateId));
         person.setClientType("R");
         person.setBornCity(luogoNascitaJFXTextField.getText());
         person.setCf(CFJFXTextField.getText());
+
         Date d = new Date();
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
         String finaleDate = dateFormat.format(d);
@@ -318,20 +306,62 @@ public class ControllerMembership {
 
         if(exists == 0)
         {
+            /*add new medical certificate into DB*/
+            MedicalCertificate medicalCertificate = new MedicalCertificate();
+            medicalCertificate.setDataRilascio(rilascioCertJFXTextField.getText());
+            medicalCertificate.setDataScadenza(scadenzaCertJFXTextField.getText());
+            ModelCertificatoMedico modelCertificatoMedico = new ModelDBCertificatoMedico();
+            modelCertificatoMedico.insertNewMedicalCertificate(medicalCertificate);
+
+            /*get last medical certificate id and create a new Client*/
+            int medicalCertificateId = modelCertificatoMedico.getLastMedicalCertificateInsert();
+
+            person.setMedicalCertificate(String.valueOf(medicalCertificateId));
+
+            //Mail.sendMail(mailJFXTextField.getText(), nomeJFXTextField.getText(), cognomeJFXTextField.getText(), pswTempJFXTextField.getText());
             modelClienteDB.insertNewClient(person);
             alert.displayInformation("Il cliente è stato registrato con successo!\n");
         }
         else
         {
-            alert.displayInformation("Il cliente è già presente nel DB, aggiorno infomazioni...\n");
+            alert.displayInformation("Il cliente è già presente nel DB... verifico che non sia già iscritto per quest'anno!\n");
             Person oldClient = modelClienteDB.getClient(person.getCf());
-            if(oldClient.getClientType().equalsIgnoreCase("P"))
-                person.setClientType("RP");
-            modelClienteDB.updateClientInformation(person);
-            alert.displayInformation("Le informazioni del cliente sono state aggiornate con successo!\n");
+
+            String[] membership = oldClient.getDataMembership().split("-");
+            int year = Calendar.getInstance().get(Calendar.YEAR);
+
+            /*if client is member for the new year-->error */
+            if(Integer.parseInt(membership[1]) > 6 && Integer.parseInt(membership[0]) >= year)
+            {
+                alert.displayAlert("Il cliente è già tesserato per quest'anno!");
+                StageManager mainPage = new StageManager();
+                mainPage.setStageMainPage((Stage) registraSocioJFXButton.getScene().getWindow(), managers);
+            }
+            else
+            {
+                alert.displayInformation("Aggiorno le sue informazioni!\n");
+
+                /*add new medical certificate into DB*/
+                MedicalCertificate medicalCertificate = new MedicalCertificate();
+                medicalCertificate.setDataRilascio(rilascioCertJFXTextField.getText());
+                medicalCertificate.setDataScadenza(scadenzaCertJFXTextField.getText());
+                ModelCertificatoMedico modelCertificatoMedico = new ModelDBCertificatoMedico();
+                modelCertificatoMedico.insertNewMedicalCertificate(medicalCertificate);
+
+                /*get last medical certificate id and create a new Client*/
+                int medicalCertificateId = modelCertificatoMedico.getLastMedicalCertificateInsert();
+
+                person.setMedicalCertificate(String.valueOf(medicalCertificateId));
+
+                Mail.sendMail(mailJFXTextField.getText(), nomeJFXTextField.getText(), cognomeJFXTextField.getText(), pswTempJFXTextField.getText());
+                if(oldClient.getClientType().equalsIgnoreCase("P"))
+                    person.setClientType("RP");
+                modelClienteDB.updateClientInformation(person);
+                alert.displayInformation("Le informazioni del cliente sono state aggiornate con successo!\n");
+            }
         }
-
-        /*Ingresso page*/
-
+        /*Entrance page*/
+        StageManager entrancePage = new StageManager();
+        entrancePage.setStageEntrace((Stage) registraSocioJFXButton.getScene().getWindow(), managers, person);
     }
 }

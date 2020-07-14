@@ -54,11 +54,11 @@ public class Mail {
             message.setSubject("Invio password temporanea per accesso App Vi-Block");
             String text = String.format("Caro socio %s %s,\n\nGrazie per esserti iscritto al Vi Block!\nQuest'anno ci sono un sacco di " +
                     "novità che potranno rendere la tua esperienza più divertente e l'accesso alla palestra più semplice.\n" +
-                    "Dal Play Store (Android) o App Store (Apple) potrai scaricare l'applicazione \"Vi-Block\" e accedere con le seguenti credenziali:\n " +
+                    "Dal Play Store (Android) o App Store (Apple) potrai scaricare l'applicazione \"Vi-Block\" e accedere con le seguenti credenziali:\n\n" +
                     "-Username: il tuo codice fiscale\n" +
-                    "-psw: %s\n\n" +
+                    "-Password: %s\n\n" +
                     "L'applicazione ti permetterà di: restare aggiornato su tutte le novità che riguardano la palestra, poter prenotare gli slot di allenamento (causa " +
-                    "restrizioni Covid), avere a disposizione un QRCODE per accesso rapido alla palestra in caso di abbonamento valido e tante altre funzionalità!\n" +
+                    "restrizioni Covid), avere a disposizione un QRCODE per accesso rapido alla palestra in caso di abbonamento valido o nuovo ingresso e tante altre funzionalità!\n" +
                     "Ti aspettiamo al più presto,\n\n" +
                     "Lo staff Vi-Block", nome, cognome, tempPsw);
             message.setText(text);

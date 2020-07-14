@@ -23,7 +23,7 @@ public class ModelDBCliente implements ModelCliente {
         else
             db.executeSQLUpdate( "INSERT INTO public.utente(nome, cognome, sesso, datanascita, mail, psw, certificatomedico, tipoutente, " +
                     "luogonascita, cf, datatesseramento) " +
-                    "VALUES (?, ?, ?, ?::DATE, ?, ?, ?::INTEGER, ?, ?, ?, ?); ", List.of(person.getName().trim(), person.getSurname().trim(), person.getSex().trim(), person.getBirthday().trim(),
+                    "VALUES (?, ?, ?, ?::DATE, ?, ?, ?::INTEGER, ?, ?, ?, ?::DATE); ", List.of(person.getName().trim(), person.getSurname().trim(), person.getSex().trim(), person.getBirthday().trim(),
                     person.getMail().trim(),person.getPsw().trim(), person.getMedicalCertificate(), person.getClientType().trim(), person.getBornCity().trim(), person.getCf().trim(),person.getDataMembership()));
     }
 

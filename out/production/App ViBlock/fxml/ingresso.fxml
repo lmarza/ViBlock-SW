@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerIngresso">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ControllerEntrance">
    <children>
       <AnchorPane layoutX="406.0" layoutY="-7.0">
          <children>
@@ -35,7 +35,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <JFXButton fx:id="DieciIngrJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="475.0" layoutY="583.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Abbonamento 10 ingressi" textFill="#ffa423">
+            <JFXButton fx:id="dieciIngrJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="475.0" layoutY="583.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Abbonamento 10 ingressi" textFill="#ffa423">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
@@ -80,7 +80,7 @@
                   <Font name="Ink Free" size="57.0" />
                </font>
             </Label>
-            <Label fx:id="totDaPagareLabel" layoutX="724.0" layoutY="945.0" prefHeight="93.0" prefWidth="163.0" textFill="#1d1c1c">
+            <Label fx:id="totDaPagareLabel" layoutX="724.0" layoutY="945.0" prefHeight="93.0" prefWidth="284.0" textFill="#1d1c1c">
                <font>
                   <Font name="Ink Free" size="57.0" />
                </font>
@@ -189,6 +189,14 @@
                   <Font name="Tahoma" size="35.0" />
                </font>
             </JFXCheckBox>
+            <JFXButton fx:id="resetJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1284.0" layoutY="666.0" prefHeight="79.0" prefWidth="163.0" style="-fx-background-color: #ffa423; -fx-background-radius: 90;" text="Reset">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="404.0" layoutY="-2.0" prefHeight="126.0" prefWidth="1533.0">
@@ -223,7 +231,7 @@
                   <Image url="@../images/Vi%20block.png" />
                </image>
             </ImageView>
-            <Label layoutX="21.0" layoutY="290.0" prefHeight="33.0" prefWidth="383.0" textFill="#fffcfc">
+            <Label fx:id="dateLabel" layoutX="21.0" layoutY="290.0" prefHeight="33.0" prefWidth="383.0" textFill="#fffcfc">
                <font>
                   <Font name="Ink Free" size="25.0" />
                </font>
@@ -263,7 +271,7 @@
                   <Font name="Ink Free" size="25.0" />
                </font>
             </Label>
-            <Label fx:id="PersEntrateLabel" layoutX="143.0" layoutY="783.0" prefHeight="36.0" prefWidth="137.0" textFill="#fffcfc">
+            <Label fx:id="PersEntrateLabel" alignment="CENTER" layoutX="143.0" layoutY="783.0" prefHeight="36.0" prefWidth="137.0" textFill="#fffcfc">
                <font>
                   <Font size="25.0" />
                </font>
@@ -273,7 +281,7 @@
                   <Font name="Ink Free" size="25.0" />
                </font>
             </Label>
-            <Label fx:id="prelievoLabe" layoutX="127.0" layoutY="531.0" prefHeight="36.0" prefWidth="168.0" textFill="#fffcfc">
+            <Label fx:id="prelievoLabel" layoutX="127.0" layoutY="531.0" prefHeight="36.0" prefWidth="168.0" textFill="#fffcfc">
                <font>
                   <Font size="25.0" />
                </font>
