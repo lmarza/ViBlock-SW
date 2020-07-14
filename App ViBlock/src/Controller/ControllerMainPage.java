@@ -9,11 +9,14 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -56,7 +59,7 @@ public class ControllerMainPage {
     private JFXTextField searchJFXTextField;
 
     @FXML
-    private ImageView searchImageView;
+    private JFXButton searchClientJFXButton;
 
     @FXML
     private JFXButton tesseramentoJFXButton;
@@ -91,8 +94,14 @@ public class ControllerMainPage {
         riepMensileJFXButton.setOnAction(this::handleRiepMensileJFXButton);
         prelievoJFXButton.setOnAction(this::handlePrelievoJFXButton);
         esportaSaldoGiorJFXButton.setOnAction(this::handleEsportaSaldoGJFXButton);
-        searchImageView.setOnMouseClicked(this::handleSearchImageView);
+        searchClientJFXButton.setOnAction(this::handleSearchClientJFXButton);
         logoutImageView.setOnMouseClicked(this::handleLogOutImageView);
+        searchJFXTextField.setOnKeyReleased(event ->
+        {
+            if (event.getCode() == KeyCode.ENTER)
+                searchClientJFXButton.fire();
+        });
+
     }
 
     public void setManagers(ArrayList<Manager> managers) {
@@ -230,6 +239,17 @@ public class ControllerMainPage {
         newMembership.setStageNewMembership((Stage) tesseramentoJFXButton.getScene().getWindow(), managers);
     }
 
+    private void handleSearchClientJFXButton(ActionEvent actionEvent) {
+       if(isCFcode(searchJFXTextField.getText()))
+       {
+           /*first check if client has a valid subscription */
+
+       }
+    }
+
+    private boolean isCFcode(String cf){
+        return cf.matches("[A-Z]{3}[A-Z]{3}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z]");
+    }
 
 
 }

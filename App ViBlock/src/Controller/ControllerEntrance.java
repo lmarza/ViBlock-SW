@@ -17,11 +17,8 @@ import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class ControllerEntrance {
 
@@ -362,7 +359,4 @@ public class ControllerEntrance {
         mainPage.setStageMainPage((Stage) homePageImageView.getScene().getWindow(), managers);
 
     }
-
-
-
 }

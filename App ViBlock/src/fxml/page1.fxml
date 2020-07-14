@@ -97,23 +97,11 @@
                   <Image url="@../images/wp1871760.jpg" />
                </image>
             </ImageView>
-            <JFXTextField fx:id="searchJFXTextField" alignment="BOTTOM_LEFT" layoutX="705.0" layoutY="209.0" prefHeight="65.0" prefWidth="611.0" promptText="Cerca cliente">
+            <JFXTextField fx:id="searchJFXTextField" alignment="BOTTOM_LEFT" layoutX="705.0" layoutY="209.0" prefHeight="65.0" prefWidth="545.0" promptText="Cerca cliente">
                <font>
                   <Font size="30.0" />
                </font>
             </JFXTextField>
-            <AnchorPane layoutX="602.0" layoutY="226.0" prefHeight="70.0" prefWidth="84.0">
-               <children>
-                  <ImageView fx:id="searchImageView" fitHeight="54.0" fitWidth="51.0" layoutX="39.0" layoutY="-6.0">
-                     <image>
-                        <Image url="@../images/search_32px.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-               </children>
-            </AnchorPane>
             <JFXButton fx:id="tesseramentoJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="518.0" layoutY="421.0" prefHeight="130.0" prefWidth="299.0" ripplerFill="#060606" style="-fx-background-color: rgba(0,0,0,0.7); -fx-background-radius: 70;" text="Tesseramento Socio" textFill="WHITE">
                <font>
                   <Font name="Tahoma" size="20.0" />
@@ -179,6 +167,16 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
+            <JFXButton fx:id="searchClientJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1263.0" layoutY="229.0" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: #0288d1; -fx-background-radius: 90;" text="Cerca" textFill="#fcfcfc">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="51.0" fitWidth="57.0" layoutX="643.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/search_32px.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="404.0" layoutY="-2.0" prefHeight="126.0" prefWidth="1533.0">
