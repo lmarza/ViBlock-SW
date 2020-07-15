@@ -26,6 +26,7 @@ public class ModelDBDayEntrance implements ModelDayEntrance {
         return dayEntrance;
     }
 
+
     private DayEntrance resultSetToDayEntrance(ResultSet rs) {
         DayEntrance dayEntrance = null;
 
@@ -50,5 +51,13 @@ public class ModelDBDayEntrance implements ModelDayEntrance {
         }
 
         return null;
+    }
+
+    @Override
+    public void insertNewDayEntranceSubmission(String entrance, String cf, int remainingEntrance) {
+        db.DBOpenConnection();
+        db.executeSQLUpdate("INSERT INTO public.ingressoagiorni(ingresso, istanteingresso, ingressiresidui, cfutente) " +
+                "VALUES (?, CURRENT_TIMESTAMP, ?, ?); ",List.of(entrance, String.valueOf(remainingEntrance), cf));
+
     }
 }

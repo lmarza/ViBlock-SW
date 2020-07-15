@@ -5,10 +5,6 @@ import Model.*;
 import Utils.StageManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -18,10 +14,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import javax.xml.validation.Validator;
 import java.math.BigDecimal;
 import java.text.DateFormat;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -244,6 +238,7 @@ public class ControllerMainPage {
 
     private void handleSearchClientJFXButton(ActionEvent actionEvent) {
         ControllerAlert alert = new ControllerAlert();
+        ModelCliente modelClienteDB = new ModelDBCliente();
 
         if (searchJFXTextField.getText().isEmpty())
             alert.displayAlert("Inserire un nome cognome o CF!\n");
@@ -251,49 +246,125 @@ public class ControllerMainPage {
         {
             if(isCFcode(searchJFXTextField.getText()))
             {
-                /*first check if client has a valid subscription */
-                ModelCliente modelClienteDB = new ModelDBCliente();
-                dieciIngressi = modelClienteDB.checkTenEntranceSubmission(searchJFXTextField.getText());
-                mensile = modelClienteDB.checkMonthEntranceSubmission(searchJFXTextField.getText());
-                trimestrale = modelClienteDB.check3MonthEntranceSubmission(searchJFXTextField.getText());
-                tesseracorso = modelClienteDB.checkClassEntranceSubmission(searchJFXTextField.getText());
-
-                if(dieciIngressi > 0 || tesseracorso > 0)
+                Person client = modelClienteDB.getClient(searchJFXTextField.getText());
+                if(client == null)
                 {
-                    modelClienteDB.updateClientSubmissionDayEntrance(searchJFXTextField.getText());
-                    /*display summary entrance*/
-                    ModelDayEntrance modelDayEntranceDB = new ModelDBDayEntrance();
-                    DayEntrance dayEntrance = modelDayEntranceDB.getDayEntrance(searchJFXTextField.getText());
-
-                    alert.displayInformation(String.format("Il cliente %s %s ha effettuato l'ingresso: %s!\nRiepilogo ingressi residui: %d",dayEntrance.getName(),
-                            dayEntrance.getSurname(), dayEntrance.getEntrance(),dayEntrance.getRemainingEntrance()));
+                    alert.displayAlert("Il cliente non è nel DB!\nEffettuare un ingresso prova o tesseramento.");
+                    searchJFXTextField.clear();
                 }
-                else if(mensile > 0 || trimestrale > 0)
+
+                else
                 {
-                    modelClienteDB.updateClientSubmissionDurationEntrance(searchJFXTextField.getText());
+                    if(!ClientHasSubmission(searchJFXTextField.getText()))
+                    {
+                        alert.displayInformation("Il cliente non ha un abbonamento valido!\n");
+                        /*Fetch client information*/
+                        Person person = modelClienteDB.getClient(searchJFXTextField.getText());
 
-                    /*display summary entrance*/
-                    ModelPeriodEntrance modelPeriodEntranceDB = new ModelDBPeriodEntrance();
-                    PeriodEntrance periodEntrance = modelPeriodEntranceDB.getPeriodEntrance(searchJFXTextField.getText());
+                        /*Entrance page*/
+                        StageManager entrancePage = new StageManager();
+                        entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, person);
+                    }
+                }
 
-                    alert.displayInformation(String.format("Il cliente %s %s ha effettuato l'ingresso: %s!\nInzio abbonamento: %s\nFine abbonamento: %s",periodEntrance.getName(),
-                            periodEntrance.getSurname(), periodEntrance.getEntrance(), periodEntrance.getStartSubmission(), periodEntrance.getEndSubmission()));
+            }
+            else
+            {
+                /*take name and surname from textField*/
+                String[] nameSurname = searchJFXTextField.getText().split(" ");
+                /*if first name and last name are single, so name surname--> fetch client information*/
+                if(nameSurname.length == 2)
+                {
+                    /*Fetch client information*/
+                    Person client = modelClienteDB.getClientFromNameSurname(nameSurname[0], nameSurname[1]);
+                    if(client == null)
+                    {
+                        alert.displayAlert("Il cliente non è nel DB!\nEffettuare un ingresso prova o tesseramento.");
+                        searchJFXTextField.clear();
+                    }
+                    else
+                    {
+                        if(!ClientHasSubmission(client.getCf()))
+                        {
+                            alert.displayInformation("Il cliente non ha un abbonamento valido!\n");
+                            /*Fetch client information*/
+                            /*Entrance page*/
+                            StageManager entrancePage = new StageManager();
+                            entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
+                        }
+                    }
 
                 }
                 else
                 {
-                    alert.displayInformation("Il cliente non ha un abbonamento valido!\n");
-                    /*Fetch client information*/
-                    Person person = modelClienteDB.getClient(searchJFXTextField.getText());
+                    /*create a dialog to choose the right combination of name-surname*/
+                    Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert1.setTitle("Scegli la combinazione nome-cognome corretta");
+                    alert1.setHeaderText("");
+                    alert1.setContentText("Scegli il nome e cognome giusto:");
+                    ((Stage)alert1.getDialogPane().getScene().getWindow()).getIcons().add(new Image("images/Vi Block.png"));
 
-                    /*Entrance page*/
-                    StageManager entrancePage = new StageManager();
-                    entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, person);
+                    String name = searchJFXTextField.getText();
+                    int firstSpace = name.indexOf(" "); // detect the first space character
+                    String firstName2 = name.substring(0, firstSpace);  // get everything upto the first space character
+                    String lastName2 = name.substring(firstSpace).trim(); // get everything after the first space, trimming the spaces off
+
+                    String lastName = "";
+                    String firstName = "";
+                    if(name.split("\\w+").length>1){
+
+                        lastName = name.substring(name.lastIndexOf(" ")+1);
+                        firstName = name.substring(0, name.lastIndexOf(' '));
+                    }
+                    else{
+                        firstName = name;
+                    }
+
+                    ButtonType buttonTypeOne = new ButtonType(String.format("Nome: %s - Cognome: %s",firstName2,lastName2));
+                    ButtonType buttonTypeTwo = new ButtonType(String.format("Nome: %s - Cognome: %s",firstName, lastName));
+                    ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                    alert1.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+                    Optional<ButtonType> result = alert1.showAndWait();
+                    if (result.get() == buttonTypeOne){
+                        Person client = modelClienteDB.getClientFromNameSurname(firstName2,lastName2);
+                        if(client == null)
+                        {
+                            alert.displayAlert("Il cliente non è nel DB!\nEffettuare un ingresso prova o tesseramento.");
+                            searchJFXTextField.clear();
+                        }
+                        else
+                        {
+                            if(!ClientHasSubmission(client.getCf()))
+                            {
+                                alert.displayInformation("Il cliente non ha un abbonamento valido!\n");
+                                /*Fetch client information*/
+                                /*Entrance page*/
+                                StageManager entrancePage = new StageManager();
+                                entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
+                            }
+                        }
+                    } else if (result.get() == buttonTypeTwo) {
+                        Person client = modelClienteDB.getClientFromNameSurname(firstName,lastName);
+                        if(client == null)
+                        {
+                            alert.displayAlert("Il cliente non è nel DB!\nEffettuare un ingresso prova o tesseramento.");
+                            searchJFXTextField.clear();
+                        }
+                        else
+                        {
+                            if(!ClientHasSubmission(client.getCf()))
+                            {
+                                alert.displayInformation("Il cliente non ha un abbonamento valido!\n");
+                                /*Fetch client information*/
+                                /*Entrance page*/
+                                StageManager entrancePage = new StageManager();
+                                entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
+                            }
+                        }
+
+                    }
                 }
-            }
-            else
-            {
-                String[] split = searchJFXTextField.getText().split(" ");
             }
         }
 
@@ -303,6 +374,41 @@ public class ControllerMainPage {
         return cf.matches("[A-Z]{3}[A-Z]{3}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z]");
     }
 
+    private boolean ClientHasSubmission(String cf)
+    {
+        ModelCliente modelClienteDB = new ModelDBCliente();
+        ControllerAlert alert = new ControllerAlert();
+        /*first check if client has a valid subscription */
+        dieciIngressi = modelClienteDB.checkTenEntranceSubmission(cf);
+        mensile = modelClienteDB.checkMonthEntranceSubmission(cf);
+        trimestrale = modelClienteDB.check3MonthEntranceSubmission(cf);
+        tesseracorso = modelClienteDB.checkClassEntranceSubmission(cf);
 
+        if(dieciIngressi > 0 || tesseracorso > 0)
+        {
+            modelClienteDB.updateClientSubmissionDayEntrance(cf);
+            /*display summary entrance*/
+            ModelDayEntrance modelDayEntranceDB = new ModelDBDayEntrance();
+            DayEntrance dayEntrance = modelDayEntranceDB.getDayEntrance(cf);
+
+            alert.displayInformation(String.format("Il cliente %s %s ha effettuato l'ingresso:\n%s\nRiepilogo ingressi residui: %d",dayEntrance.getName(),
+                    dayEntrance.getSurname(), dayEntrance.getEntrance(),dayEntrance.getRemainingEntrance()));
+            return true;
+        }
+        else if(mensile > 0 || trimestrale > 0)
+        {
+            modelClienteDB.updateClientSubmissionDurationEntrance(cf);
+
+            /*display summary entrance*/
+            ModelPeriodEntrance modelPeriodEntranceDB = new ModelDBPeriodEntrance();
+            PeriodEntrance periodEntrance = modelPeriodEntranceDB.getPeriodEntrance(cf);
+
+            alert.displayInformation(String.format("Il cliente %s %s ha effettuato l'ingresso:\n%s\nInzio abbonamento: %s\nFine abbonamento: %s",periodEntrance.getName(),
+                    periodEntrance.getSurname(), periodEntrance.getEntrance(), periodEntrance.getStartSubmission(), periodEntrance.getEndSubmission()));
+            return true;
+
+        }
+        return false;
+    }
 }
 

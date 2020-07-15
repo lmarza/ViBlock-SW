@@ -327,19 +327,9 @@ public class ControllerMembership {
             alert.displayInformation("Il cliente è già presente nel DB... verifico che non sia già iscritto per quest'anno!\n");
             Person oldClient = modelClienteDB.getClient(person.getCf());
 
-            String[] membership = oldClient.getDataMembership().split("-");
-            int year = Calendar.getInstance().get(Calendar.YEAR);
-
-            /*if client is member for the new year-->error */
-            if(Integer.parseInt(membership[1]) > 6 && Integer.parseInt(membership[0]) >= year)
+            if(oldClient.getDataMembership() == null)
             {
-                alert.displayAlert("Il cliente è già tesserato per quest'anno!");
-                StageManager mainPage = new StageManager();
-                mainPage.setStageMainPage((Stage) registraSocioJFXButton.getScene().getWindow(), managers);
-            }
-            else
-            {
-                alert.displayInformation("Aggiorno le sue informazioni!\n");
+                alert.displayInformation("Il cliente non è già tesserato per quest'anno,aggiorno le sue informazioni!\n");
 
                 /*add new medical certificate into DB*/
                 MedicalCertificate medicalCertificate = new MedicalCertificate();
@@ -353,15 +343,30 @@ public class ControllerMembership {
 
                 person.setMedicalCertificate(String.valueOf(medicalCertificateId));
 
+                //TODO: enable send email
                 Mail.sendMail(mailJFXTextField.getText(), nomeJFXTextField.getText(), cognomeJFXTextField.getText(), pswTempJFXTextField.getText());
                 if(oldClient.getClientType().equalsIgnoreCase("P"))
                     person.setClientType("RP");
                 modelClienteDB.updateClientInformation(person);
                 alert.displayInformation("Le informazioni del cliente sono state aggiornate con successo!\n");
             }
+            else
+            {
+                String[] membership = oldClient.getDataMembership().split("-");
+                int year = Calendar.getInstance().get(Calendar.YEAR);
+
+                /*if client is member for the new year-->error */
+                if(Integer.parseInt(membership[1]) > 6 && Integer.parseInt(membership[0]) >= year)
+                {
+                    alert.displayAlert("Il cliente è già tesserato per quest'anno!");
+                    StageManager mainPage = new StageManager();
+                    mainPage.setStageMainPage((Stage) registraSocioJFXButton.getScene().getWindow(), managers);
+                }
+            }
         }
         /*Entrance page*/
         StageManager entrancePage = new StageManager();
+        person.setBirthday(person.getBirthday().replaceAll("/", "-"));
         entrancePage.setStageEntrace((Stage) registraSocioJFXButton.getScene().getWindow(), managers, person);
     }
 }

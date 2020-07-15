@@ -7,6 +7,7 @@ public interface ModelCliente {
     public int checkIfClientAlreadyExists(String cf);
     public void updateClientInformation(Person person);
     public Person getClient(String cf);
+    public Person getClientFromNameSurname(String name, String surname);
 
     public int checkTenEntranceSubmission(String cf);
     public int checkMonthEntranceSubmission(String cf);

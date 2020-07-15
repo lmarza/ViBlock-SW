@@ -109,7 +109,7 @@ public class ControllerEntrance {
 
     private String ingresso;
 
-    private String scarpette;
+    private String scarpette = "NO";
 
 
     @FXML
@@ -148,7 +148,7 @@ public class ControllerEntrance {
         scadCertificatoLabel.setText(modelCertificatoMedicoDB.getExpiryDateMedicalCertificate(person.getMedicalCertificate()));
 
         int year = Calendar.getInstance().get(Calendar.YEAR);
-        String[] birthday = person.getBirthday().split("/");
+        String[] birthday = person.getBirthday().split("-");
         if(year - Integer.parseInt(birthday[2]) < 18)
             U18Label.setText("SI");
         else
@@ -348,6 +348,18 @@ public class ControllerEntrance {
         }
         else
             payment.setShoes("NO");
+
+        /*Add record into DB for DayEntrance or PeriodEntrance*/
+        ModelDayEntrance modelDayEntranceDB = new ModelDBDayEntrance();
+        ModelPeriodEntrance modelPeriodEntranceDB = new ModelDBPeriodEntrance();
+        if ("Abbonamento 10 ingressi".equalsIgnoreCase(ingresso))
+            modelDayEntranceDB.insertNewDayEntranceSubmission("Abbonamento 10 ingressi", person.getCf(), 9);
+        else if("Tessera corso".equalsIgnoreCase(ingresso))
+            modelDayEntranceDB.insertNewDayEntranceSubmission("Abbonamento 10 ingressi", person.getCf(), 4);
+        else if("Abbonamento mensile".equalsIgnoreCase(ingresso))
+            modelPeriodEntranceDB.insertNewMonthPeriodEntranceSubmission(person.getCf());
+        else if ("Abbonamento trimestrale".equalsIgnoreCase(ingresso))
+            modelPeriodEntranceDB.insertNew3MonthPeriodEntranceSubmission(person.getCf());
 
 
         /*Add payment into DB*/

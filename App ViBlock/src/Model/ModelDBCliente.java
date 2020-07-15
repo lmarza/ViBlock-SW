@@ -67,7 +67,7 @@ public class ModelDBCliente implements ModelCliente {
     public void updateClientInformation(Person person) {
         db.DBOpenConnection();
         db.executeSQLUpdate("UPDATE utente " +
-                "SET mail=?, psw=?, certificatomedico=?::INTEGER, tipoutente=? , datatesseramento=? " +
+                "SET mail=?, psw=?, certificatomedico=?::INTEGER, tipoutente=? , datatesseramento=?::DATE " +
                 "WHERE cf = ? ;", List.of(person.getMail(), person.getPsw(), person.getMedicalCertificate(),person.getClientType(), person.getDataMembership(), person.getCf()));
     }
 
@@ -79,6 +79,21 @@ public class ModelDBCliente implements ModelCliente {
         db.executeSQLQuery( "SELECT * " +
                 "FROM utente " +
                 "WHERE cf = ?; ", List.of(cf));
+
+        person = resultSetToPerson(db.getResultSet());
+
+
+        return person;
+    }
+
+    @Override
+    public Person getClientFromNameSurname(String name, String surname) {
+        Person person;
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT * " +
+                "FROM utente " +
+                "WHERE (nome ILIKE ? OR cognome ILIKE ?) AND (nome ILIKE ? OR cognome ILIKE ?) ", List.of(name,name,surname, surname));
 
         person = resultSetToPerson(db.getResultSet());
 
@@ -180,7 +195,7 @@ public class ModelDBCliente implements ModelCliente {
     @Override
     public void updateClientSubmissionDayEntrance(String cf) {
         db.DBOpenConnection();
-        db.executeSQLUpdate("UPDATE ingressoagiorni" +
+        db.executeSQLUpdate("UPDATE ingressoagiorni " +
                 "SET istanteingresso = CURRENT_TIMESTAMP, ingressiresidui = ingressiresidui - 1 " +
                 "WHERE cfutente = ?",List.of(cf));
 
@@ -189,8 +204,8 @@ public class ModelDBCliente implements ModelCliente {
     @Override
     public void updateClientSubmissionDurationEntrance(String cf) {
         db.DBOpenConnection();
-        db.executeSQLUpdate("UPDATE ingressoadurata" +
-                "SET istanteingresso = CURRENT_TIMESTAMP" +
+        db.executeSQLUpdate("UPDATE ingressoadurata " +
+                "SET istanteingresso = CURRENT_TIMESTAMP " +
                 "WHERE cfutente = ?",List.of(cf));
     }
 

@@ -26,6 +26,7 @@ public class ModelDBPeriodEntrance implements ModelPeriodEntrance {
         return periodEntrance;
     }
 
+
     private PeriodEntrance resultSetToPeriodEntrance(ResultSet rs) {
         PeriodEntrance periodEntrance = null;
 
@@ -38,7 +39,7 @@ public class ModelDBPeriodEntrance implements ModelPeriodEntrance {
                 periodEntrance.setSurname(db.getSQLString(rs,"cognome"));
                 periodEntrance.setCf(db.getSQLString(rs, "cf"));
                 periodEntrance.setEntrance(db.getSQLString(rs,"ingresso"));
-                periodEntrance.setStartSubmission(db.getSQLDate(rs, "inzioabbonamento"));
+                periodEntrance.setStartSubmission(db.getSQLDate(rs, "inizioabbonamento"));
                 periodEntrance.setEndSubmission(db.getSQLDate(rs, "fineabbonamento"));
             }
 
@@ -51,6 +52,21 @@ public class ModelDBPeriodEntrance implements ModelPeriodEntrance {
         }
 
         return null;
+    }
+
+    @Override
+    public void insertNewMonthPeriodEntranceSubmission(String cf) {
+        db.DBOpenConnection();
+        db.executeSQLUpdate("INSERT INTO public.ingressoadurata(ingresso, istanteingresso, inizioabbonamento, fineabbonamento, cfutente) " +
+                "VALUES ('Abbonamento mensile', CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE + INTERVAL '1 month' , ?) ", List.of(cf));
+
+    }
+
+    @Override
+    public void insertNew3MonthPeriodEntranceSubmission(String cf) {
+        db.DBOpenConnection();
+        db.executeSQLUpdate("INSERT INTO public.ingressoadurata(ingresso, istanteingresso, inizioabbonamento, fineabbonamento, cfutente) " +
+                "VALUES ('Abbonamento trimestrale', CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE + INTERVAL '1 month' , ?) ", List.of(cf));
     }
 
 }
