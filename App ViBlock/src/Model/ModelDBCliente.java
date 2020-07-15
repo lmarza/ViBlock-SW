@@ -86,6 +86,7 @@ public class ModelDBCliente implements ModelCliente {
         return person;
     }
 
+
     private Person resultSetToPerson(ResultSet rs)
     {
         Person person = null;
@@ -120,6 +121,80 @@ public class ModelDBCliente implements ModelCliente {
         return null;
     }
 
+    @Override
+    public int checkTenEntranceSubmission(String cf) {
+        int count;
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT COUNT(*) " +
+                "FROM ingressoagiorni " +
+                "WHERE ingresso ILIKE 'Abbonamento 10 ingressi' AND cfutente = ? AND ingressiresidui > 0; ", List.of(cf));
+
+        count = resultSetToCountRecord(db.getResultSet());
+
+        return count;
+    }
+
+    @Override
+    public int checkMonthEntranceSubmission(String cf) {
+        int count;
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT COUNT(*) " +
+                "FROM ingressoadurata " +
+                "WHERE ingresso ILIKE 'Abbonamento mensile' AND cfutente = ? AND fineabbonamento > CURRENT_DATE; ", List.of(cf));
+
+        count = resultSetToCountRecord(db.getResultSet());
+
+        return count;
+    }
+
+    @Override
+    public int check3MonthEntranceSubmission(String cf) {
+        int count;
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT COUNT(*) " +
+                "FROM ingressoadurata " +
+                "WHERE ingresso ILIKE 'Abbonamento trimestrale' AND cfutente = ? AND fineabbonamento > CURRENT_DATE; ", List.of(cf));
+
+        count = resultSetToCountRecord(db.getResultSet());
+
+        return count;
+    }
+
+    @Override
+    public int checkClassEntranceSubmission(String cf) {
+        int count;
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT COUNT(*) " +
+                "FROM ingressoagiorni " +
+                "WHERE ingresso ILIKE 'Tessera corso' AND cfutente = ? AND ingressiresidui > 0; ", List.of(cf));
+
+        count = resultSetToCountRecord(db.getResultSet());
+
+        return count;
+    }
+
+    @Override
+    public void updateClientSubmissionDayEntrance(String cf) {
+        db.DBOpenConnection();
+        db.executeSQLUpdate("UPDATE ingressoagiorni" +
+                "SET istanteingresso = CURRENT_TIMESTAMP, ingressiresidui = ingressiresidui - 1 " +
+                "WHERE cfutente = ?",List.of(cf));
+
+    }
+
+    @Override
+    public void updateClientSubmissionDurationEntrance(String cf) {
+        db.DBOpenConnection();
+        db.executeSQLUpdate("UPDATE ingressoadurata" +
+                "SET istanteingresso = CURRENT_TIMESTAMP" +
+                "WHERE cfutente = ?",List.of(cf));
+    }
 
 
 }
+
+

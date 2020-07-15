@@ -7,4 +7,13 @@ public interface ModelCliente {
     public int checkIfClientAlreadyExists(String cf);
     public void updateClientInformation(Person person);
     public Person getClient(String cf);
+
+    public int checkTenEntranceSubmission(String cf);
+    public int checkMonthEntranceSubmission(String cf);
+    public int check3MonthEntranceSubmission(String cf);
+    public int checkClassEntranceSubmission(String cf);
+
+    void updateClientSubmissionDayEntrance(String cf);
+    void updateClientSubmissionDurationEntrance(String cf);
+
 }

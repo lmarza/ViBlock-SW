@@ -1,8 +1,6 @@
 package Controller;
 
-import Data.Entrata;
-import Data.Manager;
-import Data.RiepilogoGiornaliero;
+import Data.*;
 import Model.*;
 import Utils.StageManager;
 import com.jfoenix.controls.JFXButton;
@@ -83,6 +81,11 @@ public class ControllerMainPage {
     private JFXButton esportaSaldoGiorJFXButton;
 
     private ArrayList<Manager> managers;
+
+    private int dieciIngressi;
+    private int mensile;
+    private int trimestrale;
+    private int tesseracorso;
 
     @FXML
     private void initialize()
@@ -240,11 +243,60 @@ public class ControllerMainPage {
     }
 
     private void handleSearchClientJFXButton(ActionEvent actionEvent) {
-       if(isCFcode(searchJFXTextField.getText()))
-       {
-           /*first check if client has a valid subscription */
+        ControllerAlert alert = new ControllerAlert();
 
-       }
+        if (searchJFXTextField.getText().isEmpty())
+            alert.displayAlert("Inserire un nome cognome o CF!\n");
+        else
+        {
+            if(isCFcode(searchJFXTextField.getText()))
+            {
+                /*first check if client has a valid subscription */
+                ModelCliente modelClienteDB = new ModelDBCliente();
+                dieciIngressi = modelClienteDB.checkTenEntranceSubmission(searchJFXTextField.getText());
+                mensile = modelClienteDB.checkMonthEntranceSubmission(searchJFXTextField.getText());
+                trimestrale = modelClienteDB.check3MonthEntranceSubmission(searchJFXTextField.getText());
+                tesseracorso = modelClienteDB.checkClassEntranceSubmission(searchJFXTextField.getText());
+
+                if(dieciIngressi > 0 || tesseracorso > 0)
+                {
+                    modelClienteDB.updateClientSubmissionDayEntrance(searchJFXTextField.getText());
+                    /*display summary entrance*/
+                    ModelDayEntrance modelDayEntranceDB = new ModelDBDayEntrance();
+                    DayEntrance dayEntrance = modelDayEntranceDB.getDayEntrance(searchJFXTextField.getText());
+
+                    alert.displayInformation(String.format("Il cliente %s %s ha effettuato l'ingresso: %s!\nRiepilogo ingressi residui: %d",dayEntrance.getName(),
+                            dayEntrance.getSurname(), dayEntrance.getEntrance(),dayEntrance.getRemainingEntrance()));
+                }
+                else if(mensile > 0 || trimestrale > 0)
+                {
+                    modelClienteDB.updateClientSubmissionDurationEntrance(searchJFXTextField.getText());
+
+                    /*display summary entrance*/
+                    ModelPeriodEntrance modelPeriodEntranceDB = new ModelDBPeriodEntrance();
+                    PeriodEntrance periodEntrance = modelPeriodEntranceDB.getPeriodEntrance(searchJFXTextField.getText());
+
+                    alert.displayInformation(String.format("Il cliente %s %s ha effettuato l'ingresso: %s!\nInzio abbonamento: %s\nFine abbonamento: %s",periodEntrance.getName(),
+                            periodEntrance.getSurname(), periodEntrance.getEntrance(), periodEntrance.getStartSubmission(), periodEntrance.getEndSubmission()));
+
+                }
+                else
+                {
+                    alert.displayInformation("Il cliente non ha un abbonamento valido!\n");
+                    /*Fetch client information*/
+                    Person person = modelClienteDB.getClient(searchJFXTextField.getText());
+
+                    /*Entrance page*/
+                    StageManager entrancePage = new StageManager();
+                    entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, person);
+                }
+            }
+            else
+            {
+                String[] split = searchJFXTextField.getText().split(" ");
+            }
+        }
+
     }
 
     private boolean isCFcode(String cf){
