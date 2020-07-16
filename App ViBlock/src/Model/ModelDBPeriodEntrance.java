@@ -65,7 +65,7 @@ public class ModelDBPeriodEntrance implements ModelPeriodEntrance {
     @Override
     public void insertNew3MonthPeriodEntranceSubmission(String cf) {
         db.DBOpenConnection();
-        db.executeSQLUpdate("INSERT INTO public.ingressoadurata(ingresso, istanteingresso, inizioabbonamento, fineabbonamento, cfutente) " +
+        db.executeSQLUpdate("INSERT INTO ingressoadurata(ingresso, istanteingresso, inizioabbonamento, fineabbonamento, cfutente) " +
                 "VALUES ('Abbonamento trimestrale', CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE + INTERVAL '1 month' , ?) ", List.of(cf));
     }
 
@@ -79,6 +79,20 @@ public class ModelDBPeriodEntrance implements ModelPeriodEntrance {
         int result = resultSetToisAlreadyEntered(db.getResultSet());
 
         return result != 0;
+    }
+
+    @Override
+    public void insertOldMonthSubmission(String cf, int giorniResidui) {
+        db.DBOpenConnection();
+        db.executeSQLUpdate("INSERT INTO ingressoadurata(ingresso, istanteingresso, inizioabbonamento, fineabbonamento, cfutente) " +
+                "VALUES ('Abbonamento mensile', CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE + ?::INTEGER, ?); ", List.of(String.valueOf(giorniResidui),cf));
+    }
+
+    @Override
+    public void insertOld3MonthSubmission(String cf, int giorniResidui) {
+        db.DBOpenConnection();
+        db.executeSQLUpdate("INSERT INTO ingressoadurata(ingresso, istanteingresso, inizioabbonamento, fineabbonamento, cfutente) " +
+                "VALUES ('Abbonamento mensile', CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE + ?::INTEGER, ?); ", List.of(String.valueOf(giorniResidui),cf));
     }
 
     private int resultSetToisAlreadyEntered(ResultSet rs) {

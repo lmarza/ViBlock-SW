@@ -35,7 +35,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <JFXButton fx:id="dieciIngrJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="475.0" layoutY="583.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Abbonamento 10 ingressi" textFill="#ffa423">
+            <JFXButton fx:id="dieciIngrJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="440.0" layoutY="532.0" prefHeight="79.0" prefWidth="308.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Abbonamento 10 ingressi" textFill="#ffa423">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
@@ -43,7 +43,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="ingressoSingoloJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="581.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Ingresso singolo" textFill="#ffa423">
+            <JFXButton fx:id="ingressoSingoloJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="93.0" layoutY="531.0" prefHeight="79.0" prefWidth="308.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Ingresso singolo" textFill="#ffa423">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
@@ -51,7 +51,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="mensileJFXButton" alignment="CENTER" layoutX="851.0" layoutY="583.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Abbonamento Mensile" textFill="#ffa423">
+            <JFXButton fx:id="mensileJFXButton" alignment="CENTER" layoutX="799.0" layoutY="531.0" prefHeight="79.0" prefWidth="308.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Abbonamento mensile" textFill="#ffa423">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
@@ -59,7 +59,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="trimeJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="110.0" layoutY="739.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Abbonamento Trimestrale" textFill="#ffa423">
+            <JFXButton fx:id="trimeJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="95.0" layoutY="663.0" prefHeight="79.0" prefWidth="308.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Abbonamento trimestrale" textFill="#ffa423">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
@@ -67,7 +67,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="corsoJFXButton" alignment="CENTER" layoutX="480.0" layoutY="741.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Tessera Corso" textFill="#ffa423">
+            <JFXButton fx:id="corsoJFXButton" alignment="CENTER" layoutX="445.0" layoutY="664.0" prefHeight="79.0" prefWidth="308.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Tessera corso" textFill="#ffa423">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
@@ -103,7 +103,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <AnchorPane layoutX="92.0" layoutY="145.0" prefHeight="370.0" prefWidth="661.0" style="-fx-background-color: rgba(0,0,0,0.4); -fx-background-radius: 90;">
+            <AnchorPane layoutX="85.0" layoutY="128.0" prefHeight="370.0" prefWidth="661.0" style="-fx-background-color: rgba(0,0,0,0.4); -fx-background-radius: 90;">
                <children>
                   <Label layoutX="182.0" layoutY="46.0" maxWidth="220.0" prefHeight="47.0" prefWidth="103.0" text="Nome:" textFill="#f1f1f1">
                      <font>
@@ -176,7 +176,7 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
-            <JFXButton fx:id="scarpetteJFXButton" alignment="CENTER" layoutX="856.0" layoutY="740.0" prefHeight="104.0" prefWidth="322.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Noleggio scarpette" textFill="#ffa423">
+            <JFXButton fx:id="scarpetteJFXButton" alignment="CENTER" layoutX="800.0" layoutY="665.0" prefHeight="79.0" prefWidth="308.0" style="-fx-background-color: rgba(30, 139, 195, 0.8); -fx-background-radius: 90;" text="Noleggio scarpette" textFill="#ffa423">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
@@ -189,7 +189,31 @@
                   <Font name="Tahoma" size="35.0" />
                </font>
             </JFXCheckBox>
-            <JFXButton fx:id="resetJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1284.0" layoutY="666.0" prefHeight="79.0" prefWidth="163.0" style="-fx-background-color: #ffa423; -fx-background-radius: 90;" text="Reset">
+            <JFXButton fx:id="resetJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1247.0" layoutY="663.0" prefHeight="79.0" prefWidth="163.0" style="-fx-background-color: #ffa423; -fx-background-radius: 90;" text="Reset">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="vecchio10IngressiJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" layoutY="777.0" prefHeight="79.0" prefWidth="308.0" style="-fx-background-color: #ffe082; -fx-background-radius: 90;" text="Vecchio 10 ingressi">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="vecchioMensileJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="451.0" layoutY="784.0" prefHeight="79.0" prefWidth="308.0" style="-fx-background-color: #ffe082; -fx-background-radius: 90;" text="Vecchio mensile">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="vecchioTrimestraleJFXButton" alignment="CENTER" contentDisplay="CENTER" layoutX="810.0" layoutY="786.0" prefHeight="79.0" prefWidth="308.0" style="-fx-background-color: #ffe082; -fx-background-radius: 90;" text="Vecchio trimestrale">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>

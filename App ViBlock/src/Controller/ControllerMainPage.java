@@ -16,10 +16,7 @@ import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 public class ControllerMainPage {
 
@@ -261,7 +258,6 @@ public class ControllerMainPage {
                     alert.displayAlert("Il cliente non è nel DB!\nEffettuare un ingresso prova o tesseramento.");
                     searchJFXTextField.clear();
                 }
-
                 else
                 {
                     if(!ClientHasSubmission(searchJFXTextField.getText()))
@@ -273,6 +269,7 @@ public class ControllerMainPage {
                         /*Entrance page*/
                         StageManager entrancePage = new StageManager();
                         entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, person);
+
                     }
                 }
 
@@ -299,12 +296,28 @@ public class ControllerMainPage {
                         {
                             alert.displayInformation("Il cliente non ha un abbonamento valido!\n");
                             /*Fetch client information*/
-                            /*Entrance page*/
-                            StageManager entrancePage = new StageManager();
-                            entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
+                            int year = Calendar.getInstance().get(Calendar.YEAR);
+
+                            /*if client has already done a try, membership page!*/
+                            if(client.getDataMembership() == null && client.getDataTry() != null)
+                            {
+                                String[] dataTry = client.getDataTry().split("-");
+                                if(Integer.parseInt(dataTry[1]) > 6 && Integer.parseInt(dataTry[0]) >= year)
+                                {
+                                    alert.displayAlert("Il cliente ha già effettuato la prova! Per continuare deve tesserarsi...");
+
+                                    StageManager membershipPage = new StageManager();
+                                    membershipPage.setStageNewMembership((Stage) searchJFXTextField.getScene().getWindow(), managers);
+                                }
+                            }
+                            else if (client.getDataMembership() != null)
+                            {
+                                /*Entrance page*/
+                                StageManager entrancePage = new StageManager();
+                                entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
+                            }
                         }
                     }
-
                 }
                 else
                 {
@@ -350,9 +363,26 @@ public class ControllerMainPage {
                             {
                                 alert.displayInformation("Il cliente non ha un abbonamento valido!\n");
                                 /*Fetch client information*/
-                                /*Entrance page*/
-                                StageManager entrancePage = new StageManager();
-                                entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
+                                int year = Calendar.getInstance().get(Calendar.YEAR);
+
+                                /*if client has already done a try, membership page!*/
+                                if(client.getDataMembership() == null && client.getDataTry() != null)
+                                {
+                                    String[] dataTry = client.getDataTry().split("-");
+                                    if(Integer.parseInt(dataTry[1]) > 6 && Integer.parseInt(dataTry[0]) >= year)
+                                    {
+                                        alert.displayAlert("Il cliente ha già effettuato la prova! Per continuare deve tesserarsi...");
+
+                                        StageManager membershipPage = new StageManager();
+                                        membershipPage.setStageNewMembership((Stage) searchJFXTextField.getScene().getWindow(), managers);
+                                    }
+                                }
+                                else if (client.getDataMembership() != null)
+                                {
+                                    /*Entrance page*/
+                                    StageManager entrancePage = new StageManager();
+                                    entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
+                                }
                             }
                         }
                     } else if (result.get() == buttonTypeTwo) {
@@ -368,9 +398,26 @@ public class ControllerMainPage {
                             {
                                 alert.displayInformation("Il cliente non ha un abbonamento valido!\n");
                                 /*Fetch client information*/
-                                /*Entrance page*/
-                                StageManager entrancePage = new StageManager();
-                                entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
+                                int year = Calendar.getInstance().get(Calendar.YEAR);
+
+                                /*if client has already done a try, membership page!*/
+                                if(client.getDataMembership() == null && client.getDataTry() != null)
+                                {
+                                    String[] dataTry = client.getDataTry().split("-");
+                                    if(Integer.parseInt(dataTry[1]) > 6 && Integer.parseInt(dataTry[0]) >= year)
+                                    {
+                                        alert.displayAlert("Il cliente ha già effettuato la prova! Per continuare deve tesserarsi...");
+
+                                        StageManager membershipPage = new StageManager();
+                                        membershipPage.setStageNewMembership((Stage) searchJFXTextField.getScene().getWindow(), managers);
+                                    }
+                                }
+                                else if (client.getDataMembership() != null)
+                                {
+                                    /*Entrance page*/
+                                    StageManager entrancePage = new StageManager();
+                                    entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
+                                }
                             }
                         }
 
