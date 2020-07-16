@@ -186,10 +186,19 @@ public class ControllerMainPage {
             }
         }
 
-        if(!withdrawal.equals(new BigDecimal(0.0)))
+        ModelPrelievo modelPrelievoDB = new ModelDBPrelievo();
+        String[] withdrawalLabel = prelievoLabel.getText().split(" ");
+        if(!withdrawal.equals(new BigDecimal(0.0)) && withdrawalLabel[0].equals("0"))
         {
-            ModelPrelievo modelPrelievoDB = new ModelDBPrelievo();
             modelPrelievoDB.insertWithdrawal(withdrawal, managers.get(0));
+            alert.displayInformation("Prelievo eseguito correttamente!\n");
+            setSideScreen();
+
+        }
+        else
+        {
+            modelPrelievoDB.updateWithdrawal(withdrawal, managers.get(0));
+            alert.displayInformation("Prelievo aggiornato correttamente!\n");
             setSideScreen();
         }
 
@@ -272,8 +281,10 @@ public class ControllerMainPage {
             {
                 /*take name and surname from textField*/
                 String[] nameSurname = searchJFXTextField.getText().split(" ");
+                if(nameSurname.length < 2)
+                    alert.displayAlert("Inserire nome e cognome o CF!\n");
                 /*if first name and last name are single, so name surname--> fetch client information*/
-                if(nameSurname.length == 2)
+                else if(nameSurname.length == 2)
                 {
                     /*Fetch client information*/
                     Person client = modelClienteDB.getClientFromNameSurname(nameSurname[0], nameSurname[1]);
@@ -386,27 +397,39 @@ public class ControllerMainPage {
 
         if(dieciIngressi > 0 || tesseracorso > 0)
         {
-            modelClienteDB.updateClientSubmissionDayEntrance(cf);
-            /*display summary entrance*/
+            /*check if client is already entered for the current day*/
             ModelDayEntrance modelDayEntranceDB = new ModelDBDayEntrance();
-            DayEntrance dayEntrance = modelDayEntranceDB.getDayEntrance(cf);
+            if(modelDayEntranceDB.isAlreadyEntered(cf))
+                alert.displayAlert("Il cliente è già entrato oggi!\n");
+            else
+            {
+                modelClienteDB.updateClientSubmissionDayEntrance(cf);
+                /*display summary entrance*/
+                DayEntrance dayEntrance = modelDayEntranceDB.getDayEntrance(cf);
 
-            alert.displayInformation(String.format("Il cliente %s %s ha effettuato l'ingresso:\n%s\nRiepilogo ingressi residui: %d",dayEntrance.getName(),
-                    dayEntrance.getSurname(), dayEntrance.getEntrance(),dayEntrance.getRemainingEntrance()));
+                alert.displayInformation(String.format("Il cliente %s %s ha effettuato l'ingresso:\n%s\nRiepilogo ingressi residui: %d",dayEntrance.getName(),
+                        dayEntrance.getSurname(), dayEntrance.getEntrance(),dayEntrance.getRemainingEntrance()));
+                searchJFXTextField.clear();
+            }
             return true;
+
         }
         else if(mensile > 0 || trimestrale > 0)
         {
             modelClienteDB.updateClientSubmissionDurationEntrance(cf);
-
-            /*display summary entrance*/
             ModelPeriodEntrance modelPeriodEntranceDB = new ModelDBPeriodEntrance();
-            PeriodEntrance periodEntrance = modelPeriodEntranceDB.getPeriodEntrance(cf);
+            if(modelPeriodEntranceDB.isAlreadyEntered(cf))
+                alert.displayAlert("Il cliente è già entrato oggi!\n");
+            else
+            {
+                /*display summary entrance*/
+                PeriodEntrance periodEntrance = modelPeriodEntranceDB.getPeriodEntrance(cf);
 
-            alert.displayInformation(String.format("Il cliente %s %s ha effettuato l'ingresso:\n%s\nInzio abbonamento: %s\nFine abbonamento: %s",periodEntrance.getName(),
-                    periodEntrance.getSurname(), periodEntrance.getEntrance(), periodEntrance.getStartSubmission(), periodEntrance.getEndSubmission()));
+                alert.displayInformation(String.format("Il cliente %s %s ha effettuato l'ingresso:\n%s\nInzio abbonamento: %s\nFine abbonamento: %s",periodEntrance.getName(),
+                        periodEntrance.getSurname(), periodEntrance.getEntrance(), periodEntrance.getStartSubmission(), periodEntrance.getEndSubmission()));
+                searchJFXTextField.clear();
+            }
             return true;
-
         }
         return false;
     }

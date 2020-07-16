@@ -56,8 +56,15 @@ public class ModelDBPrelievo implements ModelPrelievo {
     public void insertWithdrawal(BigDecimal importo, Manager socio)
     {
         db.DBOpenConnection();
-        Date currentTimestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
-        db.executeSQLUpdate("INSERT INTO prelievo(istante, socio, importo) VALUES(?::TIMESTAMP, ?, ?::NUMERIC(6,2)); ", List.of(currentTimestamp.toString(), socio.getUsername(), importo.toString()));
+        db.executeSQLUpdate("INSERT INTO prelievo(istante, socio, importo) VALUES(CURRENT_TIMESTAMP, ?, ?::NUMERIC(6,2)); ", List.of(socio.getUsername(), importo.toString()));
+    }
+
+    @Override
+    public void updateWithdrawal(BigDecimal importo, Manager socio) {
+        db.DBOpenConnection();
+        db.executeSQLUpdate("UPDATE public.prelievo " +
+                "SET istante= CURRENT_TIMESTAMP, socio=?, importo= importo + ?::NUMERIC(7,2)" +
+                "WHERE date_part('day'::text, istante) = date_part('day'::text, CURRENT_DATE)", List.of(socio.getUsername(), importo.toString()));
     }
 
 }

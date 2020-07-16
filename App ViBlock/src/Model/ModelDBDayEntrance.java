@@ -57,7 +57,44 @@ public class ModelDBDayEntrance implements ModelDayEntrance {
     public void insertNewDayEntranceSubmission(String entrance, String cf, int remainingEntrance) {
         db.DBOpenConnection();
         db.executeSQLUpdate("INSERT INTO public.ingressoagiorni(ingresso, istanteingresso, ingressiresidui, cfutente) " +
-                "VALUES (?, CURRENT_TIMESTAMP, ?, ?); ",List.of(entrance, String.valueOf(remainingEntrance), cf));
+                "VALUES (?, CURRENT_TIMESTAMP, ?::INTEGER, ?); ",List.of(entrance, String.valueOf(remainingEntrance), cf));
 
     }
+
+    @Override
+    public boolean isAlreadyEntered(String cf) {
+
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT COUNT(*) " +
+                "FROM ingressoagiorni " +
+                "WHERE cfutente = ? AND istanteingresso::DATE = CURRENT_DATE", List.of(cf));
+
+        int result = resultSetToisAlreadyEntered(db.getResultSet());
+
+        return result != 0;
+
+    }
+
+    private int resultSetToisAlreadyEntered(ResultSet rs) {
+
+            int count = 0;
+
+            try
+            {
+                while (rs.next())
+                {
+                    count = db.getSQLInt(rs, "count");
+                }
+
+                return count;
+            }
+            catch (SQLException e)
+            {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+
+            return Integer.parseInt(null);
+    }
+
 }

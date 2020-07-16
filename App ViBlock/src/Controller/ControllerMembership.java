@@ -113,6 +113,8 @@ public class ControllerMembership {
 
     private ArrayList<Manager> managers;
 
+    private Person person;
+
     private final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", Pattern.CASE_INSENSITIVE);
 
@@ -168,16 +170,9 @@ public class ControllerMembership {
 
         if(error.isEmpty())
         {
-            Person person = new Person();
-            person.setSurname(cognomeJFXTextField.getText());
-            person.setName(nomeJFXTextField.getText());
-            person.setSex(sessoComboBox.getValue());
-            person.setBornCity(luogoNascitaJFXTextField.getText().toUpperCase());
-            String[] birthday = dataNascitaJFXTextField.getText().split("/");
-            person.setDay(birthday[0]);
-            person.setMonth(birthday[1]);
-            person.setYear(birthday[2]);
+            person = createPerson();
             CFJFXTextField.setText(new CodiceFiscale(person).getCode());
+            person.setCf(CFJFXTextField.getText());
         }
         else
         {
@@ -197,7 +192,7 @@ public class ControllerMembership {
         {
             genCFJFXButton.setDisable(true);
             String[] birthday = dataNascitaJFXTextField.getText().split("/");
-            CFJFXTextField.setText(nomeJFXTextField.getText()+cognomeJFXTextField.getText()+birthday[2]);
+            CFJFXTextField.setText(person.getName()+person.getSurname()+birthday[2]);
         }
 
         if(!stranieroCheckBox.isSelected())
@@ -209,6 +204,9 @@ public class ControllerMembership {
         ControllerPersonInformation checkFields = new ControllerPersonInformation();
         String error = checkFields.fieldsAreValid(nomeJFXTextField, cognomeJFXTextField, dataNascitaJFXTextField, luogoNascitaJFXTextField, sessoComboBox.getValue());
         int year = Calendar.getInstance().get(Calendar.YEAR);
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        String[] rilascio = rilascioCertJFXTextField.getText().split("/");
+        String[] scadenza = scadenzaCertJFXTextField.getText().split("/");
 
         /*check if mail is valid*/
         if(!isMailValid(mailJFXTextField.getText()))
@@ -220,18 +218,18 @@ public class ControllerMembership {
         }
         else
         {
-            String[] split = rilascioCertJFXTextField.getText().split("/");
-            if(split.length < 3)
+
+            if(rilascio.length < 3)
             {
                 error += "-La data di rilascio deve avere formato DD/MM/YYYY!\n";
             }
             else
             {
-                if(!isNumerical(split[0]) || split[0].length() > 2 || (Integer.parseInt(split[0]) > 31 ||(Integer.parseInt(split[0]) < 1)))
+                if(!isNumerical(rilascio[0]) || rilascio[0].length() > 2 || (Integer.parseInt(rilascio[0]) > 31 ||(Integer.parseInt(rilascio[0]) < 1)))
                     error += "-Giorno di rilascio certificato non valido!\n";
-                if(!isNumerical(split[1]) || split[1].length() > 2 || (Integer.parseInt(split[1]) < 1 ||(Integer.parseInt(split[1]) > 12)))
+                if(!isNumerical(rilascio[1]) || rilascio[1].length() > 2 || (Integer.parseInt(rilascio[1]) < 1 ||(Integer.parseInt(rilascio[1]) > 12)))
                     error += "-Mese di rilascio certificato non valido!\n";
-                if(!isNumerical(split[2]) || split[2].length() != 4 || (Integer.parseInt(split[2]) > year ||(Integer.parseInt(split[2]) < 1900)))
+                if(!isNumerical(rilascio[2]) || rilascio[2].length() != 4 || (Integer.parseInt(rilascio[2]) > year || (Integer.parseInt(rilascio[2]) < 1900)))
                     error += "-Anno di rilascio certificato non valido (YYYY, 4 cifre necessarie)!\n";
             }
         }
@@ -242,21 +240,23 @@ public class ControllerMembership {
         }
         else
         {
-            String[] split = scadenzaCertJFXTextField.getText().split("/");
-            if(split.length < 3)
+            if(scadenza.length < 3)
             {
                 error += "-La data di scadenza deve avere formato DD/MM/YYYY!\n";
             }
             else
             {
-                if(!isNumerical(split[0]) || split[0].length() > 2 || (Integer.parseInt(split[0]) > 31 ||(Integer.parseInt(split[0]) < 1)))
+                if(!isNumerical(scadenza[0]) || scadenza[0].length() > 2 || (Integer.parseInt(scadenza[0]) > 31 ||(Integer.parseInt(scadenza[0]) < 1)))
                     error += "-Giorno scadenza certificato non valido!\n";
-                if(!isNumerical(split[1]) || split[1].length() > 2 || (Integer.parseInt(split[1]) < 1 ||(Integer.parseInt(split[1]) > 12)))
+                if(!isNumerical(scadenza[1]) || scadenza[1].length() > 2 || (Integer.parseInt(scadenza[1]) < 1 ||(Integer.parseInt(scadenza[1]) > 12)))
                     error += "-Mese scadenza certificato non valido!\n";
-                if(!isNumerical(split[2]) || split[2].length() != 4 || (Integer.parseInt(split[2]) < year ||(Integer.parseInt(split[2]) < 1900)))
+                if(!isNumerical(scadenza[2]) || scadenza[2].length() != 4 || (Integer.parseInt(scadenza[2]) < year ||(Integer.parseInt(scadenza[2]) < 1900)))
                     error += "-Anno scadenza certificato non valido (YYYY, 4 cifre necessarie)!\n";
             }
         }
+
+        if(Integer.parseInt(rilascio[2]) >= Integer.parseInt(scadenza[2]))
+            error += "-Data di rilascio o scadenza errata!Controlla gli anni\n";
 
         if(error.isEmpty())
         {
@@ -288,16 +288,9 @@ public class ControllerMembership {
         EncryptPassword encryptPassword = new EncryptPassword();
         String finalPsw = encryptPassword.generateHashPsw(pswTempJFXTextField.getText());
 
-        Person person = new Person();
-        person.setName(nomeJFXTextField.getText());
-        person.setSurname(cognomeJFXTextField.getText());
-        person.setSex(sessoComboBox.getValue());
-        person.setBirthday(dataNascitaJFXTextField.getText());
         person.setMail(mailJFXTextField.getText());
         person.setPsw(finalPsw);
         person.setClientType("R");
-        person.setBornCity(luogoNascitaJFXTextField.getText());
-        person.setCf(CFJFXTextField.getText());
 
         Date d = new Date();
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
@@ -344,7 +337,7 @@ public class ControllerMembership {
                 person.setMedicalCertificate(String.valueOf(medicalCertificateId));
 
                 //TODO: enable send email
-                Mail.sendMail(mailJFXTextField.getText(), nomeJFXTextField.getText(), cognomeJFXTextField.getText(), pswTempJFXTextField.getText());
+                //Mail.sendMail(mailJFXTextField.getText(), nomeJFXTextField.getText(), cognomeJFXTextField.getText(), pswTempJFXTextField.getText());
                 if(oldClient.getClientType().equalsIgnoreCase("P"))
                     person.setClientType("RP");
                 modelClienteDB.updateClientInformation(person);
@@ -368,5 +361,38 @@ public class ControllerMembership {
         StageManager entrancePage = new StageManager();
         person.setBirthday(person.getBirthday().replaceAll("/", "-"));
         entrancePage.setStageEntrace((Stage) registraSocioJFXButton.getScene().getWindow(), managers, person);
+    }
+
+    private Person createPerson() {
+        Person p = new Person();
+        String s = cognomeJFXTextField.getText().trim();
+        String[] s1 = s.split(" ");
+        String surname;
+        if(s1.length < 2)
+            surname = s.substring(0, 1).toUpperCase() + s.substring(1);
+        else
+            surname = s1[0].substring(0,1).toUpperCase() + s1[0].substring(1) + s1[1].substring(0,1).toUpperCase() + s1[1].substring(1);
+        p.setSurname(surname);
+
+        String n = nomeJFXTextField.getText().trim();
+        String[] n1 = n.split(" ");
+        String name;
+        if(n1.length < 2)
+            name = n.substring(0, 1).toUpperCase() + n.substring(1);
+        else
+            name = n1[0].substring(0,1).toUpperCase() + n1[0].substring(1) + n1[1].substring(0,1).toUpperCase() + n1[1].substring(1);
+        p.setName(name);
+
+        p.setSex(sessoComboBox.getValue());
+        String b = luogoNascitaJFXTextField.getText();
+        String birthPlace = b.substring(0, 1).toUpperCase() + b.substring(1);
+        p.setBornCity(birthPlace);
+        p.setBirthday(dataNascitaJFXTextField.getText());
+        String[] birthday = dataNascitaJFXTextField.getText().split("/");
+        p.setDay(birthday[0]);
+        p.setMonth(birthday[1]);
+        p.setYear(birthday[2]);
+
+        return p;
     }
 }

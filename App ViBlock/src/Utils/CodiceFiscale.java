@@ -32,7 +32,7 @@ public class CodiceFiscale {
             giorno=p.getDay();
             mese=p.getMonth();
             anno=p.getYear();
-            citta=p.getBornCity();
+            citta=p.getBornCity().toUpperCase();
 
             popolazioneStringheConsonantiVocali();
 

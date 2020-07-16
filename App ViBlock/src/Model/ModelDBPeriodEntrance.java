@@ -69,4 +69,38 @@ public class ModelDBPeriodEntrance implements ModelPeriodEntrance {
                 "VALUES ('Abbonamento trimestrale', CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE + INTERVAL '1 month' , ?) ", List.of(cf));
     }
 
+    @Override
+    public boolean isAlreadyEntered(String cf) {
+        db.DBOpenConnection();
+        db.executeSQLQuery( "SELECT COUNT(*) " +
+                "FROM ingressoadurata " +
+                "WHERE cfutente = ? AND istanteingresso::DATE = CURRENT_DATE", List.of(cf));
+
+        int result = resultSetToisAlreadyEntered(db.getResultSet());
+
+        return result != 0;
+    }
+
+    private int resultSetToisAlreadyEntered(ResultSet rs) {
+
+        int count = 0;
+
+        try
+        {
+            while (rs.next())
+            {
+                count = db.getSQLInt(rs, "count");
+            }
+
+            return count;
+        }
+        catch (SQLException e)
+        {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        return Integer.parseInt(null);
+    }
+
 }

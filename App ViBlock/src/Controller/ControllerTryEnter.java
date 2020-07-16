@@ -106,6 +106,10 @@ public class ControllerTryEnter {
 
     private ArrayList<Manager> managers;
 
+    private int ingresso;
+
+    private Person person;
+
     @FXML
     private void initialize()
     {
@@ -151,16 +155,9 @@ public class ControllerTryEnter {
 
         if(error.isEmpty())
         {
-            Person person = new Person();
-            person.setSurname(cognomeJFXTextField.getText());
-            person.setName(nomeJFXTextField.getText());
-            person.setSex(sessoComboBox.getValue());
-            person.setBornCity(luogoNascitaJFXTextField.getText().toUpperCase());
-            String[] birthday = dataNascitaJFXTextField.getText().split("/");
-            person.setDay(birthday[0]);
-            person.setMonth(birthday[1]);
-            person.setYear(birthday[2]);
+            person = createPerson();
             CFJFXTextField.setText(new CodiceFiscale(person).getCode());
+            person.setCf(CFJFXTextField.getText());
         }
         else
         {
@@ -169,12 +166,13 @@ public class ControllerTryEnter {
     }
 
 
+
     private void populateComboBox() {
         sex.addAll("M", "F");
     }
 
     private void handleIngressoProvaJFXButton(ActionEvent actionEvent) {
-        totDaPagareLabel.setText("10 €");
+        ingresso += 10;
         ControllerAlert alert = new ControllerAlert();
         ModelCliente modelClienteDB = new ModelDBCliente();
 
@@ -205,6 +203,8 @@ public class ControllerTryEnter {
                 if(Integer.parseInt(membership[1]) > 6 && Integer.parseInt(membership[0]) >= year)
                 {
                     alert.displayAlert("Il cliente è già tesserato!");
+                    StageManager mainPage = new StageManager();
+                    mainPage.setStageMainPage((Stage) ingressoProvaJFXButton.getScene().getWindow(), managers);
                 }
             }
 
@@ -212,9 +212,16 @@ public class ControllerTryEnter {
             {
                 dataTry = person.getDataTry().split("-");
                 if(Integer.parseInt(dataTry[1]) > 6 && Integer.parseInt(dataTry[0]) >= year)
+                {
                     alert.displayAlert("Il cliente ha già effettuato la prova!");
+                    StageManager mainPage = new StageManager();
+                    mainPage.setStageMainPage((Stage) ingressoProvaJFXButton.getScene().getWindow(), managers);
+                }
+
+
             }
         }
+        totDaPagareLabel.setText(String.valueOf(ingresso) + " €");
     }
 
     private void handleContantiJFXCheckBox(ActionEvent actionEvent) {
@@ -234,10 +241,11 @@ public class ControllerTryEnter {
 
     private void handleScarpetteJFXCheckBox(ActionEvent actionEvent) {
         if(scarpetteJFXCheckBox.isSelected())
-            totDaPagareLabel.setText("12 €");
+            ingresso += 2;
 
         if(!scarpetteJFXCheckBox.isSelected())
-            totDaPagareLabel.setText("10 €");
+            ingresso -= 2;
+        totDaPagareLabel.setText(String.valueOf(ingresso) + " €");
     }
 
     private void handleStranieroCheckBox(ActionEvent actionEvent) {
@@ -257,14 +265,6 @@ public class ControllerTryEnter {
         ModelCliente modelClientDB = new ModelDBCliente();
 
         /*first create new client and insert into DB*/
-        Person person = new Person();
-        person.setSurname(cognomeJFXTextField.getText());
-        person.setName(nomeJFXTextField.getText());
-        person.setSex(sessoComboBox.getValue());
-        person.setBornCity(luogoNascitaJFXTextField.getText());
-        person.setBirthday(dataNascitaJFXTextField.getText());
-        person.setSex(sessoComboBox.getValue());
-        person.setCf(CFJFXTextField.getText());
         person.setClientType("P");
         Date d = new Date();
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
@@ -306,4 +306,37 @@ public class ControllerTryEnter {
         mainPage.setStageMainPage((Stage) homePageImageView.getScene().getWindow(), managers);
 
     }
+
+    private Person createPerson() {
+        Person p = new Person();
+        String s = cognomeJFXTextField.getText().trim();
+        String[] s1 = s.split(" ");
+        String surname;
+        if(s1.length < 2)
+            surname = s.substring(0, 1).toUpperCase() + s.substring(1);
+        else
+            surname = s1[0].substring(0,1).toUpperCase() + s1[0].substring(1) + " " + s1[1].substring(0,1).toUpperCase() + s1[1].substring(1);
+        p.setSurname(surname);
+
+        String n = nomeJFXTextField.getText().trim();
+        String[] n1 = n.split(" ");
+        String name;
+        if(n1.length < 2)
+            name = n.substring(0, 1).toUpperCase() + n.substring(1);
+        else
+            name = n1[0].substring(0,1).toUpperCase() + n1[0].substring(1) + " " + n1[1].substring(0,1).toUpperCase() + n1[1].substring(1);
+        p.setName(name);
+        p.setSex(sessoComboBox.getValue());
+        String b = luogoNascitaJFXTextField.getText();
+        String birthPlace = b.substring(0, 1).toUpperCase() + b.substring(1);
+        p.setBornCity(birthPlace);
+        p.setBirthday(dataNascitaJFXTextField.getText());
+        String[] birthday = dataNascitaJFXTextField.getText().split("/");
+        p.setDay(birthday[0]);
+        p.setMonth(birthday[1]);
+        p.setYear(birthday[2]);
+
+        return p;
+    }
+
 }

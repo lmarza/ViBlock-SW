@@ -83,6 +83,8 @@ public class ControllerLoginPage {
         if(m == null)
         {
             alert.displayAlert("username o psw sbagliate!");
+            userJFXTextField.clear();
+            pswJFXPasswordField.clear();
         }
         else
         {
