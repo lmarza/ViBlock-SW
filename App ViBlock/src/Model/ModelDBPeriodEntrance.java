@@ -85,14 +85,14 @@ public class ModelDBPeriodEntrance implements ModelPeriodEntrance {
     public void insertOldMonthSubmission(String cf, int giorniResidui) {
         db.DBOpenConnection();
         db.executeSQLUpdate("INSERT INTO ingressoadurata(ingresso, istanteingresso, inizioabbonamento, fineabbonamento, cfutente) " +
-                "VALUES ('Abbonamento mensile', CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE + ?::INTEGER, ?); ", List.of(String.valueOf(giorniResidui),cf));
+                "VALUES ('Vecchio mensile', CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE + ?::INTEGER, ?); ", List.of(String.valueOf(giorniResidui),cf));
     }
 
     @Override
     public void insertOld3MonthSubmission(String cf, int giorniResidui) {
         db.DBOpenConnection();
         db.executeSQLUpdate("INSERT INTO ingressoadurata(ingresso, istanteingresso, inizioabbonamento, fineabbonamento, cfutente) " +
-                "VALUES ('Abbonamento mensile', CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE + ?::INTEGER, ?); ", List.of(String.valueOf(giorniResidui),cf));
+                "VALUES ('Vecchio trimestrale', CURRENT_TIMESTAMP, CURRENT_DATE, CURRENT_DATE + ?::INTEGER, ?); ", List.of(String.valueOf(giorniResidui),cf));
     }
 
     private int resultSetToisAlreadyEntered(ResultSet rs) {
