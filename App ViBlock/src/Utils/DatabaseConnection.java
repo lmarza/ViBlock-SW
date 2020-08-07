@@ -45,7 +45,8 @@ public class DatabaseConnection
 
             if (connection == null) {
                 Class.forName("org.postgresql.Driver");
-                connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ViBlock", user, psw);
+                //connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ViBlock", user, psw);
+                connection = DriverManager.getConnection("jdbc:postgresql://ec2-54-217-224-85.eu-west-1.compute.amazonaws.com:5432/d56ic61hqjvlum",user, psw);
             }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
