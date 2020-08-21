@@ -136,6 +136,8 @@ public class ControllerEntrance {
     @FXML
     private void initialize() {
         //populateClientInformation(person);
+
+        pagamentoJFXButton.setDisable(true);
         ingressoSingoloJFXButton.setOnAction(this::handleSingleEntrace);
         dieciIngrJFXButton.setOnAction(this::handleTenEntrace);
         mensileJFXButton.setOnAction(this::handleMonthEntrace);
@@ -185,6 +187,7 @@ public class ControllerEntrance {
 
     private void handleTenEntrace(ActionEvent actionEvent) {
         setDisableButtons();
+        pagamentoJFXButton.setDisable(false);
         ModelPagamento modelPagamentoDB = new ModelDBPagamento();
         totDaPagareLabel.setText(modelPagamentoDB.getPriceEntrance("Abbonamento 10 ingressi", U18Label.getText()).intValueExact() + " €");
         ingresso = "Abbonamento 10 ingressi";
@@ -192,6 +195,7 @@ public class ControllerEntrance {
 
     private void handleMonthEntrace(ActionEvent actionEvent) {
         setDisableButtons();
+        pagamentoJFXButton.setDisable(false);
         ModelPagamento modelPagamentoDB = new ModelDBPagamento();
         totDaPagareLabel.setText(modelPagamentoDB.getPriceEntrance("Abbonamento mensile", U18Label.getText()).intValueExact() + " €");
         ingresso = "Abbonamento mensile";
@@ -199,6 +203,7 @@ public class ControllerEntrance {
 
     private void handle3MonthEntrace(ActionEvent actionEvent) {
         setDisableButtons();
+        pagamentoJFXButton.setDisable(false);
         ModelPagamento modelPagamentoDB = new ModelDBPagamento();
         totDaPagareLabel.setText(modelPagamentoDB.getPriceEntrance("Abbonamento trimestrale", U18Label.getText()).intValueExact() + " €");
 
@@ -208,6 +213,7 @@ public class ControllerEntrance {
 
     private void handleClassEntrace(ActionEvent actionEvent) {
         setDisableButtons();
+        pagamentoJFXButton.setDisable(false);
         ModelPagamento modelPagamentoDB = new ModelDBPagamento();
         totDaPagareLabel.setText(modelPagamentoDB.getPriceEntrance("Tessera corso", U18Label.getText()).intValueExact() + " €");
         ingresso = "Tessera corso";
@@ -230,6 +236,7 @@ public class ControllerEntrance {
             try {
                 int i = Integer.parseInt(s.get());
                 entrateResidue = i;
+                pagamentoJFXButton.setDisable(false);
             } catch (NumberFormatException e) {
                 alert.displayAlert("Controlla la cifra inserita!");
             }
@@ -281,12 +288,17 @@ public class ControllerEntrance {
             giorniResidui = (int) ChronoUnit.DAYS.between(dateBefore, dateAfter);
 
             if (giorniResidui > 0)
+            {
                 alert.displayInformation(String.format("Abbonamento valido per il risarcimento!\nGiorni alla scadenza: %d",giorniResidui));
+                pagamentoJFXButton.setDisable(false);
+            }
+
         }
     }
 
     private void handleOld3MonthEntranceSubmission(ActionEvent actionEvent) {
         setDisableButtons();
+
         totDaPagareLabel.setText(0 + " €");
         ingresso = "Vecchio trimestrale";
 
@@ -330,11 +342,17 @@ public class ControllerEntrance {
             giorniResidui = (int) ChronoUnit.DAYS.between(dateBefore, dateAfter);
 
             if (giorniResidui > 0)
+            {
                 alert.displayInformation(String.format("Abbonamento valido per il risarcimento!\nGiorni alla scadenza: %d",giorniResidui));
+                pagamentoJFXButton.setDisable(false);
+            }
+
         }
     }
 
     private void handleShoes(ActionEvent actionEvent) {
+
+        pagamentoJFXButton.setDisable(false);
         if (!totDaPagareLabel.getText().isEmpty()) {
             String[] s = totDaPagareLabel.getText().split(" ");
             int partial = Integer.parseInt(s[0]);
@@ -345,6 +363,7 @@ public class ControllerEntrance {
         }
         scarpetteJFXButton.setDisable(true);
         scarpette = "SI";
+
     }
 
     private void handleSingleEntrace(ActionEvent actionEvent) {
@@ -369,10 +388,12 @@ public class ControllerEntrance {
         }
         ingressoSingoloJFXButton.setDisable(true);
         ingresso = "Ingresso singolo";
+        pagamentoJFXButton.setDisable(false);
 
     }
 
     private void handleResetButton(ActionEvent actionEvent) {
+        pagamentoJFXButton.setDisable(true);
         ingressoSingoloJFXButton.setDisable(false);
         dieciIngrJFXButton.setDisable(false);
         mensileJFXButton.setDisable(false);
@@ -385,7 +406,7 @@ public class ControllerEntrance {
         totDaPagareLabel.setText("");
         tesseramentoJFXCheckBox.setSelected(false);
         ingresso = null;
-        scarpette = null;
+        scarpette = "NO";
 
     }
 
@@ -411,7 +432,14 @@ public class ControllerEntrance {
                 else
                     totDaPagareLabel.setText(20 + " €");
             } else {
-                totDaPagareLabel.setText(Integer.parseInt(partial[0]) - 20 + " €");
+                if(Integer.parseInt(partial[0]) == 20){
+                    if(U18Label.getText().equalsIgnoreCase("NO"))
+                        totDaPagareLabel.setText( "7 €");
+                    else
+                        totDaPagareLabel.setText( "5 €");
+                }
+                else
+                    totDaPagareLabel.setText(Integer.parseInt(partial[0]) - 20 + " €");
             }
         }
     }

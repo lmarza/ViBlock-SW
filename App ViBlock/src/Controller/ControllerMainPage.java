@@ -119,7 +119,7 @@ public class ControllerMainPage {
     }
 
     private void handleEsportaSaldoGJFXButton(ActionEvent actionEvent) {
-        /*first check if one balance for db is already into DB */
+        /*first check if one balance for today is already into DB */
         ModelRiepilogoGiorn modelRiepilogoGiornDB = new ModelDBRiepilogoGiorn();
         int row = modelRiepilogoGiornDB.checkIfRecordExists();
         RiepilogoGiornaliero riepilogo = new RiepilogoGiornaliero();

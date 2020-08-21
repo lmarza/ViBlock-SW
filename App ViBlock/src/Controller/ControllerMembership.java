@@ -337,7 +337,7 @@ public class ControllerMembership {
                 person.setMedicalCertificate(String.valueOf(medicalCertificateId));
 
                 //TODO: enable send email
-                //Mail.sendMail(mailJFXTextField.getText(), nomeJFXTextField.getText(), cognomeJFXTextField.getText(), pswTempJFXTextField.getText());
+                Mail.sendMail(mailJFXTextField.getText(), nomeJFXTextField.getText(), cognomeJFXTextField.getText(), pswTempJFXTextField.getText());
                 if(oldClient.getClientType().equalsIgnoreCase("P"))
                     person.setClientType("RP");
                 modelClienteDB.updateClientInformation(person);

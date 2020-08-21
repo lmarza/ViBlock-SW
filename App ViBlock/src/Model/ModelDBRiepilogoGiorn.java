@@ -212,7 +212,7 @@ public class ModelDBRiepilogoGiorn implements ModelRiepilogoGiorn {
     public void insertDayBalance(RiepilogoGiornaliero dailyBalance) {
         db.DBOpenConnection();
         db.executeSQLUpdate("INSERT INTO riepilogogiornate(data, saldofinale, tesseramenti, solditesseramenti, entrategiornaliere, prelievi) " +
-                "VALUES (?::DATE, ?::NUMERIC(7,2), ?::INTEGER, ?::NUMERIC(7,2), ?::NUMERIC(7,2), ?::NUMERIC(7,2));", List.of(dailyBalance.getData(), dailyBalance.getSaldoFinale().toString(), dailyBalance.getTesseramenti().toString(),
+                "VALUES (CURRENT_DATE, ?::NUMERIC(7,2), ?::INTEGER, ?::NUMERIC(7,2), ?::NUMERIC(7,2), ?::NUMERIC(7,2));", List.of(dailyBalance.getSaldoFinale().toString(), dailyBalance.getTesseramenti().toString(),
                 dailyBalance.getSoldiTesseramenti().toString(), dailyBalance.getEntrateGiornata().toString(), dailyBalance.getPrelievi().toString()));
 
     }
@@ -222,8 +222,8 @@ public class ModelDBRiepilogoGiorn implements ModelRiepilogoGiorn {
         db.DBOpenConnection();
         db.executeSQLUpdate("UPDATE public.riepilogogiornate " +
                 "SET saldofinale=?::NUMERIC(7,2), tesseramenti=?::INTEGER, solditesseramenti=?::NUMERIC(7,2), entrategiornaliere=?::NUMERIC(7,2), prelievi=?::NUMERIC(7,2) " +
-                "WHERE data = ?::DATE", List.of(dailyBalance.getSaldoFinale().toString(), dailyBalance.getTesseramenti().toString(),
-                dailyBalance.getSoldiTesseramenti().toString(), dailyBalance.getEntrateGiornata().toString(), dailyBalance.getPrelievi().toString(), dailyBalance.getData()));
+                "WHERE data = CURRENT_DATE", List.of(dailyBalance.getSaldoFinale().toString(), dailyBalance.getTesseramenti().toString(),
+                dailyBalance.getSoldiTesseramenti().toString(), dailyBalance.getEntrateGiornata().toString(), dailyBalance.getPrelievi().toString()));
     }
 
 }
