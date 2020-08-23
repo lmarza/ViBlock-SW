@@ -158,6 +158,8 @@ public class ControllerTryEnter {
             person = createPerson();
             CFJFXTextField.setText(new CodiceFiscale(person).getCode());
             person.setCf(CFJFXTextField.getText());
+            person.setFirstEntrance(true);
+            person.setMembershipPayed(false);
         }
         else
         {
@@ -270,6 +272,8 @@ public class ControllerTryEnter {
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
         String finaleDate = dateFormat.format(d);
         person.setDataTry(finaleDate);
+        person.setMembershipPayed(false);
+        person.setFirstEntrance(true);
 
         modelClientDB.insertNewClient(person);
 

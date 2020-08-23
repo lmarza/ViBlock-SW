@@ -16,5 +16,6 @@ public interface ModelCliente {
 
     void updateClientSubmissionDayEntrance(String cf);
     void updateClientSubmissionDurationEntrance(String cf);
+    void updateClientSubmissionPayed(String cf, Boolean bool);
 
 }

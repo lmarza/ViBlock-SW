@@ -173,6 +173,8 @@ public class ControllerMembership {
             person = createPerson();
             CFJFXTextField.setText(new CodiceFiscale(person).getCode());
             person.setCf(CFJFXTextField.getText());
+            person.setFirstEntrance(true);
+            person.setMembershipPayed(false);
         }
         else
         {

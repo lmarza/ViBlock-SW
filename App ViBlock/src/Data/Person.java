@@ -17,6 +17,9 @@ public class Person {
     private String dataTry;
     private String ClientType;
     private String dataMembership;
+    private boolean firstEntrance;
+    private boolean membershipPayed;
+
 
 
     public Person(){}
@@ -139,6 +142,22 @@ public class Person {
 
     public void setDataMembership(String dataMembership) {
         this.dataMembership = dataMembership;
+    }
+
+    public boolean isFirstEntrance() {
+        return firstEntrance;
+    }
+
+    public void setFirstEntrance(boolean firstEntrance) {
+        this.firstEntrance = firstEntrance;
+    }
+
+    public boolean isMembershipPayed() {
+        return membershipPayed;
+    }
+
+    public void setMembershipPayed(boolean membershipPayed) {
+        this.membershipPayed = membershipPayed;
     }
 
 }

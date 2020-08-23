@@ -383,7 +383,7 @@ public class ControllerEntrance {
 
             String[] tot = totDaPagareLabel.getText().split(" ");
             int partial = Integer.parseInt(tot[0]);
-            partial += 2;
+            partial += 1;
             totDaPagareLabel.setText(partial + " €");
         }
         ingressoSingoloJFXButton.setDisable(true);
@@ -502,6 +502,13 @@ public class ControllerEntrance {
             modelPeriodEntranceDB.insertOldMonthSubmission(person.getCf(), giorniResidui);
         else if("Vecchio Trimestrale".equalsIgnoreCase(ingresso))
             modelPeriodEntranceDB.insertOld3MonthSubmission(person.getCf(), giorniResidui);
+
+        /*
+        if membership is checked update db with isMembershipPayed true
+        */
+        ModelCliente modelClienteDB = new ModelDBCliente();
+        if(tesseramentoJFXCheckBox.isSelected())
+            modelClienteDB.updateClientSubmissionPayed(CFLabel.getText(), true);
 
 
         /*Add payment into DB*/

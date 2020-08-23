@@ -260,6 +260,10 @@ public class ControllerMainPage {
                 }
                 else
                 {
+                    /*
+                    * check if client has done submission online and must pay
+                    */
+
                     if(!ClientHasSubmission(searchJFXTextField.getText()))
                     {
                         alert.displayInformation("Il cliente non ha un abbonamento valido!\n");

@@ -12,9 +12,15 @@ public class ModelDBCertificatoMedico implements ModelCertificatoMedico {
 
     @Override
     public void insertNewMedicalCertificate(MedicalCertificate medicalCertificate) {
+        String dataRilascio = medicalCertificate.getDataRilascio();
+        String dataScadenza = medicalCertificate.getDataScadenza();
+
+        String[] dataR = dataRilascio.split("/");
+        String[] dataS = dataScadenza.split("/");
+
         db.DBOpenConnection();
         db.executeSQLUpdate("INSERT INTO public.certificatomedico(datarilascio, datascadenza) " +
-                "VALUES (?::DATE, ?::DATE); ", List.of(medicalCertificate.getDataRilascio(), medicalCertificate.getDataScadenza()));
+                "VALUES (?::DATE, ?::DATE);", List.of(dataR[1]+"/"+ dataR[0] + "/" + dataR[2], dataS[1]+"/"+ dataS[0] + "/" + dataS[2]));
     }
 
     @Override

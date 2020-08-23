@@ -17,14 +17,14 @@ public class ModelDBCliente implements ModelCliente {
         db.DBOpenConnection();
         if(person.getMedicalCertificate() == null)
             db.executeSQLUpdate( "INSERT INTO public.utente(nome, cognome, sesso, datanascita, mail, psw, certificatomedico, dataprova, tipoutente, " +
-                    "luogonascita, cf) " +
-                    "VALUES (?, ?, ?, ?::DATE,null, null, null,  ?::DATE, ?, ?, ?); ", List.of(person.getName().trim(), person.getSurname().trim(), person.getSex().trim(), person.getBirthday().trim(),
-                    person.getDataTry().trim(), person.getClientType().trim(), person.getBornCity().trim(), person.getCf().trim()));
+                    "luogonascita, cf, primoaccesso, iscrizionepagata) " +
+                    "VALUES (?, ?, ?, ?::DATE,null, null, null,  CURRENT_DATE, ?, ?, ?, ?::boolean, ?::boolean); ", List.of(person.getName().trim(), person.getSurname().trim(), person.getSex().trim(), person.getBirthday().trim(),
+                     person.getClientType().trim(), person.getBornCity().trim(), person.getCf().trim(), String.valueOf(person.isFirstEntrance()), String.valueOf(person.isMembershipPayed())));
         else
             db.executeSQLUpdate( "INSERT INTO public.utente(nome, cognome, sesso, datanascita, mail, psw, certificatomedico, tipoutente, " +
-                    "luogonascita, cf, datatesseramento) " +
-                    "VALUES (?, ?, ?, ?::DATE, ?, ?, ?::INTEGER, ?, ?, ?, ?::DATE); ", List.of(person.getName().trim(), person.getSurname().trim(), person.getSex().trim(), person.getBirthday().trim(),
-                    person.getMail().trim(),person.getPsw().trim(), person.getMedicalCertificate(), person.getClientType().trim(), person.getBornCity().trim(), person.getCf().trim(),person.getDataMembership()));
+                    "luogonascita, cf, datatesseramento, primoaccesso, iscrizionepagata) " +
+                    "VALUES (?, ?, ?, ?::DATE, ?, ?, ?::INTEGER, ?, ?, ?, CURRENT_DATE, ?::boolean, ?::boolean); ", List.of(person.getName().trim(), person.getSurname().trim(), person.getSex().trim(), person.getBirthday().trim(),
+                    person.getMail().trim(),person.getPsw().trim(), person.getMedicalCertificate(), person.getClientType().trim(), person.getBornCity().trim(), person.getCf().trim(),String.valueOf(person.isFirstEntrance()), String.valueOf(person.isMembershipPayed())));
     }
 
     @Override
@@ -67,8 +67,8 @@ public class ModelDBCliente implements ModelCliente {
     public void updateClientInformation(Person person) {
         db.DBOpenConnection();
         db.executeSQLUpdate("UPDATE utente " +
-                "SET mail=?, psw=?, certificatomedico=?::INTEGER, tipoutente=? , datatesseramento=?::DATE " +
-                "WHERE cf = ? ;", List.of(person.getMail(), person.getPsw(), person.getMedicalCertificate(),person.getClientType(), person.getDataMembership(), person.getCf()));
+                "SET mail=?, psw=?, certificatomedico=?::INTEGER, tipoutente=? , datatesseramento= CURRENT_DATE " +
+                "WHERE cf = ? ;", List.of(person.getMail(), person.getPsw(), person.getMedicalCertificate(),person.getClientType(), person.getCf()));
     }
 
     @Override
@@ -123,6 +123,8 @@ public class ModelDBCliente implements ModelCliente {
                 person.setBornCity(db.getSQLString(rs, "luogonascita"));
                 person.setCf(db.getSQLString(rs, "cf"));
                 person.setDataMembership(db.getSQLString(rs,"datatesseramento"));
+                person.setFirstEntrance(db.getSQLBool(rs, "primoaccesso"));
+                person.setMembershipPayed(db.getSQLBool(rs,"iscrizionepagata"));
             }
 
             return person;
@@ -207,6 +209,14 @@ public class ModelDBCliente implements ModelCliente {
         db.executeSQLUpdate("UPDATE ingressoadurata " +
                 "SET istanteingresso = CURRENT_TIMESTAMP " +
                 "WHERE cfutente = ?",List.of(cf));
+    }
+
+    @Override
+    public void updateClientSubmissionPayed(String cf, Boolean bool) {
+        db.DBOpenConnection();
+        db.executeSQLUpdate("UPDATE Utente " +
+                "SET iscrizionepagata = ?::boolean " +
+                "WHERE cf = ?",List.of(String.valueOf(bool), cf));
     }
 
 
