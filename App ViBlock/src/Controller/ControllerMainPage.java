@@ -263,17 +263,24 @@ public class ControllerMainPage {
                     /*
                     * check if client has done submission online and must pay
                     */
+                    if(!client.isMembershipPayed())
+                    {
+                        alert.displayInformation("Il cliente deve pagare il tesseramento eseguito online!\n");
+                        /*Entrance page*/
+                        StageManager entrancePage = new StageManager();
+                        entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
+
+                    }
 
                     if(!ClientHasSubmission(searchJFXTextField.getText()))
                     {
                         alert.displayInformation("Il cliente non ha un abbonamento valido!\n");
                         /*Fetch client information*/
-                        Person person = modelClienteDB.getClient(searchJFXTextField.getText());
+                        //Person person = modelClienteDB.getClient(searchJFXTextField.getText());
 
                         /*Entrance page*/
                         StageManager entrancePage = new StageManager();
-                        entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, person);
-
+                        entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
                     }
                 }
 
@@ -296,7 +303,15 @@ public class ControllerMainPage {
                     }
                     else
                     {
-                        if(!ClientHasSubmission(client.getCf()))
+                        if(!client.isMembershipPayed())
+                        {
+                            alert.displayInformation("Il cliente deve pagare il tesseramento eseguito online!\n");
+                            /*Entrance page*/
+                            StageManager entrancePage = new StageManager();
+                            entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
+
+                        }
+                        else if(!ClientHasSubmission(client.getCf()))
                         {
                             alert.displayInformation("Il cliente non ha un abbonamento valido!\n");
                             /*Fetch client information*/
@@ -321,6 +336,7 @@ public class ControllerMainPage {
                                 entrancePage.setStageEntrace((Stage) searchClientJFXButton.getScene().getWindow(), managers, client);
                             }
                         }
+
                     }
                 }
                 else

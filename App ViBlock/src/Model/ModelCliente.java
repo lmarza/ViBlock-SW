@@ -9,6 +9,7 @@ public interface ModelCliente {
     public Person getClient(String cf);
     public Person getClientFromNameSurname(String name, String surname);
 
+
     public int checkTenEntranceSubmission(String cf);
     public int checkMonthEntranceSubmission(String cf);
     public int check3MonthEntranceSubmission(String cf);
@@ -17,5 +18,7 @@ public interface ModelCliente {
     void updateClientSubmissionDayEntrance(String cf);
     void updateClientSubmissionDurationEntrance(String cf);
     void updateClientSubmissionPayed(String cf, Boolean bool);
+
+
 
 }

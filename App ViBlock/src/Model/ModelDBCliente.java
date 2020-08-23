@@ -15,15 +15,17 @@ public class ModelDBCliente implements ModelCliente {
     @Override
     public void insertNewClient(Person person) {
         db.DBOpenConnection();
+        String dataNascita = person.getBirthday();
+        String[] birthday = dataNascita.split("/");
         if(person.getMedicalCertificate() == null)
             db.executeSQLUpdate( "INSERT INTO public.utente(nome, cognome, sesso, datanascita, mail, psw, certificatomedico, dataprova, tipoutente, " +
                     "luogonascita, cf, primoaccesso, iscrizionepagata) " +
-                    "VALUES (?, ?, ?, ?::DATE,null, null, null,  CURRENT_DATE, ?, ?, ?, ?::boolean, ?::boolean); ", List.of(person.getName().trim(), person.getSurname().trim(), person.getSex().trim(), person.getBirthday().trim(),
+                    "VALUES (?, ?, ?, ?::DATE,null, null, null,  CURRENT_DATE, ?, ?, ?, ?::boolean, ?::boolean); ", List.of(person.getName().trim(), person.getSurname().trim(), person.getSex().trim(), birthday[1] + "/" + birthday[0] + "/" + birthday[2],
                      person.getClientType().trim(), person.getBornCity().trim(), person.getCf().trim(), String.valueOf(person.isFirstEntrance()), String.valueOf(person.isMembershipPayed())));
         else
             db.executeSQLUpdate( "INSERT INTO public.utente(nome, cognome, sesso, datanascita, mail, psw, certificatomedico, tipoutente, " +
                     "luogonascita, cf, datatesseramento, primoaccesso, iscrizionepagata) " +
-                    "VALUES (?, ?, ?, ?::DATE, ?, ?, ?::INTEGER, ?, ?, ?, CURRENT_DATE, ?::boolean, ?::boolean); ", List.of(person.getName().trim(), person.getSurname().trim(), person.getSex().trim(), person.getBirthday().trim(),
+                    "VALUES (?, ?, ?, ?::DATE, ?, ?, ?::INTEGER, ?, ?, ?, CURRENT_DATE, ?::boolean, ?::boolean); ", List.of(person.getName().trim(), person.getSurname().trim(), person.getSex().trim(), birthday[1] + "/" + birthday[0] + "/" + birthday[2],
                     person.getMail().trim(),person.getPsw().trim(), person.getMedicalCertificate(), person.getClientType().trim(), person.getBornCity().trim(), person.getCf().trim(),String.valueOf(person.isFirstEntrance()), String.valueOf(person.isMembershipPayed())));
     }
 
@@ -100,6 +102,8 @@ public class ModelDBCliente implements ModelCliente {
 
         return person;
     }
+
+
 
 
     private Person resultSetToPerson(ResultSet rs)
